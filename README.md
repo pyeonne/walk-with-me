@@ -8,22 +8,22 @@
 
 #### Frontend
 
-<img width="957" alt="스크린샷 2022-01-29 오전 11 50 55" src="https://user-images.githubusercontent.com/42693257/151644463-8c19e89b-5b79-444b-809b-4d7bbd45bd8c.png">
+<img width="959" alt="스크린샷 2022-01-29 오후 12 03 15" src="https://user-images.githubusercontent.com/42693257/151644861-9a38f74b-0e62-4f71-8d27-aecbb8fc2aa8.png">
 
 - Context API, CSS Module
 
 
 #### Backend
 
-<img width="956" alt="스크린샷 2022-01-29 오전 11 52 55" src="https://user-images.githubusercontent.com/42693257/151644528-203b4e90-ea8e-4e8c-a2b3-65bacd87b96a.png">
-
+<img width="956" alt="스크린샷 2022-01-29 오전 11 59 06" src="https://user-images.githubusercontent.com/42693257/151644798-72a3fb74-7cf6-413f-887f-c29400fa7b26.png">
 
 - Express, Mongoose
 
 
 #### Database
 
-<img width="957" alt="스크린샷 2022-01-29 오전 11 53 47" src="https://user-images.githubusercontent.com/42693257/151644550-210eb602-c83b-4357-a79e-681ac676b590.png">
+<img width="960" alt="스크린샷 2022-01-29 오후 12 03 25" src="https://user-images.githubusercontent.com/42693257/151644863-b6c48d1d-9e7f-464f-a024-794347da9c49.png">
+
 
 
 ### 🔍 웹서비스에 대한 자세한 개요
