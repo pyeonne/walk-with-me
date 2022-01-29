@@ -6,12 +6,25 @@
 
 ### 🔨 기술 스택
 
-| 구성     | 기술 스택           |
-| -------- | ------------------- |
-| Frontend | React, JavaScript   |
-| Backend  | Node JS, Express JS |
-| Database | Mongo DB, mongoose  |
-| Server   | nginx, VM azure     |
+#### Frontend
+
+<img width="957" alt="스크린샷 2022-01-29 오전 11 50 55" src="https://user-images.githubusercontent.com/42693257/151644463-8c19e89b-5b79-444b-809b-4d7bbd45bd8c.png">
+
+- Context API, CSS Module
+
+
+#### Backend
+
+<img width="956" alt="스크린샷 2022-01-29 오전 11 52 55" src="https://user-images.githubusercontent.com/42693257/151644528-203b4e90-ea8e-4e8c-a2b3-65bacd87b96a.png">
+
+
+- Express, Mongoose
+
+
+#### Database
+
+<img width="957" alt="스크린샷 2022-01-29 오전 11 53 47" src="https://user-images.githubusercontent.com/42693257/151644550-210eb602-c83b-4357-a79e-681ac676b590.png">
+
 
 ### 🔍 웹서비스에 대한 자세한 개요
 
