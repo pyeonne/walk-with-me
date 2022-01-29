@@ -22,7 +22,7 @@
 
 #### Database
 
-<img width="960" alt="스크린샷 2022-01-29 오후 12 03 25" src="https://user-images.githubusercontent.com/42693257/151644863-b6c48d1d-9e7f-464f-a024-794347da9c49.png">
+<img width="958" alt="스크린샷 2022-01-29 오후 4 37 37" src="https://user-images.githubusercontent.com/42693257/151652290-86414eb7-6048-4d25-8fe5-27d574331aac.png">
 
 
 
