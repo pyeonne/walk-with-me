@@ -62,7 +62,8 @@ post /api/posts/:id/likes
  */
 exports.like = async (req, res) => {
   const { id } = req.params;
-  const { _id: userId } = res.locals.user;
+  // const { _id: userId } = res.locals.user;
+  const userId = '61fb774b55055d5f23ae2e01';
 
   await Post.updateOne(
     { _id: id },
@@ -79,6 +80,19 @@ exports.like = async (req, res) => {
 /* 포스트 관심 해제
 delete /api/posts/:id/likes
  */
-exports.unlike = (req, res) => {
+exports.unlike = async (req, res) => {
+  const { id } = req.params;
+  // const { _id: userId } = res.locals.user;
+  const userId = '61fb6580c1aed98d135fb934';
+
+  await Post.updateOne(
+    { _id: id },
+    {
+      $pull: {
+        likeMembers: userId,
+      },
+    }
+  );
+
   res.status(200).json({ success: '관심 해제' });
 };
