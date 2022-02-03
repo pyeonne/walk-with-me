@@ -30,7 +30,10 @@ exports.create = async (req, res) => {
 /* 포스트 수정
 PUT /api/posts/:id
  */
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
+  const data = req.body;
+  const { id } = req.params;
+  await Post.updateOne({ id }, data);
   res.status(200).json({ success: '포스트 수정' });
 };
 
