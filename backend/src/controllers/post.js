@@ -60,7 +60,19 @@ exports.delete = async (req, res) => {
 /* 포스트 관심 등록
 post /api/posts/:id/likes
  */
-exports.like = (req, res) => {
+exports.like = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId } = res.locals.user;
+
+  await Post.updateOne(
+    { _id: id },
+    {
+      $push: {
+        likeMembers: userId,
+      },
+    }
+  );
+
   res.status(200).json({ success: '관심 등록' });
 };
 
