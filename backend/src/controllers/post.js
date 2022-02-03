@@ -51,7 +51,9 @@ exports.update = async (req, res) => {
 /* 포스트 제거
 DELETE /api/posts/:id
  */
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+  await Post.deleteOne({ id });
   res.status(200).json({ success: '포스트 삭제' });
 };
 
