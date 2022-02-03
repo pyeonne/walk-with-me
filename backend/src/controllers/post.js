@@ -44,7 +44,7 @@ PUT /api/posts/:id
 exports.update = async (req, res) => {
   const data = req.body;
   const { id } = req.params;
-  await Post.updateOne({ id }, data);
+  await Post.updateOne({ _id: id }, data);
   res.status(200).json({ success: '포스트 수정' });
 };
 
@@ -53,7 +53,7 @@ DELETE /api/posts/:id
  */
 exports.delete = async (req, res) => {
   const { id } = req.params;
-  await Post.deleteOne({ id });
+  await Post.deleteOne({ _id: id });
   res.status(200).json({ success: '포스트 삭제' });
 };
 
