@@ -37,6 +37,12 @@ const UserSchema = new mongoose.Schema({
       ref: 'Post',
     },
   ],
+  applyPosts: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'Post',
+    },
+  ],
 });
 
 module.exports = UserSchema;

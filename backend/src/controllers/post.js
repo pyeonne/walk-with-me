@@ -1,4 +1,4 @@
-const { Post } = require('../models/');
+const { Post, User } = require('../models/');
 
 /* 특정 포스트 조회
 GET /api/posts/:id
@@ -93,4 +93,36 @@ exports.unlike = async (req, res) => {
   );
 
   res.status(200).json({ success: '관심 해제' });
+};
+
+/* 가입 신청
+POST /api/posts/:id
+*/
+exports.apply = async (req, res) => {
+  const { id } = req.params;
+  // const { _id: userId } = res.locals.user;
+  const userId = '61fb6580c1aed98d135fb934';
+
+  await Post.updateOne(
+    { _id: id },
+    {
+      $push: {
+        preMembers: userId,
+      },
+    }
+  );
+
+  const user = await User.updateOne(
+    { _id: userId },
+    {
+      $push: {
+        applyPosts: id,
+      },
+    }
+  )
+    .populate('applyPosts')
+    .exec();
+
+  // populate 수정하기
+  res.status(200).json(user.applyPosts);
 };

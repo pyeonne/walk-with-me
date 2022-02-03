@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueArrayPlugin = require('mongoose-unique-array');
 
 const PostSchema = new mongoose.Schema({
   author: {
@@ -36,6 +37,7 @@ const PostSchema = new mongoose.Schema({
     {
       type: mongoose.Types.ObjectId,
       ref: 'User',
+      unique: true,
     },
   ],
   likeCount: {
@@ -53,5 +55,7 @@ const PostSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+PostSchema.plugin(uniqueArrayPlugin);
 
 module.exports = PostSchema;

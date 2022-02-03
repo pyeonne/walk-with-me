@@ -16,4 +16,6 @@ router.delete('/:id', postCtrl.delete);
 router.post('/:id/likes', postCtrl.like);
 router.delete('/:id/likes', postCtrl.unlike);
 
+// 가입 신청
+router.post('/:id', postCtrl.apply);
 module.exports = router;
