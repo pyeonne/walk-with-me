@@ -9,7 +9,7 @@ const transport = nodemailer.createTransport({
 });
 
 module.exports = (to, subject, text) =>
-  new Promise((rsolve, reject) => {
+  new Promise((resolve, reject) => {
     const message = {
       from: 'dbsgkr0203@gmail.com',
       to,

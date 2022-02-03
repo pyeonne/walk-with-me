@@ -3,6 +3,10 @@ const asyncHandler = require('../utils/async-handler');
 const hashPassword = require('../utils/hash-password');
 const generatePassword = require('../utils/generate-password');
 const nodeMailer = require('../utils/node-mailer');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+
+// 회원 가입
 exports.signUp = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // 가입된 계정
@@ -23,8 +27,32 @@ exports.signUp = asyncHandler(async (req, res) => {
   res.status(200).json({ success: '회원가입' });
 });
 
-exports.signIn = (req, res) => {
-  res.status(200).json({ success: '로그인' });
+// 로그인
+// exports.signIn = (req, res) => {
+//   res.status(200).json({ success: '로그인' });
+// };
+exports.signIn = async (req, res, next) => {
+  try {
+    passport.authenticate('local', (passportError, user, info) => {
+      // 인증이 실패했거나 유저 데이터가 없으면 에러
+      if (passportError || !user) {
+        res.status(400).json({ message: info.message });
+        return;
+      }
+      // user 데이터를 통해 로그인 진행
+      req.login(user, { session: false }, (loginError) => {
+        if (loginError) {
+          res.json(loginError);
+          return;
+        }
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+        res.cookie('token', token);
+        res.json({ user });
+      });
+    })(req, res);
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.signOut = (req, res) => {
