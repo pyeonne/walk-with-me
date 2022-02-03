@@ -1168,11 +1168,6 @@ mongodb@4.2.2:
   optionalDependencies:
     saslprep "^1.0.3"
 
-mongoose-unique-array@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/mongoose-unique-array/-/mongoose-unique-array-0.4.2.tgz#8720d90446bd7077eb2fadfbce48ae042402765f"
-  integrity sha512-9Z/2rvYip/WnjLM6WzyOse04P2s5pj/oE43kMiMkdi9U1a8wyt9rXoB2mtlo/PUptLvZtOOmOCREL/9tYo6liQ==
-
 mongoose@^6.1.8:
   version "6.1.8"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.1.8.tgz#8565c7610ceb81a9b0416ceb4bf0b709c8b83f6a"
