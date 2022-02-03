@@ -3,20 +3,31 @@ const { Post } = require('../models/');
 /* 특정 포스트 조회
 GET /api/posts/:id
  */
-exports.read = (req, res) => {
-  res.status(200).json({ success: '특정 포스트' });
+exports.read = async (req, res) => {
+  const { id } = req.params;
+  const post = await Post.findById(id);
+  res.status(200).json(post);
 };
 
 /* 포스트 목록
 GET /api/posts
+GET /api/posts?age=20&category=running
  */
-exports.list = (req, res) => {
+exports.list = async (req, res) => {
   const queryObj = req.query;
+  const { age, category, area } = queryObj;
+
   if (Object.keys(queryObj).length === 0) {
-    res.status(200).json({ success: '포스트 목록' });
+    const posts = await Post.find();
+    res.status(200).json(posts);
     return;
   }
-  res.status(200).json({ success: '포스트 필터링' });
+
+  const posts = await Post.find({
+    $or: [{ age }, { category }, { area }],
+  });
+
+  res.status(200).json(posts);
 };
 
 /* 포스트 작성
