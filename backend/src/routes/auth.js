@@ -40,6 +40,6 @@ router.get(
 router.post('/signup', authCtrl.signUp);
 router.post('/find-password', authCtrl.findPassword);
 router.post('/signin', authCtrl.signIn);
-// router.post('/signout', authCtrl.signOut);
+router.get('/signout', authCtrl.signOut);
 
 module.exports = router;

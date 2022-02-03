@@ -55,8 +55,11 @@ exports.signIn = async (req, res, next) => {
   }
 };
 
+// 로그아웃
 exports.signOut = (req, res) => {
-  res.status(200).json({ success: '로그아웃' });
+  res.cookie('token', '');
+  req.logout();
+  res.status(200).send({ message: '로그아웃에 성공했습니다.' });
 };
 
 // 비밀번호 찾기

@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const passportSetup = require('./passport/strategies/passport');
 const passportSettingRouter = require('./passport/index');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const authRoute = require('./routes/auth');
@@ -27,9 +28,10 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 app.use(passport.initialize());
 passportSettingRouter();
-app.use(passport.session());
+// app.use(passport.session());
 app.use(
   cors({
     origin: 'http://localhost:3000',
