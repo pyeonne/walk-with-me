@@ -62,8 +62,7 @@ post /api/posts/:id/likes
  */
 exports.like = async (req, res) => {
   const { id } = req.params;
-  // const { _id: userId } = res.locals.user;
-  const userId = '61fb774b55055d5f23ae2e01';
+  const { _id: userId } = res.locals.user;
 
   await Post.updateOne(
     { _id: id },
@@ -82,8 +81,7 @@ delete /api/posts/:id/likes
  */
 exports.unlike = async (req, res) => {
   const { id } = req.params;
-  // const { _id: userId } = res.locals.user;
-  const userId = '61fb6580c1aed98d135fb934';
+  const { _id: userId } = res.locals.user;
 
   await Post.updateOne(
     { _id: id },
