@@ -1,3 +1,5 @@
+const { Post } = require('../models/');
+
 /* 특정 포스트 조회
 GET /api/posts/:id
  */
@@ -20,8 +22,9 @@ exports.list = (req, res) => {
 /* 포스트 작성
 POST /api/posts
  */
-exports.create = (req, res) => {
-  res.status(200).json({ success: '포스트 등록' });
+exports.create = async (req, res) => {
+  await Post.create(req.body);
+  res.status(201).json({ success: '포스트 등록' });
 };
 
 /* 포스트 수정
