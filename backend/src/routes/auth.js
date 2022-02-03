@@ -37,6 +37,16 @@ router.get(
   })
 );
 
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get(
+  '/kakao/callback',
+  passport.authenticate('kakao', {
+    successRedirect: CLIENT_URL,
+    failureRedirect: '/login/failed',
+  })
+);
+
 router.post('/signup', authCtrl.signUp);
 router.post('/find-password', authCtrl.findPassword);
 router.post('/signin', authCtrl.signIn);

@@ -1,9 +1,9 @@
-const passport = require('passport');
+// const passport = require('passport');
 
-const local = require('./strategies/local');
-const jwt = require('./strategies/jwt');
+// const local = require('./strategies/local');
+// const jwt = require('./strategies/jwt');
 
-module.exports = () => {
-  passport.use(local);
-  passport.use(jwt);
-};
+// module.exports = () => {
+//   passport.use(local);
+//   passport.use(jwt);
+// };

@@ -28,7 +28,7 @@ app.use(
 );
 
 app.use(passport.initialize());
-passportSettingRouter();
+// passportSettingRouter();
 app.use(passport.session());
 app.use(
   cors({
