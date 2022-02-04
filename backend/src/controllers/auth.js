@@ -121,6 +121,17 @@ exports.findPassword = asyncHandler(async (req, res) => {
   }
 });
 
+// 비밀번호 변경
+// patch /api/users/:id/profile/password
+exports.changePassword = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  const readUser = await User.findOne({ _id: id });
+  readUser.password = hashPassword(password);
+  await readUser.save();
+  res.json({ success: '비밀번호가 변경되었습니다.' });
+});
+
 // 구글 로그인
 exports.google = passport.authenticate('google', { scope: ['profile'] });
 exports.googleCallback = passport.authenticate('google', {
