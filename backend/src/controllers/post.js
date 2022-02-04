@@ -115,8 +115,8 @@ POST /api/posts/:id
 */
 exports.apply = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
-  const { bio } = req.body;
   const { _id: userId } = res.locals.user;
+  const { bio } = req.body;
 
   await Post.findByIdAndUpdate(postId, {
     $push: {
