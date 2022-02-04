@@ -13,7 +13,7 @@ exports.checkObjectId = (req, res, next) => {
 };
 
 exports.checkLogin = (req, res, next) => {
-  if (true) {
+  if (res.locals.user) {
     return next();
   }
 
@@ -23,8 +23,7 @@ exports.checkLogin = (req, res, next) => {
 
 exports.checkUser = async (req, res, next) => {
   const { id: postId } = req.params;
-  // const { _id: userId } = res.locals.user;
-  const userId = '61fcaa3f0eef334891fd736c';
+  const { _id: userId } = res.locals.user;
   const { author } = await Post.findById(postId).populate('author');
 
   if (userId === author._id.toString()) {

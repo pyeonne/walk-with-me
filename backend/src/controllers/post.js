@@ -63,8 +63,7 @@ post /api/posts/:id/likes
  */
 exports.like = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
-  // const { _id: userId } = res.locals.user;
-  const userId = '61fcaa3f0eef334891fd736c';
+  const { _id: userId } = res.locals.user;
 
   const post = await Post.findByIdAndUpdate(
     postId,
@@ -90,8 +89,7 @@ delete /api/posts/:id/likes
  */
 exports.unlike = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
-  // const { _id: userId } = res.locals.user;
-  const userId = '61fb91201312a009604af76a';
+  const { _id: userId } = res.locals.user;
 
   const post = await Post.findByIdAndUpdate(
     postId,
@@ -118,8 +116,7 @@ POST /api/posts/:id
 exports.apply = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
   const { bio } = req.body;
-  // const { _id: userId } = res.locals.user;
-  const userId = '61fcaa3b0eef334891fd7369';
+  const { _id: userId } = res.locals.user;
 
   await Post.findByIdAndUpdate(postId, {
     $push: {

@@ -54,4 +54,5 @@ router.delete(
   checkUser,
   postCtrl.kick
 );
+
 module.exports = router;
