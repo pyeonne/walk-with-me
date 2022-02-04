@@ -84,19 +84,23 @@ exports.like = async (req, res) => {
 delete /api/posts/:id/likes
  */
 exports.unlike = async (req, res) => {
-  const { id } = req.params;
-  const { _id: userId } = res.locals.user;
+  const { id: postId } = req.params;
+  // const { _id: userId } = res.locals.user;
+  const userId = '61fb91201312a009604af76a';
 
-  await Post.updateOne(
-    { _id: id },
-    {
-      $pull: {
-        likeMembers: userId,
-      },
-    }
-  );
+  const post = await Post.findByIdAndUpdate(postId, {
+    $pull: {
+      likeMembers: userId,
+    },
+  }).populate('likeMembers');
 
-  res.status(200).json({ success: '관심 해제' });
+  await User.findByIdAndUpdate(userId, {
+    $pull: {
+      likes: postId,
+    },
+  });
+
+  res.status(200).json(post.likeMembers);
 };
 
 /* 가입 신청
