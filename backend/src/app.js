@@ -1,5 +1,4 @@
 require('dotenv').config();
-const cookieSession = require('cookie-session');
 const express = require('express');
 const cors = require('cors');
 const passportSetup = require('./passport/strategies/passport');
@@ -20,18 +19,10 @@ mongoose.connect(URI).then(() => console.log('MongoDB is connected'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cookieSession({
-    name: 'session',
-    keys: ['pyeonne'],
-    maxAge: 24 * 60 * 60 * 100,
-  })
-);
-
 app.use(cookieParser());
 app.use(passport.initialize());
 passportSettingRouter();
-// app.use(passport.session());
+
 app.use(
   cors({
     origin: 'http://localhost:3000',
