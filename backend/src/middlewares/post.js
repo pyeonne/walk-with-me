@@ -17,15 +17,6 @@ exports.checkObjectId = (req, res, next) => {
   next(error);
 };
 
-exports.checkLogin = async (req, res, next) => {
-  if (res.locals.user) {
-    return next();
-  }
-
-  const error = new Error('로그인을 해주세요.');
-  next(error);
-};
-
 exports.checkOwnPost = async (req, res, next) => {
   const { id: postId } = req.params;
   const { _id: userId } = res.locals.user;

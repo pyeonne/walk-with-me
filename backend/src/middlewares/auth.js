@@ -11,3 +11,15 @@ exports.setUser = (req, res, next) => {
 
   next();
 };
+
+exports.checkLogin = (req, res, next) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    // res.redirect('/');
+    const error = new Error('잘못된 접근입니다.');
+    throw error;
+  }
+
+  next();
+};
