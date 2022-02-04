@@ -179,3 +179,21 @@ exports.allow = asyncHandler(async (req, res) => {
     preMembers: post.preMembers,
   });
 });
+
+exports.deny = asyncHandler(async (req, res) => {
+  const { id: postId, userId } = req.params;
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $pull: {
+        preMembers: userId,
+      },
+    },
+    { new: true }
+  ).populate('preMembers');
+
+  res.status(200).json({
+    preMembers: post.preMembers,
+  });
+});

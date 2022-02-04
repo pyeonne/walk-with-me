@@ -38,5 +38,14 @@ router.post(
   postCtrl.allow
 );
 
+router.post(
+  '/:id/management/:userId/deny',
+  checkLogin,
+  checkObjectId,
+  checkUser,
+  postCtrl.deny
+);
+
 // 회원 퇴출
+
 module.exports = router;
