@@ -15,7 +15,7 @@ exports.signUp = asyncHandler(async (req, res) => {
 
   if (existedUser) {
     const error = new Error('이미 가입되었습니다.');
-    err.status = 401;
+    error.status = 401;
     throw error;
   }
 

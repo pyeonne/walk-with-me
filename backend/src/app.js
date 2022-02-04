@@ -6,7 +6,7 @@ const passportSettingRouter = require('./passport/index');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const authRoute = require('./routes/auth');
+
 // router
 const apiRouter = require('./routes');
 
