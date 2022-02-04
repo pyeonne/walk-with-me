@@ -20,21 +20,21 @@ const UserSchema = new mongoose.Schema({
   gender: String,
   birthYear: Number,
   area: String,
-  bio: [
+  likes: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'Post',
+    },
+  ],
+  applyPosts: [
     {
       _id: mongoose.Types.ObjectId,
-      text: {
+      bio: {
         type: String,
         min: 2,
         max: 100,
         default: '',
       },
-    },
-  ],
-  likes: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'Post',
     },
   ],
 });
