@@ -39,10 +39,6 @@ const PostSchema = new mongoose.Schema({
       unique: true,
     },
   ],
-  likeCount: {
-    type: Number,
-    default: 0,
-  },
   likeMembers: [
     {
       type: mongoose.Types.ObjectId,

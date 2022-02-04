@@ -61,19 +61,23 @@ exports.delete = async (req, res) => {
 post /api/posts/:id/likes
  */
 exports.like = async (req, res) => {
-  const { id } = req.params;
-  const { _id: userId } = res.locals.user;
+  const { id: postId } = req.params;
+  // const { _id: userId } = res.locals.user;
+  const userId = '61fb91201312a009604af76a';
 
-  await Post.updateOne(
-    { _id: id },
-    {
-      $push: {
-        likeMembers: userId,
-      },
-    }
-  );
+  const post = await Post.findByIdAndUpdate(postId, {
+    $push: {
+      likeMembers: userId,
+    },
+  }).populate('likeMembers');
 
-  res.status(200).json({ success: '관심 등록' });
+  await User.findByIdAndUpdate(userId, {
+    $push: {
+      likes: postId,
+    },
+  });
+
+  res.status(200).json(post.likeMembers);
 };
 
 /* 포스트 관심 해제
@@ -100,9 +104,9 @@ POST /api/posts/:id
 */
 exports.apply = async (req, res) => {
   const { id } = req.params;
+  const { bio } = req.body;
   // const { _id: userId } = res.locals.user;
-  const userId = '61fb6580c1aed98d135fb934';
-
+  const userId = '61fb91201312a009604af76a';
   await Post.updateOne(
     { _id: id },
     {
@@ -112,17 +116,15 @@ exports.apply = async (req, res) => {
     }
   );
 
-  const user = await User.updateOne(
-    { _id: userId },
-    {
-      $push: {
-        applyPosts: id,
+  const user = await User.findByIdAndUpdate(userId, {
+    $push: {
+      applyPosts: {
+        _id: id,
+        bio,
       },
-    }
-  )
-    .populate('applyPosts')
-    .exec();
+    },
+  });
 
-  // populate 수정하기
-  res.status(200).json(user.applyPosts);
+  // res.status(200).json({ success: '가입 신청 완료' });
+  res.status(200).json(user);
 };
