@@ -1,19 +1,20 @@
 const { Post, User } = require('../models/');
+const asyncHandler = require('../utils/async-handler');
 
 /* 특정 포스트 조회
 GET /api/posts/:id
  */
-exports.read = async (req, res) => {
+exports.read = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const post = await Post.findById(id);
   res.status(200).json(post);
-};
+});
 
 /* 포스트 목록
 GET /api/posts
 GET /api/posts?age=20&category=running
  */
-exports.list = async (req, res) => {
+exports.list = asyncHandler(async (req, res) => {
   const queryObj = req.query;
   const { age, category, area } = queryObj;
 
@@ -28,39 +29,39 @@ exports.list = async (req, res) => {
   });
 
   res.status(200).json(posts);
-};
+});
 
 /* 포스트 작성
 POST /api/posts
  */
-exports.create = async (req, res) => {
+exports.create = asyncHandler(async (req, res) => {
   await Post.create(req.body);
   res.status(201).json({ success: '포스트 등록' });
-};
+});
 
 /* 포스트 수정
 PUT /api/posts/:id
  */
-exports.update = async (req, res) => {
+exports.update = asyncHandler(async (req, res) => {
   const data = req.body;
   const { id } = req.params;
   await Post.updateOne({ _id: id }, data);
   res.status(200).json({ success: '포스트 수정' });
-};
+});
 
 /* 포스트 제거
 DELETE /api/posts/:id
  */
-exports.delete = async (req, res) => {
+exports.delete = asyncHandler(async (req, res) => {
   const { id } = req.params;
   await Post.deleteOne({ _id: id });
   res.status(200).json({ success: '포스트 삭제' });
-};
+});
 
 /* 포스트 관심 등록
 post /api/posts/:id/likes
  */
-exports.like = async (req, res) => {
+exports.like = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
   // const { _id: userId } = res.locals.user;
   const userId = '61fcaa3f0eef334891fd736c';
@@ -82,12 +83,12 @@ exports.like = async (req, res) => {
   });
 
   res.status(200).json(post.likeMembers);
-};
+});
 
 /* 포스트 관심 해제
 delete /api/posts/:id/likes
  */
-exports.unlike = async (req, res) => {
+exports.unlike = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
   // const { _id: userId } = res.locals.user;
   const userId = '61fb91201312a009604af76a';
@@ -109,12 +110,12 @@ exports.unlike = async (req, res) => {
   });
 
   res.status(200).json(post.likeMembers);
-};
+});
 
 /* 가입 신청
 POST /api/posts/:id
 */
-exports.apply = async (req, res) => {
+exports.apply = asyncHandler(async (req, res) => {
   const { id: postId } = req.params;
   const { bio } = req.body;
   // const { _id: userId } = res.locals.user;
@@ -140,4 +141,41 @@ exports.apply = async (req, res) => {
   );
 
   res.status(200).json(user);
-};
+});
+
+exports.management = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const post = await Post.findById(id)
+    .populate('members')
+    .populate('preMembers');
+
+  res.status(200).json({
+    members: post.members,
+    preMembers: post.preMembers,
+  });
+});
+
+exports.allow = asyncHandler(async (req, res) => {
+  const { id: postId, userId } = req.params;
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $push: {
+        members: userId,
+      },
+      $pull: {
+        preMembers: userId,
+      },
+    },
+    { new: true }
+  )
+    .populate('members')
+    .populate('preMembers');
+
+  res.status(200).json({
+    members: post.members,
+    preMembers: post.preMembers,
+  });
+});
