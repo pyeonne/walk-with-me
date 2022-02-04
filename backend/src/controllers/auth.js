@@ -28,6 +28,7 @@ exports.signUp = asyncHandler(async (req, res) => {
   res.status(200).json({ success: '회원가입' });
 });
 
+// 로그인
 exports.signIn = async (req, res, next) => {
   try {
     passport.authenticate('local', (passportError, user, info) => {
@@ -45,7 +46,7 @@ exports.signIn = async (req, res, next) => {
         const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
         res.locals.user = { _id: user._id }; // 나중에 로그인 할때도 처리
         res.cookie('token', token);
-        res.json({ user });
+        res.status(200).json({ user });
       });
     })(req, res);
   } catch (error) {
@@ -53,10 +54,33 @@ exports.signIn = async (req, res, next) => {
   }
 };
 
+// 로그아웃
 exports.signOut = (req, res) => {
   res.cookie('token', '');
   res.status(200).send({ message: '로그아웃에 성공했습니다.' });
 };
+
+// 회원 정보 등록
+// POST /api/users/:id/profile
+// nickname, gender, area, birtYear, profileUrl, bio
+exports.update = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { nickname, gender, area, birthYear, profileUrl, bio } = req.body;
+  await User.updateOne(
+    { _id: id },
+    {
+      nickname,
+      gender,
+      area,
+      birthYear,
+      profileUrl,
+      bio,
+    }
+  );
+  res.status(200).send({ success: '정보등록에 성공했습니다.' });
+});
+// 회원 정보 조회
+// GET /api/users/:id/profile
 
 // 비밀번호 찾기
 exports.findPassword = asyncHandler(async (req, res) => {

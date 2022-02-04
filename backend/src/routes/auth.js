@@ -10,10 +10,13 @@ router.get('/google', authCtrl.google);
 router.get('/google.callback', authCtrl.googleCallback);
 router.get('/kakao', authCtrl.kakao);
 router.get('/kakao/callback', authCtrl.kakaoCallback);
+
 // 로컬 로그인
 router.post('/signup', authCtrl.signUp);
 router.post('/find-password', authCtrl.findPassword);
 router.post('/signin', authCtrl.signIn);
 router.get('/signout', authCtrl.signOut);
 
+// 회원 정보 등록
+router.post('/:id/profile', authCtrl.update);
 module.exports = router;
