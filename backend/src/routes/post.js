@@ -47,5 +47,11 @@ router.post(
 );
 
 // 회원 퇴출
-
+router.delete(
+  '/:id/management/:userId',
+  checkLogin,
+  checkObjectId,
+  checkUser,
+  postCtrl.kick
+);
 module.exports = router;
