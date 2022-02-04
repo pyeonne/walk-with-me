@@ -5,6 +5,7 @@ const generatePassword = require('../utils/generate-password');
 const nodeMailer = require('../utils/node-mailer');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const CLIENT_URL = 'http://localhost:3000';
 
 // 회원 가입
 exports.signUp = asyncHandler(async (req, res) => {
@@ -27,10 +28,6 @@ exports.signUp = asyncHandler(async (req, res) => {
   res.status(200).json({ success: '회원가입' });
 });
 
-// 로그인
-// exports.signIn = (req, res) => {
-//   res.status(200).json({ success: '로그인' });
-// };
 exports.signIn = async (req, res, next) => {
   try {
     passport.authenticate('local', (passportError, user, info) => {
@@ -46,6 +43,7 @@ exports.signIn = async (req, res, next) => {
           return;
         }
         const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+        res.locals.user = { _id: user._id }; // 나중에 로그인 할때도 처리
         res.cookie('token', token);
         res.json({ user });
       });
@@ -57,7 +55,6 @@ exports.signIn = async (req, res, next) => {
 
 exports.signOut = (req, res) => {
   res.cookie('token', '');
-  req.logout();
   res.status(200).send({ message: '로그아웃에 성공했습니다.' });
 };
 

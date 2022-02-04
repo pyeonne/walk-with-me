@@ -31,7 +31,7 @@ app.use(
 app.use(cookieParser());
 app.use(passport.initialize());
 passportSettingRouter();
-app.use(passport.session());
+// app.use(passport.session());
 app.use(
   cors({
     origin: 'http://localhost:3000',
