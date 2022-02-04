@@ -19,4 +19,6 @@ router.get('/signout', authCtrl.signOut);
 
 // 회원 정보 등록
 router.post('/:id/profile', authCtrl.update);
+// 회원 정보 조회
+router.get('/:id/profile', authCtrl.read);
 module.exports = router;

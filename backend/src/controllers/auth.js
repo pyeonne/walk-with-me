@@ -14,9 +14,9 @@ exports.signUp = asyncHandler(async (req, res) => {
   const existedUser = await User.findOne({ email });
 
   if (existedUser) {
-    const err = new Error('이미 가입되었습니다.');
+    const error = new Error('이미 가입되었습니다.');
     err.status = 401;
-    throw err;
+    throw error;
   }
 
   const hashedPassword = hashPassword(password);
@@ -79,8 +79,21 @@ exports.update = asyncHandler(async (req, res) => {
   );
   res.status(200).send({ success: '정보등록에 성공했습니다.' });
 });
+
 // 회원 정보 조회
 // GET /api/users/:id/profile
+exports.read = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const readUser = await User.findOne({ _id: id });
+  const { nickname, gender, area, birthYear, profileUrl, bio } = readUser;
+
+  if (!readUser) {
+    const error = new Error('가입되지 않은 계정입니다.');
+    error.status = 401;
+    throw error;
+  }
+  res.status(200).send({ nickname, gender, area, birthYear, profileUrl, bio });
+});
 
 // 비밀번호 찾기
 exports.findPassword = asyncHandler(async (req, res) => {
@@ -89,7 +102,7 @@ exports.findPassword = asyncHandler(async (req, res) => {
   if (!existedUser) {
     const error = new Error('가입되지 않은 계정입니다.');
     error.status = 401;
-    throw err;
+    throw error;
   }
 
   const newPassword = generatePassword();
