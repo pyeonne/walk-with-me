@@ -56,7 +56,9 @@ exports.signIn = async (req, res, next) => {
 };
 
 exports.signOut = (req, res) => {
-  res.status(200).json({ success: '로그아웃' });
+  res.cookie('token', '');
+  req.logout();
+  res.status(200).send({ message: '로그아웃에 성공했습니다.' });
 };
 
 // 비밀번호 찾기
@@ -83,4 +85,18 @@ exports.findPassword = asyncHandler(async (req, res) => {
     error.status = 421;
     throw error;
   }
+});
+
+// 구글 로그인
+exports.google = passport.authenticate('google', { scope: ['profile'] });
+exports.googleCallback = passport.authenticate('google', {
+  successRedirect: CLIENT_URL,
+  failureRedirect: '/login/failed',
+});
+
+// 카카오 로그인
+exports.kakao = passport.authenticate('kakao');
+exports.kakaoCallback = passport.authenticate('kakao', {
+  successRedirect: CLIENT_URL,
+  failureRedirect: '/login/failed',
 });

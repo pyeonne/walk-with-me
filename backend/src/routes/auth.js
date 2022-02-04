@@ -10,7 +10,6 @@ router.get('/login/success', (req, res) => {
       success: true,
       message: 'successfull',
       user: req.user,
-      //   cookies: req.cookies
     });
   }
 });
@@ -27,25 +26,11 @@ router.get('/logout', (req, res) => {
   res.redirect(CLIENT_URL);
 });
 
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
-
-router.get(
-  '/google.callback',
-  passport.authenticate('google', {
-    successRedirect: CLIENT_URL,
-    failureRedirect: '/login/failed',
-  })
-);
-
-router.get('/kakao', passport.authenticate('kakao'));
-
-router.get(
-  '/kakao/callback',
-  passport.authenticate('kakao', {
-    successRedirect: CLIENT_URL,
-    failureRedirect: '/login/failed',
-  })
-);
+// 소셜 로그인
+router.get('/google', authCtrl.google);
+router.get('/google.callback', authCtrl.googleCallback);
+router.get('/kakao', authCtrl.kakao);
+router.get('/kakao/callback', authCtrl.kakaoCallback);
 
 router.post('/signup', authCtrl.signUp);
 router.post('/find-password', authCtrl.findPassword);
