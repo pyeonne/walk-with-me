@@ -63,13 +63,17 @@ post /api/posts/:id/likes
 exports.like = async (req, res) => {
   const { id: postId } = req.params;
   // const { _id: userId } = res.locals.user;
-  const userId = '61fb91201312a009604af76a';
+  const userId = '61fcaa3f0eef334891fd736c';
 
-  const post = await Post.findByIdAndUpdate(postId, {
-    $push: {
-      likeMembers: userId,
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $push: {
+        likeMembers: userId,
+      },
     },
-  }).populate('likeMembers');
+    { new: true }
+  ).populate('likeMembers');
 
   await User.findByIdAndUpdate(userId, {
     $push: {
@@ -88,11 +92,15 @@ exports.unlike = async (req, res) => {
   // const { _id: userId } = res.locals.user;
   const userId = '61fb91201312a009604af76a';
 
-  const post = await Post.findByIdAndUpdate(postId, {
-    $pull: {
-      likeMembers: userId,
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $pull: {
+        likeMembers: userId,
+      },
     },
-  }).populate('likeMembers');
+    { new: true }
+  ).populate('likeMembers');
 
   await User.findByIdAndUpdate(userId, {
     $pull: {
@@ -107,28 +115,29 @@ exports.unlike = async (req, res) => {
 POST /api/posts/:id
 */
 exports.apply = async (req, res) => {
-  const { id } = req.params;
+  const { id: postId } = req.params;
   const { bio } = req.body;
   // const { _id: userId } = res.locals.user;
-  const userId = '61fb91201312a009604af76a';
-  await Post.updateOne(
-    { _id: id },
-    {
-      $push: {
-        preMembers: userId,
-      },
-    }
-  );
+  const userId = '61fcaa3b0eef334891fd7369';
 
-  const user = await User.findByIdAndUpdate(userId, {
+  await Post.findByIdAndUpdate(postId, {
     $push: {
-      applyPosts: {
-        _id: id,
-        bio,
-      },
+      preMembers: userId,
     },
   });
 
-  // res.status(200).json({ success: '가입 신청 완료' });
+  const user = await User.findByIdAndUpdate(
+    userId,
+    {
+      $push: {
+        applyPosts: {
+          _id: postId,
+          bio,
+        },
+      },
+    },
+    { new: true }
+  );
+
   res.status(200).json(user);
 };

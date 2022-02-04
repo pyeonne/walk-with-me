@@ -36,7 +36,6 @@ const PostSchema = new mongoose.Schema({
     {
       type: mongoose.Types.ObjectId,
       ref: 'User',
-      unique: true,
     },
   ],
   likeMembers: [
