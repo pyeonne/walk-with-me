@@ -20,11 +20,11 @@ exports.signUp = asyncHandler(async (req, res) => {
   }
 
   const hashedPassword = hashPassword(password);
-  const user = await User.create({
+  await User.create({
     email,
     password: hashedPassword,
   });
-  res.locals.user = { _id: user._id }; // 나중에 로그인 할때도 처리
+
   res.status(200).json({ success: '회원가입' });
 });
 
@@ -43,8 +43,7 @@ exports.signIn = async (req, res, next) => {
           res.json(loginError);
           return;
         }
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
-        res.locals.user = { _id: user._id }; // 나중에 로그인 할때도 처리
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
         res.cookie('token', token);
         res.status(200).json({ user });
       });

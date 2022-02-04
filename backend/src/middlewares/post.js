@@ -3,16 +3,21 @@ const { ObjectId } = mongoose.Types;
 const { Post } = require('../models');
 
 exports.checkObjectId = (req, res, next) => {
-  const { id } = req.params;
-  if (ObjectId.isValid(id)) {
+  const { id: postId, userId } = req.params;
+
+  if (ObjectId.isValid(postId) && !userId) {
     return next();
   }
 
-  const error = new Error('유효하지 않은 포스트 아이디입니다.');
+  if (ObjectId.isValid(postId) && ObjectId.isValid(userId)) {
+    return next();
+  }
+
+  const error = new Error('잘못된 접근입니다.');
   next(error);
 };
 
-exports.checkLogin = (req, res, next) => {
+exports.checkLogin = async (req, res, next) => {
   if (res.locals.user) {
     return next();
   }
@@ -21,7 +26,7 @@ exports.checkLogin = (req, res, next) => {
   next(error);
 };
 
-exports.checkUser = async (req, res, next) => {
+exports.checkOwnPost = async (req, res, next) => {
   const { id: postId } = req.params;
   const { _id: userId } = res.locals.user;
   const { author } = await Post.findById(postId).populate('author');
