@@ -100,3 +100,26 @@ exports.kakaoCallback = passport.authenticate('kakao', {
   successRedirect: CLIENT_URL,
   failureRedirect: '/login/failed',
 });
+
+// 이메일 로그인
+exports.loginSuccess = asyncHandler(async (req, res) => {
+  if (req.user) {
+    res.status(200).json({
+      success: true,
+      message: 'successfull',
+      user: req.user,
+    });
+  }
+});
+
+exports.loginFailed = asyncHandler(async (req, res) => {
+  res.status(401).json({
+    success: false,
+    message: 'failure',
+  });
+});
+
+exports.logout = asyncHandler(async (req, res) => {
+  req.logout();
+  res.redirect(CLIENT_URL);
+});
