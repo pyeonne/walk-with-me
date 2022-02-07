@@ -23,8 +23,13 @@
   height: 9rem;
 }
 
+.profile-image {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 2rem;
+}
+
 .sign-in {
-  height: 2.5rem;
   color: #1e0e62;
   background-color: white;
   border: none;
