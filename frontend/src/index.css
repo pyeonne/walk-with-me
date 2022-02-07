@@ -1,3 +1,20 @@
+/* Global */
+:root {
+  /* Color */
+  --first-color: #7eda8b;
+  --text-color: #292a2c;
+  --text-color-light: #f9fafc;
+  --body-color: #f0f1f3;
+}
+
+/* Variables Dark Theme */
+body.darkTheme {
+  --first-color: #b2f2bb;
+  --text-color: #f9fafc;
+  --text-color-light: #333;
+  --body-color: #333;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0-modified | 20110126
    License: none (public domain)
@@ -454,7 +471,7 @@ body {
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f1f3;
+  background-color: var(--body-color);
 }
 
 code {

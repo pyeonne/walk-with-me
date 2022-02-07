@@ -2,7 +2,7 @@ import React from 'react';
 import Arrow from './icons/Arrow.jsx';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ currPage, pageCount, onClickPage }) => {
+const Pagination = ({ currPage, pageCount, onClickPage, isDark }) => {
   const MAX_PAGE_COUNT = 9;
 
   const getPageNumbers = (currPage, total) => {
@@ -24,7 +24,7 @@ const Pagination = ({ currPage, pageCount, onClickPage }) => {
         onClick={() => currPage > 0 && onClickPage(currPage - 1)}
         disabled={currPage <= 0}
       >
-        <Arrow />
+        <Arrow isDark={isDark} />
       </button>
       {getPageNumbers(currPage, pageCount).map((page) => {
         return (
@@ -44,7 +44,7 @@ const Pagination = ({ currPage, pageCount, onClickPage }) => {
         flip='true'
         disabled={currPage >= pageCount - 1}
       >
-        <Arrow />
+        <Arrow isDark={isDark} />
       </button>
     </div>
   );
