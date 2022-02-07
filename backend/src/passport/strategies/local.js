@@ -11,12 +11,12 @@ const local = new LocalStrategy(config, async (email, password, done) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      done(null, false, { message: '가입되지 않은 회원입니다.' });
+      done(null, false, { message: '이메일 또는 비밀번호를 확인해주세요.' });
       return;
     }
 
     if (user.password !== hashPassword(password)) {
-      done(null, false, { message: '비밀번호를 확인해주세요.' });
+      done(null, false, { message: '이메일 또는 비밀번호를 확인해주세요.' });
       return;
     }
 

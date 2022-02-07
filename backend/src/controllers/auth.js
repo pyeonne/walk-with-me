@@ -1,11 +1,10 @@
-const { User } = require('../models/index');
+const { User } = require('../models');
 const asyncHandler = require('../utils/async-handler');
 const hashPassword = require('../utils/hash-password');
 const generatePassword = require('../utils/generate-password');
 const nodeMailer = require('../utils/node-mailer');
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const CLIENT_URL = 'http://localhost:3000';
+const axios = require('axios');
 
 // 회원 가입
 exports.signUp = asyncHandler(async (req, res) => {
@@ -14,27 +13,33 @@ exports.signUp = asyncHandler(async (req, res) => {
   const existedUser = await User.findOne({ email });
 
   if (existedUser) {
-    const error = new Error('이미 가입되었습니다.');
+    const error = new Error('중복된 이메일입니다.');
     error.status = 401;
     throw error;
   }
 
   const hashedPassword = hashPassword(password);
-  await User.create({
+  const user = await User.create({
     email,
     password: hashedPassword,
   });
 
-  res.status(200).json({ success: '회원가입' });
+  const token = user.generateToken();
+  res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: process.env.EXPIRE_TIME,
+  });
+
+  res.status(200).json(user);
 });
 
 // 로그인
 exports.signIn = async (req, res, next) => {
   try {
-    passport.authenticate('local', (passportError, user, info) => {
+    passport.authenticate('local', (passportError, user, error) => {
       // 인증이 실패했거나 유저 데이터가 없으면 에러
       if (passportError || !user) {
-        res.status(400).json({ message: info.message });
+        res.status(400).json({ failure: error.message });
         return;
       }
       // user 데이터를 통해 로그인 진행
@@ -43,9 +48,14 @@ exports.signIn = async (req, res, next) => {
           res.json(loginError);
           return;
         }
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-        res.cookie('token', token);
-        res.status(200).json({ user });
+
+        const token = user.generateToken();
+        res.cookie('token', token, {
+          httpOnly: true,
+          maxAge: process.env.EXPIRE_TIME,
+        });
+
+        res.status(200).json(user);
       });
     })(req, res);
   } catch (error) {
@@ -56,27 +66,28 @@ exports.signIn = async (req, res, next) => {
 // 로그아웃
 exports.signOut = (req, res) => {
   res.cookie('token', '');
-  res.status(200).send({ message: '로그아웃에 성공했습니다.' });
+  res.status(200).json({ success: '로그아웃 성공' });
 };
 
 // 회원 정보 등록
 // POST /api/users/:id/profile
-// nickname, gender, area, birtYear, profileUrl, bio
+// nickname, gender, area, birtYear, profileUrl
 exports.update = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { nickname, gender, area, birthYear, profileUrl, bio } = req.body;
-  await User.updateOne(
-    { _id: id },
+  const { nickname, gender, area, birthYear, profileUrl } = req.body;
+  const user = await User.findByIdAndUpdate(
+    id,
     {
       nickname,
       gender,
       area,
       birthYear,
       profileUrl,
-      bio,
-    }
+    },
+    { new: true }
   );
-  res.status(200).send({ success: '정보등록에 성공했습니다.' });
+
+  res.status(200).json(user);
 });
 
 // 회원 정보 조회
@@ -84,14 +95,15 @@ exports.update = asyncHandler(async (req, res) => {
 exports.read = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const readUser = await User.findOne({ _id: id });
-  const { nickname, gender, area, birthYear, profileUrl, bio } = readUser;
 
   if (!readUser) {
     const error = new Error('가입되지 않은 계정입니다.');
-    error.status = 401;
+    res.status(401);
     throw error;
   }
-  res.status(200).send({ nickname, gender, area, birthYear, profileUrl, bio });
+
+  const { nickname, gender, area, birthYear, profileUrl } = readUser;
+  res.status(200).json({ nickname, gender, area, birthYear, profileUrl });
 });
 
 // 비밀번호 찾기
@@ -100,7 +112,7 @@ exports.findPassword = asyncHandler(async (req, res) => {
   const existedUser = await User.findOne({ email });
   if (!existedUser) {
     const error = new Error('가입되지 않은 계정입니다.');
-    error.status = 401;
+    res.status(401);
     throw error;
   }
 
@@ -115,7 +127,7 @@ exports.findPassword = asyncHandler(async (req, res) => {
     res.json({ success: '메일이 발송되었습니다.' });
   } catch (err) {
     const error = new Error('메일 발송에 실패했습니다.');
-    error.status = 421;
+    res.status(421);
     throw error;
   }
 });
@@ -132,38 +144,47 @@ exports.changePassword = asyncHandler(async (req, res) => {
 });
 
 // 구글 로그인
-exports.google = passport.authenticate('google', { scope: ['profile'] });
+exports.google = passport.authenticate('google', {
+  scope: ['email', 'profile'],
+});
 exports.googleCallback = passport.authenticate('google', {
-  successRedirect: CLIENT_URL,
-  failureRedirect: '/login/failed',
+  failureRedirect: '/signin',
 });
 
 // 카카오 로그인
 exports.kakao = passport.authenticate('kakao');
 exports.kakaoCallback = passport.authenticate('kakao', {
-  successRedirect: CLIENT_URL,
-  failureRedirect: '/login/failed',
+  failureRedirect: '/signin',
 });
 
-// 이메일 로그인
-exports.loginSuccess = asyncHandler(async (req, res) => {
-  if (req.user) {
-    res.status(200).json({
-      success: true,
-      message: 'successfull',
-      user: req.user,
-    });
-  }
-});
-
-exports.loginFailed = asyncHandler(async (req, res) => {
-  res.status(401).json({
-    success: false,
-    message: 'failure',
+exports.setCookie = (req, res) => {
+  res.cookie('token', req.user.token, {
+    httpOnly: true,
+    maxAge: process.env.EXPIRE_TIME,
   });
-});
+  res.cookie('logout_token', req.user.logoutToken, {
+    httpOnly: true,
+    maxAge: process.env.EXPIRE_TIME,
+  });
+  res.redirect('http://localhost:3000');
+};
 
-exports.logout = asyncHandler(async (req, res) => {
-  req.logout();
-  res.redirect(CLIENT_URL);
-});
+exports.oAuthLogout = async (req, res) => {
+  try {
+    const ACCESS_TOKEN = req.cookies['logout_token'];
+    await axios({
+      method: 'post',
+      url: 'https://kapi.kakao.com/v1/user/logout',
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    });
+    res.cookie('token', '');
+    res.cookie('logout_token', '');
+  } catch (error) {
+    console.error(error);
+    res.json(error);
+  }
+
+  res.redirect('http://localhost:3000');
+};

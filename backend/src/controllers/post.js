@@ -5,8 +5,8 @@ const asyncHandler = require('../utils/async-handler');
 GET /api/posts/:id
  */
 exports.read = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const post = await Post.findById(id);
+  const { _id } = res.locals.post;
+  const post = await Post.findOne({ _id }).populate('author');
   res.status(200).json(post);
 });
 
@@ -19,7 +19,7 @@ exports.list = asyncHandler(async (req, res) => {
   const { age, category, area } = queryObj;
 
   if (Object.keys(queryObj).length === 0) {
-    const posts = await Post.find();
+    const posts = await Post.find().populate('author');
     res.status(200).json(posts);
     return;
   }
@@ -44,8 +44,8 @@ PUT /api/posts/:id
  */
 exports.update = asyncHandler(async (req, res) => {
   const data = req.body;
-  const { id } = req.params;
-  await Post.updateOne({ _id: id }, data);
+  const { _id } = res.locals.post;
+  await Post.updateOne({ _id }, data);
   res.status(200).json({ success: '포스트 수정' });
 });
 
@@ -53,17 +53,39 @@ exports.update = asyncHandler(async (req, res) => {
 DELETE /api/posts/:id
  */
 exports.delete = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  await Post.deleteOne({ _id: id });
+  const { _id } = res.locals.post;
+  await Post.deleteOne({ _id });
   res.status(200).json({ success: '포스트 삭제' });
+});
+
+/* 모집 상태
+PUT /api/posts/:id/status
+*/
+exports.changeStatus = asyncHandler(async (req, res) => {
+  const { _id } = res.locals.post;
+  const post = await Post.findByIdAndUpdate(
+    _id,
+    [{ $set: { isRecruiting: { $eq: [false, '$isRecruiting'] } } }],
+    { new: true }
+  );
+
+  res.status(200).json({
+    isRecruiting: post.isRecruiting,
+  });
 });
 
 /* 포스트 관심 등록
 post /api/posts/:id/likes
  */
 exports.like = asyncHandler(async (req, res) => {
-  const { id: postId } = req.params;
+  const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
+
+  await User.findByIdAndUpdate(userId, {
+    $push: {
+      likePosts: postId,
+    },
+  });
 
   const post = await Post.findByIdAndUpdate(
     postId,
@@ -75,12 +97,6 @@ exports.like = asyncHandler(async (req, res) => {
     { new: true }
   ).populate('likeMembers');
 
-  await User.findByIdAndUpdate(userId, {
-    $push: {
-      likes: postId,
-    },
-  });
-
   res.status(200).json(post.likeMembers);
 });
 
@@ -88,8 +104,14 @@ exports.like = asyncHandler(async (req, res) => {
 delete /api/posts/:id/likes
  */
 exports.unlike = asyncHandler(async (req, res) => {
-  const { id: postId } = req.params;
+  const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
+
+  await User.findByIdAndUpdate(userId, {
+    $pull: {
+      likePosts: postId,
+    },
+  });
 
   const post = await Post.findByIdAndUpdate(
     postId,
@@ -101,20 +123,14 @@ exports.unlike = asyncHandler(async (req, res) => {
     { new: true }
   ).populate('likeMembers');
 
-  await User.findByIdAndUpdate(userId, {
-    $pull: {
-      likes: postId,
-    },
-  });
-
   res.status(200).json(post.likeMembers);
 });
 
 /* 가입 신청
-POST /api/posts/:id
+POST /api/posts/:id/apply
 */
 exports.apply = asyncHandler(async (req, res) => {
-  const { id: postId } = req.params;
+  const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
   const { bio } = req.body;
 
@@ -140,10 +156,33 @@ exports.apply = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-exports.management = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+/* 가입 신청 취소
+POST /api/posts/:id/cancel
+*/
+exports.cancel = asyncHandler(async (req, res) => {
+  const { _id: postId } = res.locals.post;
+  const { _id: userId } = res.locals.user;
+  const { bio } = req.body;
 
-  const post = await Post.findById(id)
+  await Post.findByIdAndUpdate(postId, {
+    $pull: {
+      preMembers: userId,
+    },
+  });
+
+  const user = await User.findById(userId);
+  await user.deleteApplyPost(postId);
+
+  res.status(200).json(user);
+});
+
+/* 회원 관리
+GET /api/posts/:id/management
+*/
+exports.management = asyncHandler(async (req, res) => {
+  const { _id } = res.locals.post;
+
+  const post = await Post.findOne({ _id })
     .populate('members')
     .populate('preMembers');
 
@@ -153,8 +192,21 @@ exports.management = asyncHandler(async (req, res) => {
   });
 });
 
+/* 회원 관리 수락
+POST /api/posts/:id/management/:userId/allow
+*/
 exports.allow = asyncHandler(async (req, res) => {
-  const { id: postId, userId } = req.params;
+  const { _id: postId } = res.locals.post;
+  const { _id: userId } = res.locals.user;
+
+  const user = await User.findById(userId);
+  await user.deleteApplyPost(postId);
+
+  await User.findByIdAndUpdate(userId, {
+    $push: {
+      joinedPosts: postId,
+    },
+  });
 
   const post = await Post.findByIdAndUpdate(
     postId,
@@ -177,8 +229,15 @@ exports.allow = asyncHandler(async (req, res) => {
   });
 });
 
+/* 회원 관리 거절
+POST /api/posts/:id/management/:userId/deny
+*/
 exports.deny = asyncHandler(async (req, res) => {
-  const { id: postId, userId } = req.params;
+  const { _id: postId } = res.locals.post;
+  const { _id: userId } = res.locals.user;
+
+  const user = await User.findById(userId);
+  await user.deleteApplyPost(postId);
 
   const post = await Post.findByIdAndUpdate(
     postId,
@@ -195,8 +254,18 @@ exports.deny = asyncHandler(async (req, res) => {
   });
 });
 
+/* 회원 관리 퇴출
+DELETE /api/posts/:id/management/:userId/kick
+*/
 exports.kick = asyncHandler(async (req, res) => {
-  const { id: postId, userId } = req.params;
+  const { _id: postId } = res.locals.post;
+  const { _id: userId } = res.locals.user;
+
+  await User.findByIdAndUpdate(userId, {
+    $pull: {
+      joinedPosts: postId,
+    },
+  });
 
   const post = await Post.findByIdAndUpdate(
     postId,

@@ -1,50 +1,53 @@
 const { Router } = require('express');
 const postCtrl = require('../controllers/post');
-const { checkOwnPost } = require('../middlewares/post');
-const { checkLogin } = require('../middlewares/auth');
+const {
+  checkOwnPost,
+  checkPostId,
+  checkPostExist,
+} = require('../middlewares/post');
+const { checkLogin, checkUserId } = require('../middlewares/auth');
 
 const router = Router();
+const postRouter = Router();
+const manageRouter = Router();
+
+router.use('/:id', checkPostId, checkPostExist, postRouter);
+router.use(
+  '/:id/management/:userId',
+  checkUserId,
+  checkLogin,
+  checkOwnPost,
+  manageRouter
+);
 
 // 특정 포스트
-router.get('/:id', postCtrl.read);
+postRouter.get('/', postCtrl.read);
 
 // 목록, 등록, 수정, 삭제
 router.get('/', postCtrl.list);
 router.post('/', checkLogin, postCtrl.create);
-router.put('/:id', checkOwnPost, postCtrl.update);
-router.delete('/:id', checkOwnPost, postCtrl.delete);
+postRouter.put('/', checkLogin, checkOwnPost, postCtrl.update);
+postRouter.delete('/', checkLogin, checkOwnPost, postCtrl.delete);
+
+// 모집 상태 변경
+postRouter.put('/status', checkLogin, checkOwnPost, postCtrl.changeStatus);
 
 // 관심 등록, 해제
-router.post('/:id/likes', checkLogin, postCtrl.like);
-router.delete('/:id/likes', checkLogin, postCtrl.unlike);
+postRouter.post('/likes', checkLogin, postCtrl.like);
+postRouter.delete('/likes', checkLogin, postCtrl.unlike);
 
-// 가입 신청
-router.post('/:id', checkLogin, postCtrl.apply);
+// 가입 신청, 취소
+postRouter.post('/apply', checkLogin, postCtrl.apply);
+postRouter.post('/cancel', checkLogin, postCtrl.cancel);
 
 // 회원 관리 페이지
-router.get('/:id/management', checkLogin, checkOwnPost, postCtrl.management);
+postRouter.get('/management', checkLogin, checkOwnPost, postCtrl.management);
 
 // 가입 신청 수락, 거절
-router.post(
-  '/:id/management/:userId/allow',
-  checkLogin,
-  checkOwnPost,
-  postCtrl.allow
-);
-
-router.post(
-  '/:id/management/:userId/deny',
-  checkLogin,
-  checkOwnPost,
-  postCtrl.deny
-);
+manageRouter.post('/allow', postCtrl.allow);
+manageRouter.post('/deny', postCtrl.deny);
 
 // 회원 퇴출
-router.delete(
-  '/:id/management/:userId',
-  checkLogin,
-  checkOwnPost,
-  postCtrl.kick
-);
+manageRouter.delete('/', postCtrl.kick);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -20,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   gender: String,
   birthYear: Number,
   area: String,
-  likes: [
+  likePosts: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'Post',
@@ -37,6 +38,33 @@ const UserSchema = new mongoose.Schema({
       },
     },
   ],
+  joinedPosts: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'Post',
+    },
+  ],
+  kakaoId: Number,
 });
+
+UserSchema.methods.generateToken = function () {
+  const token = jwt.sign(
+    {
+      _id: this.id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.EXPIRE_TIME,
+    }
+  );
+  return token;
+};
+
+UserSchema.methods.deleteApplyPost = async function (postId) {
+  this.applyPosts = this.applyPosts.filter(
+    (post) => post._id.toString() !== postId.toString()
+  );
+  await this.save();
+};
 
 module.exports = UserSchema;
