@@ -1,18 +1,11 @@
-import { useState } from 'react';
-import './app.module.css';
-import Tab from './components/Tab/Tab';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
-  const [currTab, setCurTab] = useState('소개');
-
-  const handleClickTab = (tab) => {
-    setCurrPage(tab);
-  };
-
   return (
-    <div className='App'>
-      <Tab currTab={currTab} onClick={handleClickTab} />
-    </div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+    </Routes>
   );
 }
 

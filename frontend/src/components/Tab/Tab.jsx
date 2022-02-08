@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './tab.module.css';
+import styles from './Tab.module.css';
 
 const Tab = ({ currTab, onClick }) => {
   const tabs = ['소개', '채팅방', '회원 관리'];
@@ -7,13 +7,14 @@ const Tab = ({ currTab, onClick }) => {
     <div className={styles.container}>
       {tabs.map((tab, i) => {
         return (
-          <p
+          <span
+            className={styles.tab}
             key={`${tab}-${i}`}
-            active={currTab === tab}
+            active={(currTab === tab).toString()}
             onClick={() => onClick(tab)}
           >
             {tab}
-          </p>
+          </span>
         );
       })}
     </div>
