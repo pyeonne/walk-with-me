@@ -8,7 +8,7 @@ const Header = (props) => {
   return (
     <header className={styles['nav-bar']}>
       <div className={styles.wrapper}>
-        <Logo className={styles.logo} whatPage='header' />
+        <Logo className={styles.logo} type='row' />
         <div className={styles.right}>
           {props.isLoggedIn ? (
             <img className={styles['profile-image']} src={profile} />
