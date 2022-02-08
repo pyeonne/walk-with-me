@@ -1,4 +1,5 @@
 * {
+  box-sizing: border-box;
   font-family: 'SUIT', sans-serif;
 }
 
@@ -9,6 +10,7 @@
   --text-color: #292a2c;
   --text-color-light: #f9fafc;
   --body-color: #f0f1f3;
+  --line-color: #e1e2e4;
 }
 
 /* Variables Dark Theme */

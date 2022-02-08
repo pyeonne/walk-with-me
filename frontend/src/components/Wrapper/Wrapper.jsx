@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './Wrapper.module.css';
 
-const Wrapper = ({ width, height, display, justifyContent, alignItems }) => {
+const Wrapper = ({ props, children }) => {
   return (
-    <div
-      style={{ width, height, display, justifyContent, alignItems }}
-      className={styles.wrapper}
-    ></div>
+    <div style={{ ...props }} className={styles.wrapper}>
+      {children}
+    </div>
   );
 };
 export default Wrapper;

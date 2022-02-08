@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Dropdown.module.css';
 
-const Dropdown = ({ type }) => {
+const Dropdown = (props) => {
   const optionsObj = {
     status: [
       { value: 'ing', text: '모집 중' },
@@ -24,12 +24,21 @@ const Dropdown = ({ type }) => {
       { value: '50', text: '50대' },
       { value: '60', text: '60대' },
     ],
+    gender: [
+      { value: '', text: '성별' },
+      { value: '남', text: '남자' },
+      { value: '여', text: '여자' },
+    ],
   };
 
-  const options = optionsObj[type];
+  const options = optionsObj[props.type];
 
   return (
-    <select name='filter' className={`${classes.select} ${classes[type]}`}>
+    <select
+      name='filter'
+      style={{ width: props.width, height: props.heith }}
+      className={`${classes.select} ${classes[props.type]}`}
+    >
       {options.map((option, idx) => (
         <option key={idx} value={option.value}>
           {option.text}

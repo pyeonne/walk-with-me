@@ -24,7 +24,6 @@ const Map = (props) => {
           position: coords,
         });
 
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
         marker.setMap(map);
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
