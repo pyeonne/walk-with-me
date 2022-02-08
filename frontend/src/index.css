@@ -19,3 +19,7 @@ body.darkTheme {
   --text-color-light: #333;
   --body-color: #333;
 }
+
+html {
+  font-size: 62.5%;
+}
