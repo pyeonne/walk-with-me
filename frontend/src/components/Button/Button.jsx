@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 import kakao from './images/kakao.svg';
 import google from './images/google.svg';
-const BtnWrap = styled.div`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-`;
 
 const StyledButton = styled.button`
   display: flex;
@@ -40,7 +33,7 @@ const BtnImage = styled.i`
 const Button = (props) => {
   const image = props.image;
   return (
-    <BtnWrap>
+    <>
       {image ? (
         <StyledButton
           width={props.width}
@@ -55,9 +48,19 @@ const Button = (props) => {
           {props.text}
         </StyledButton>
       ) : (
-        <StyledButton>{props.text}</StyledButton>
+        <StyledButton
+          width={props.width}
+          height={props.height}
+          bg={props.bg}
+          color={props.color}
+          radius={props.radius}
+          ftsize={props.ftsize}
+          border={props.border}
+        >
+          {props.text}
+        </StyledButton>
       )}
-    </BtnWrap>
+    </>
   );
 };
 
