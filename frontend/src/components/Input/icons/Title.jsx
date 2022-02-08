@@ -1,4 +1,4 @@
-const Email = () => {
+const Title = () => {
   return (
     <i>
       <svg
@@ -17,4 +17,4 @@ const Email = () => {
   );
 };
 
-export default Email;
+export default Title;

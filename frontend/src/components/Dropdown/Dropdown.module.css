@@ -27,3 +27,8 @@
   background-image: url('./images/age.svg'), url('./images/arrow_down.svg');
   background-position: left 1rem center, right 1rem center;
 }
+
+.select.gender {
+  background-image: url('./images/age.svg'), url('./images/arrow_down.svg');
+  background-position: left 1rem center, right 1rem center;
+}

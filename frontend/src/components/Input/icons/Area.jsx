@@ -1,4 +1,4 @@
-const Email = () => {
+const Area = () => {
   return (
     <i>
       <svg
@@ -18,4 +18,4 @@ const Email = () => {
   );
 };
 
-export default Email;
+export default Area;
