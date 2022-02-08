@@ -1,13 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
-import SignUp from './pages/auth/SignUp';
+import Map from './components/Map/Map.jsx';
+
 function App() {
-  return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/signUp' element={<SignUp />} />
-    </Routes>
-  );
+  return <Map area='매탄3동' />;
 }
 
 export default App;

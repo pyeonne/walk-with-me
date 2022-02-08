@@ -1,0 +1,26 @@
+.map-container {
+  width: 78rem;
+  height: 44.4rem;
+  border-top: 0.1rem #efefef solid;
+}
+
+.map-text {
+  font-size: 1.6rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+
+  display: flex;
+}
+
+.label {
+  color: #666666;
+  margin-right: 1.8rem;
+}
+
+.area {
+  font-weight: bold;
+}
+
+.map {
+  height: 38.9rem;
+}
