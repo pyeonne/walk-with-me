@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './Header.module.css';
-import logo from './images/logo.svg';
 import darkMode from './images/darkMode.svg';
 import profile from './images/profile.svg';
+import Logo from './Logo.jsx';
 
 const Header = (props) => {
   return (
     <header className={styles['nav-bar']}>
       <div className={styles.wrapper}>
-        <img className={styles.logo} src={logo} />
+        <Logo className={styles.logo} whatPage='header' />
         <div className={styles.right}>
           {props.isLoggedIn ? (
             <img className={styles['profile-image']} src={profile} />
