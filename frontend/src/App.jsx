@@ -1,20 +1,11 @@
-import Button from './components/Button/Button';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <div className='App'>
-      <Button
-        // image='google'
-        text='+'
-        ftsize='2rem'
-        width='20rem'
-        height='20rem'
-        radius='50rem'
-        bg='#ffffff'
-        color='#66666'
-        border='1px solid #cccccc'
-      />
-    </div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+    </Routes>
   );
 }
 
