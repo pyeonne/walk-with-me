@@ -1,0 +1,42 @@
+.logoArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: block;
+}
+.inputArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+/* .inputArea input {
+  margin-bottom: 1rem;
+} */
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+.footer p {
+  font-size: 1.6rem;
+}
+
+.error {
+  font-size: 1rem;
+  color: red;
+}
+.success {
+  font-size: 1rem;
+  color: #3498db;
+}
+.btnAbled {
+  background-color: #7eda8b;
+}
+.btnDisabled {
+  background-color: #cccccc;
+}

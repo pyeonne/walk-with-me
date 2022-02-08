@@ -85,6 +85,10 @@ const Input = (props) => {
         name={props.name}
         type={props.type}
         placeholder={props.placeholder}
+        autoComplete={props.autoComplete}
+        value={props.value}
+        onChange={props.onChange}
+        required={props.required}
       />
     </InputWrapper>
   );

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import kakao from './images/kakao.svg';
 import google from './images/google.svg';
 
@@ -13,6 +13,11 @@ const StyledButton = styled.button`
   border-radius: ${(props) => props.radius || '0.4rem'};
   color: ${(props) => props.color || '#ffffff'};
   font-size: ${(props) => props.ftsize || '1.6rem'};
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: #cccccc;
+    `}
   cursor: pointer;
 `;
 
@@ -43,6 +48,8 @@ const Button = (props) => {
           radius={props.radius}
           ftsize={props.ftsize}
           border={props.border}
+          disabled={props.disabled}
+          onClick={props.onClick}
         >
           <BtnImage image={props.image} />
           {props.text}
@@ -56,6 +63,8 @@ const Button = (props) => {
           radius={props.radius}
           ftsize={props.ftsize}
           border={props.border}
+          disabled={props.disabled}
+          onClick={props.onClick}
         >
           {props.text}
         </StyledButton>
