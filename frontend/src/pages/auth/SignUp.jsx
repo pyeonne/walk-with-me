@@ -83,10 +83,9 @@ const SignUp = () => {
         type: CHANGE_USER_INFO,
         payload: response.data,
       });
-      navigate('/');
+      navigate('/profile-register');
     } catch (err) {
       alert('중복된 이메일입니다.');
-      // console.log('error', err.failure);
     }
   };
   const onSubmitHandler = (event) => {

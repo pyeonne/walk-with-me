@@ -1,10 +1,9 @@
 import { createContext, useReducer } from 'react';
-import { CHANGE_USER_INFO } from './actionTypes';
+import { ADD_POSTS, CHANGE_USER_INFO } from './actionTypes';
 
 const initialState = {
-  auth: {
-    userInfo: null,
-  },
+  user: null,
+  posts: [],
 };
 
 const Context = createContext({});
@@ -14,10 +13,12 @@ const reducer = (state = initialState, action) => {
     case CHANGE_USER_INFO:
       return {
         ...state,
-        auth: {
-          ...state.auth,
-          userInfo: action.payload,
-        },
+        user: action.payload,
+      };
+    case ADD_POSTS:
+      return {
+        ...state,
+        posts: action.payload,
       };
     default:
       return state;
