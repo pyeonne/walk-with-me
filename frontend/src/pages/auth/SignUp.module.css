@@ -1,0 +1,28 @@
+.logoArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+.footer p {
+  font-size: 1.6rem;
+}
+/* 메세지 공간 */
+.txtArea {
+  margin: 0 0 1rem 1.2rem;
+}
+/* 에러 메세지 */
+.error {
+  font-size: 1rem;
+  color: red;
+}
+/* 유효성 통과시 메세지 */
+.success {
+  font-size: 1rem;
+  color: #3498db;
+}
