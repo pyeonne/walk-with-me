@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import classes from './Dropdown.module.css';
 
-const Dropdown = (props) => {
+const Dropdown = forwardRef((props, ref) => {
   const optionsObj = {
     status: [
       { value: 'ing', text: '모집 중' },
@@ -36,8 +36,9 @@ const Dropdown = (props) => {
   return (
     <select
       name='filter'
-      style={{ width: props.width, height: props.heith }}
+      style={{ width: props.width, height: props.height }}
       className={`${classes.select} ${classes[props.type]}`}
+      ref={ref}
     >
       {options.map((option, idx) => (
         <option key={idx} value={option.value}>
@@ -46,6 +47,6 @@ const Dropdown = (props) => {
       ))}
     </select>
   );
-};
+});
 
 export default Dropdown;

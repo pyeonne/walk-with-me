@@ -5,6 +5,7 @@ import Area from './icons/Area';
 import Title from './icons/Title';
 import Nickname from './icons/Nickname';
 import BirthYear from './icons/BirthYear';
+import React, { forwardRef } from 'react';
 
 const InputWrapper = styled.div`
   position: relative;
@@ -43,7 +44,7 @@ const StyledTextArea = styled.textarea`
   line-height: 1.4;
 `;
 
-const Input = (props) => {
+const Input = forwardRef((props, ref) => {
   if (props.name === 'content') {
     return (
       <InputWrapper>
@@ -85,9 +86,10 @@ const Input = (props) => {
         name={props.name}
         type={props.type}
         placeholder={props.placeholder}
+        ref={ref}
       />
     </InputWrapper>
   );
-};
+});
 
 export default Input;

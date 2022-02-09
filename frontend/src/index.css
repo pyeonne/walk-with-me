@@ -7,6 +7,7 @@
 :root {
   /* Color */
   --first-color: #7eda8b;
+  --first-color-light: #d0f3d5;
   --text-color: #292a2c;
   --text-color-light: #f9fafc;
   --body-color: #f0f1f3;
