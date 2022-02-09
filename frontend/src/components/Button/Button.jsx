@@ -28,7 +28,11 @@ const BtnImage = styled.i`
     align-items: center;
     content: '';
     background-image: ${(props) =>
-      props.image === 'google' ? `url(${google})` : `url(${kakao})`};
+      props.image === 'google'
+        ? `url(${google})`
+        : props.image === 'kakao'
+        ? `url(${kakao})`
+        : `url(${props.image})`};
     background-repeat: no-repeat;
     background-size: cover;
     width: 24px;
@@ -36,37 +40,18 @@ const BtnImage = styled.i`
     margin-right: 2rem;
   }
 `;
-const Button = (props) => {
+const Button = ({ children, ...props }) => {
   const image = props.image;
   return (
     <>
       {image ? (
-        <StyledButton
-          width={props.width}
-          height={props.height}
-          bg={props.bg}
-          color={props.color}
-          radius={props.radius}
-          ftsize={props.ftsize}
-          border={props.border}
-          disabled={props.disabled}
-          onClick={props.onClick}
-        >
+        <StyledButton {...props}>
           <BtnImage image={props.image} />
           {props.text}
         </StyledButton>
       ) : (
-        <StyledButton
-          width={props.width}
-          height={props.height}
-          bg={props.bg}
-          color={props.color}
-          radius={props.radius}
-          ftsize={props.ftsize}
-          border={props.border}
-          disabled={props.disabled}
-          onClick={props.onClick}
-        >
+        <StyledButton {...props}>
+          {children}
           {props.text}
         </StyledButton>
       )}
