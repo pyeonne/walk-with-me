@@ -14,7 +14,7 @@ const InputWrapper = styled.div`
     height: 24px;
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: 2rem;
     transform: translateY(-50%);
   }
   input,
@@ -34,7 +34,7 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input`
   width: ${(props) => props.width || '50rem'};
   height: ${(props) => props.height || '6rem'};
-  padding-left: 4rem;
+  padding-left: 6rem;
 `;
 
 const StyledTextArea = styled.textarea`
