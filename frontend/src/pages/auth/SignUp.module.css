@@ -19,10 +19,13 @@
 /* 에러 메세지 */
 .error {
   font-size: 1rem;
-  color: red;
+  color: var(--error-color);
 }
 /* 유효성 통과시 메세지 */
 .success {
   font-size: 1rem;
-  color: #3498db;
+  color: var(--success-color);
+}
+.logtxt {
+  color: var(--first-color);
 }

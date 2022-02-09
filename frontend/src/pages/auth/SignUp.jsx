@@ -2,15 +2,19 @@ import Wrapper from '../../components/Wrapper/Wrapper';
 import Button from '../../components/Button/Button';
 import Logo from '../../components/Header/Logo';
 import Input from '../../components/Input/Input';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from './SignUp.module.css';
 import axios from 'axios';
+import { Context } from '../../context';
+import { CHANGE_USER_INFO } from '../../context/actionTypes';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
+  const [state, dispatch] = useContext(Context);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const navigate = useNavigate();
   // 유효성
   const [chkEmail, setChkEmail] = useState(false);
   const [chkPassword, setChkPassword] = useState(false);
@@ -69,15 +73,20 @@ const SignUp = () => {
   const apiCall = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/auth/signup',
+        'http://localhost:4000/api/auth/signup',
         {
           email,
           password,
         }
       );
-      console.log(response);
+      dispatch({
+        type: CHANGE_USER_INFO,
+        payload: response.data,
+      });
+      navigate('/');
     } catch (err) {
-      console.log('error', err);
+      alert('중복된 이메일입니다.');
+      // console.log('error', err.failure);
     }
   };
   const onSubmitHandler = (event) => {
@@ -91,7 +100,7 @@ const SignUp = () => {
           <Logo type='col' />
         </div>
         <article className={styles.content}>
-          <form action='' method='POST' onSubmit={onSubmitHandler}>
+          <form method='POST' onSubmit={onSubmitHandler}>
             <Input
               type='email'
               name='email'
@@ -151,7 +160,12 @@ const SignUp = () => {
             />
           </form>
           <div className={styles.footer}>
-            <p>이미 계정이 있으신가요? 로그인하기</p>
+            <p>
+              이미 계정이 있으신가요?{' '}
+              <Link to='/signin' className={styles.logtxt}>
+                로그인하기
+              </Link>
+            </p>
           </div>
         </article>
       </div>
