@@ -8,6 +8,7 @@ import BirthYear from './icons/BirthYear';
 
 const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: ${(props) => props.marginBottom || '1rem'};
   i {
     width: 24px;
     height: 24px;
@@ -46,7 +47,7 @@ const StyledTextArea = styled.textarea`
 const Input = (props) => {
   if (props.name === 'content') {
     return (
-      <InputWrapper>
+      <InputWrapper style={{ marginBottom: props.marginBottom }}>
         <StyledTextArea
           style={{ width: props.width, height: props.height }}
           placeholder={props.placeholder}
@@ -57,7 +58,7 @@ const Input = (props) => {
 
   if (props.name === 'birthyear') {
     return (
-      <InputWrapper>
+      <InputWrapper style={{ marginBottom: props.marginBottom }}>
         <BirthYear />
         <StyledInput
           style={{ width: props.width, height: props.height }}
@@ -73,7 +74,7 @@ const Input = (props) => {
   }
 
   return (
-    <InputWrapper>
+    <InputWrapper style={{ marginBottom: props.marginBottom }}>
       {props.name === 'email' && <Email />}
       {props.name === 'password' && <Password />}
       {props.name === 'confirmPassword' && <Password />}

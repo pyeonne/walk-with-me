@@ -2,22 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 4rem;
 }
 
-.content {
-  display: block;
-}
-.inputArea {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4rem;
-}
-
-/* .inputArea input {
-  margin-bottom: 1rem;
-} */
 .footer {
   margin-top: 2rem;
   text-align: center;
@@ -25,18 +12,17 @@
 .footer p {
   font-size: 1.6rem;
 }
-
+/* 메세지 공간 */
+.txtArea {
+  margin: 0 0 1rem 1.2rem;
+}
+/* 에러 메세지 */
 .error {
   font-size: 1rem;
   color: red;
 }
+/* 유효성 통과시 메세지 */
 .success {
   font-size: 1rem;
   color: #3498db;
-}
-.btnAbled {
-  background-color: #7eda8b;
-}
-.btnDisabled {
-  background-color: #cccccc;
 }

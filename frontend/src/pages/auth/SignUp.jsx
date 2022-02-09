@@ -4,12 +4,12 @@ import Logo from '../../components/Header/Logo';
 import Input from '../../components/Input/Input';
 import { useState } from 'react';
 import styles from './SignUp.module.css';
+import axios from 'axios';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isAbled, setIsAbled] = useState(false);
 
   // 유효성
   const [chkEmail, setChkEmail] = useState(false);
@@ -66,10 +66,23 @@ const SignUp = () => {
     setConfirmPasswordMessage('일치합니다!');
     setChkConfirmPassword(true);
   };
-
+  const apiCall = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/signup',
+        {
+          email,
+          password,
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log('error', err);
+    }
+  };
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log('버튼누름');
+    apiCall();
   };
   return (
     <Wrapper>
@@ -86,12 +99,15 @@ const SignUp = () => {
               autoComplete='off'
               value={email}
               onChange={emailHandler}
+              marginBottom='1rem'
               required
             />
             {email.length > 0 && (
-              <small className={chkEmail ? styles.success : styles.error}>
-                {emailMessage}
-              </small>
+              <div className={styles.txtArea}>
+                <small className={chkEmail ? styles.success : styles.error}>
+                  {emailMessage}
+                </small>
+              </div>
             )}
             <Input
               type='password'
@@ -103,9 +119,11 @@ const SignUp = () => {
               required
             />
             {password.length > 0 && (
-              <small className={chkPassword ? styles.success : styles.error}>
-                {passwordMessage}
-              </small>
+              <div className={styles.txtArea}>
+                <small className={chkPassword ? styles.success : styles.error}>
+                  {passwordMessage}
+                </small>
+              </div>
             )}
             <Input
               type='password'
@@ -117,11 +135,13 @@ const SignUp = () => {
               required
             />
             {confirmPassword.length > 0 && (
-              <small
-                className={chkConfirmPassword ? styles.success : styles.error}
-              >
-                {confirmPasswordMessage}
-              </small>
+              <div className={styles.txtArea}>
+                <small
+                  className={chkConfirmPassword ? styles.success : styles.error}
+                >
+                  {confirmPasswordMessage}
+                </small>
+              </div>
             )}
 
             <Button

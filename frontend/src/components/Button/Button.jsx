@@ -13,12 +13,13 @@ const StyledButton = styled.button`
   border-radius: ${(props) => props.radius || '0.4rem'};
   color: ${(props) => props.color || '#ffffff'};
   font-size: ${(props) => props.ftsize || '1.6rem'};
+  cursor: pointer;
   ${(props) =>
     props.disabled &&
     css`
-      background-color: #cccccc;
+      cursor: default;
+      background-color: #e5e5e5;
     `}
-  cursor: pointer;
 `;
 
 const BtnImage = styled.i`
