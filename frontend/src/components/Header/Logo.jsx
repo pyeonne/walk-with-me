@@ -12,6 +12,7 @@ const Logo = (props) => {
 
   return (
     <img
+      style={{ cursor: 'pointer' }}
       src={props.type == 'col' ? logoSignPage : logoHeader}
       onClick={onClickHandler}
     />

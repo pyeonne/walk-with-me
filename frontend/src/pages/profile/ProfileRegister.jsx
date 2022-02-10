@@ -18,13 +18,25 @@ const ProfileRegister = memo(() => {
   const onFileChange = (e) => setFile(e.target.files[0]);
 
   const onSubmit = (event) => {
+    const { nickname } = nameRef.current;
+    const { gender } = genderRef.current;
+    const { age } = ageRef.current;
+    const { area } = areaRef.current;
+
+    console.log(nickname, gender, age, area);
+
+    if (!nickname || !gender || !age || !area) {
+      alert('이미지를 제외한 항목들은 필수 항목입니다.');
+      return;
+    }
+
     event.preventDefault();
     const formData = new FormData();
     formData.append('image', file);
-    formData.append('name', nameRef.current.value);
-    formData.append('gender', genderRef.current.value);
-    formData.append('age', ageRef.current.value | '');
-    formData.append('area', areaRef.current.value || '');
+    formData.append('name', nickname);
+    formData.append('gender', gender);
+    formData.append('age', age | '');
+    formData.append('area', area || '');
 
     axios('http://localhost:4000/api/auth/6200bb04d1edeba0b824faec/profile', {
       method: 'post',
@@ -48,11 +60,14 @@ const ProfileRegister = memo(() => {
             처음 오셨군요? 기본 정보를 입력해주세요!
           </h2>
 
-          <div className={styles.fileInput}>
-            <FileInput onFileChange={onFileChange} />
-          </div>
+          <FileInput onFileChange={onFileChange} />
 
-          <Input ref={nameRef} name='nickname' className={styles.input} />
+          <Input
+            ref={nameRef}
+            name='nickname'
+            placeholder='닉네임'
+            className={styles.input}
+          />
           <Dropdown
             ref={genderRef}
             className={styles.input}
@@ -60,14 +75,17 @@ const ProfileRegister = memo(() => {
             width='50rem'
             height='6rem'
           />
-          <Dropdown
+          <Input
             ref={ageRef}
-            className={styles.input}
-            type='age'
-            width='50rem'
-            height='6rem'
+            name='birthyear'
+            placeholder='태어난 연도'
+            type='number'
           />
-          <Input ref={areaRef} name='area' />
+          <Input
+            ref={areaRef}
+            name='area'
+            placeholder='동 · 읍 · 면을 입력해주세요.'
+          />
           <Button text='등록하기' />
         </form>
       </div>
