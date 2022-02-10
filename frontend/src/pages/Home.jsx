@@ -11,7 +11,8 @@ import Pagination from '../components/Pagination/Pagination';
 
 const Home = () => {
   const [state, dispatch] = useContext(Context);
-  const [post, setPost] = useState([]);
+  const [posts, setPost] = useState([]);
+  const dropstyle = ['status', 'category', 'age', 'gender'];
   const getPosts = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/posts');
@@ -32,53 +33,47 @@ const Home = () => {
           <div
             style={{ display: 'flex', justifyContent: 'right', margin: '1rem' }}
           >
-            <Dropdown type='status'></Dropdown>
-            <Dropdown type='category'></Dropdown>
-            <Dropdown type='age'></Dropdown>
-            <Dropdown type='gender'></Dropdown>
+            {dropstyle.map((style, idx) => {
+              return <Dropdown key={`drop${style}_${idx}`} type={style} />;
+            })}
           </div>
-          <div style={{ display: 'flex' }}>
-            <Link to='/'>
-              <Card cardType='create' style={{ margin: '1rem' }} />
-            </Link>
-
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
-            <Card
-              cardType='recruit'
-              post={post[1]}
-              style={{ margin: '1rem' }}
-            />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateRows: 'repeat(2, 1fr)',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+            }}
+          >
+            {posts.map((post, idx) => {
+              if (!idx)
+                return (
+                  <Link to='/' style={{ textDecoration: 'none' }}>
+                    <Card
+                      key={`create_post_${idx}`}
+                      cardType='create'
+                      style={{ margin: '1rem' }}
+                    />
+                  </Link>
+                );
+              if (idx < 8)
+                return (
+                  <Link
+                    to='/'
+                    style={{
+                      textDecoration: 'none',
+                      // color: 'var(--text-color)',
+                      color: 'black',
+                    }}
+                  >
+                    <Card
+                      key={`recruit_post_${idx}`}
+                      post={post}
+                      cardType='recruit'
+                      style={{ margin: '1rem' }}
+                    />
+                  </Link>
+                );
+            })}
           </div>
           <Pagination />
         </div>
