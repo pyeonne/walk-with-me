@@ -4,49 +4,52 @@ import Dropdown from '../../components/Dropdown/Dropdown';
 import Header from '../../components/Header/Header';
 import Input from '../../components/Input/Input';
 import styles from './ProfileRegister.module.css';
+import axios from 'axios';
+import FileInput from '../../components/image_file_input/image_file_input';
 
-const ProfileRegister = ({ FileInput, onAdd }) => {
+const ProfileRegister = memo(() => {
   const formRef = useRef();
   const nameRef = useRef();
   const genderRef = useRef();
   const ageRef = useRef();
   const areaRef = useRef();
-  const [file, setFile] = useState({ fileName: null, fileURL: null });
+  const [file, setFile] = useState();
 
-  const onFileChange = (file) => {
-    setFile({
-      fileName: file.name,
-      fileURL: file.url,
-    });
-  };
+  const onFileChange = (e) => setFile(e.target.files[0]);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const profile = {
-      id: Date.now(), // uuid
-      name: nameRef.current.value || '',
-      gender: genderRef.current.value || '',
-      age: ageRef.current.value,
-      area: areaRef.current.value || '',
-      fileName: file.fileName || '',
-      fileURL: file.fileURL || '',
-    };
-    console.log(profile);
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('name', nameRef.current.value);
+    formData.append('gender', genderRef.current.value);
+    formData.append('age', ageRef.current.value | '');
+    formData.append('area', areaRef.current.value || '');
+
+    axios('http://localhost:4000/api/auth/6200bb04d1edeba0b824faec/profile', {
+      method: 'post',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    setFile();
   };
+
   return (
     <>
       <Header />
       <div className={styles.container}>
-        <form ref={formRef} className={styles.form} onSubmit={onSubmit}>
+        <form
+          ref={formRef}
+          className={styles.form}
+          encType='multipart/form-data'
+          onSubmit={onSubmit}
+        >
           <h2 className={styles.title}>
             처음 오셨군요? 기본 정보를 입력해주세요!
           </h2>
+
           <div className={styles.fileInput}>
-            <FileInput
-              name={file.fileName}
-              fileURL={file.fileURL}
-              onFileChange={onFileChange}
-            />
+            <FileInput onFileChange={onFileChange} />
           </div>
 
           <Input ref={nameRef} name='nickname' className={styles.input} />
@@ -65,11 +68,11 @@ const ProfileRegister = ({ FileInput, onAdd }) => {
             height='6rem'
           />
           <Input ref={areaRef} name='area' />
-          <Button text='등록하기' name='Add' />
+          <Button text='등록하기' />
         </form>
       </div>
     </>
   );
-};
+});
 
 export default ProfileRegister;

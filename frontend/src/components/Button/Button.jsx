@@ -1,3 +1,4 @@
+import React, { memo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import kakao from './images/kakao.svg';
 import google from './images/google.svg';
@@ -30,7 +31,7 @@ const BtnImage = styled.i`
     margin-right: 2rem;
   }
 `;
-const Button = (props) => {
+const Button = memo((props) => {
   const image = props.image;
   return (
     <>
@@ -43,6 +44,7 @@ const Button = (props) => {
           radius={props.radius}
           ftsize={props.ftsize}
           border={props.border}
+          onClick={props.onClick}
         >
           <BtnImage image={props.image} />
           {props.text}
@@ -56,12 +58,13 @@ const Button = (props) => {
           radius={props.radius}
           ftsize={props.ftsize}
           border={props.border}
+          onClick={props.onClick}
         >
           {props.text}
         </StyledButton>
       )}
     </>
   );
-};
+});
 
 export default Button;
