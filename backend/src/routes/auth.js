@@ -23,7 +23,7 @@ router.post('/:id/profile', checkLogin, authCtrl.update);
 router.get('/:id/profile', checkLogin, authCtrl.read);
 
 // 비밀번호 찾기
-router.post('/find-password', checkLogin, authCtrl.findPassword);
+router.post('/find-password', authCtrl.findPassword);
 
 // 비밀번호 변경
 router.patch('/:id/profile/password', checkLogin, authCtrl.changePassword);

@@ -12,6 +12,8 @@
   --text-color-light: #f9fafc;
   --body-color: #f0f1f3;
   --line-color: #e1e2e4;
+  --error-color: red;
+  --success-color: #3498db;
 }
 
 /* Variables Dark Theme */
@@ -24,4 +26,9 @@ body.darkTheme {
 
 html {
   font-size: 62.5%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

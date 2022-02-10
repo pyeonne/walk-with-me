@@ -15,6 +15,12 @@ const StyledButton = styled.button`
   color: ${(props) => props.color || '#ffffff'};
   font-size: ${(props) => props.ftsize || '1.6rem'};
   cursor: pointer;
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: default;
+      background-color: #e5e5e5;
+    `}
 `;
 
 const BtnImage = styled.i`
@@ -23,7 +29,11 @@ const BtnImage = styled.i`
     align-items: center;
     content: '';
     background-image: ${(props) =>
-      props.image === 'google' ? `url(${google})` : `url(${kakao})`};
+      props.image === 'google'
+        ? `url(${google})`
+        : props.image === 'kakao'
+        ? `url(${kakao})`
+        : `url(${props.image})`};
     background-repeat: no-repeat;
     background-size: cover;
     width: 24px;

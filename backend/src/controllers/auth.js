@@ -13,8 +13,8 @@ exports.signUp = asyncHandler(async (req, res) => {
   const existedUser = await User.findOne({ email });
 
   if (existedUser) {
+    res.status(401);
     const error = new Error('중복된 이메일입니다.');
-    error.status = 401;
     throw error;
   }
 

@@ -9,12 +9,13 @@ import React, { forwardRef } from 'react';
 
 const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: ${(props) => props.marginBottom || '1rem'};
   i {
     width: 24px;
     height: 24px;
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: 2rem;
     transform: translateY(-50%);
   }
   input,
@@ -34,7 +35,7 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input`
   width: ${(props) => props.width || '50rem'};
   height: ${(props) => props.height || '6rem'};
-  padding-left: 4rem;
+  padding-left: 6rem;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -47,7 +48,7 @@ const StyledTextArea = styled.textarea`
 const Input = forwardRef((props, ref) => {
   if (props.name === 'content') {
     return (
-      <InputWrapper>
+      <InputWrapper style={{ marginBottom: props.marginBottom }}>
         <StyledTextArea
           style={{ width: props.width, height: props.height }}
           placeholder={props.placeholder}
@@ -58,7 +59,7 @@ const Input = forwardRef((props, ref) => {
 
   if (props.name === 'birthyear') {
     return (
-      <InputWrapper>
+      <InputWrapper style={{ marginBottom: props.marginBottom }}>
         <BirthYear />
         <StyledInput
           style={{ width: props.width, height: props.height }}
@@ -74,7 +75,7 @@ const Input = forwardRef((props, ref) => {
   }
 
   return (
-    <InputWrapper>
+    <InputWrapper style={{ marginBottom: props.marginBottom }}>
       {props.name === 'email' && <Email />}
       {props.name === 'password' && <Password />}
       {props.name === 'confirmPassword' && <Password />}
