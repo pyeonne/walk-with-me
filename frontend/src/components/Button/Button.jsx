@@ -47,6 +47,7 @@ const Button = memo((props) => {
     <>
       {image ? (
         <StyledButton
+          type={props.type}
           width={props.width}
           height={props.height}
           bg={props.bg}
@@ -61,6 +62,7 @@ const Button = memo((props) => {
         </StyledButton>
       ) : (
         <StyledButton
+          type={props.type}
           width={props.width}
           height={props.height}
           bg={props.bg}

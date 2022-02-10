@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import SignIn from './pages/auth/SignIn';
 import PasswordFind from './pages/auth/PasswordFind';
 import ProfileRegister from './pages/profile/ProfileRegister';
-
+import RecruitRegister from './pages/recruit/RecruitRegister';
 function App() {
   return (
     <Routes>
@@ -14,6 +14,7 @@ function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
+      <Route path='/RecruitRegister' element={<RecruitRegister />} />
     </Routes>
   );
 }

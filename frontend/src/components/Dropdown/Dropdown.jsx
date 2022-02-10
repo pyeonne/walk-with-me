@@ -39,6 +39,8 @@ const Dropdown = forwardRef((props, ref) => {
       style={{ width: props.width, height: props.height }}
       className={`${classes.select} ${classes[props.type]}`}
       ref={ref}
+      onChange={props.onChange}
+      required={props.required}
     >
       {options.map((option, idx) => (
         <option key={idx} value={option.value}>
