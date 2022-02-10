@@ -13,6 +13,9 @@
   --line-color: #e1e2e4;
   --error-color: red;
   --success-color: #3498db;
+  --recruit-title-color: #666666;
+  --recruit-author-color: #5a5a5a;
+  --recruit-author-date: #757575;
 }
 
 /* Variables Dark Theme */
