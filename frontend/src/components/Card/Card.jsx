@@ -3,35 +3,42 @@ import CardRecruit from './CardRecruit';
 import CardDetail from './CardDetail';
 import React from 'react';
 
-const Card = ({ post, cardType }) => {
-  if (cardType === 'create') return <CardCreate />;
+const Card = ({ style, post, cardType }) => {
+  if (cardType === 'create') return <CardCreate style={style} />;
+
   if (!post) {
-    return <CardCreate load={true} />;
+    return <CardCreate style={style} load={true} />;
   }
 
-  const {
-    age,
-    area,
-    author,
-    content,
-    category,
-    isRecruiting,
-    likeMembers,
-    members,
-    _id,
-    title,
-    image,
-  } = post;
+  let { age, area, author, likeMembers } = post;
+  if (!author) author = { nickname: '이름없음', profileImage: '사진없음' };
+  if (!likeMembers && typeof likeMembers !== 'Array') likeMembers = [];
 
-  const ages = `${age}대`;
-  const tags = [area, ages];
-  const pic = likeMembers.map((likes, idx) => {
-    if (idx < 3) return likes.profileImage;
-  });
+  const tags = [`#${area}`, `#${age}대`];
 
-  if (cardType === 'recruit')
-    return <CardRecruit post={{ ...post, ages, tags, pic }} />;
-  if (cardType === 'detail')
-    return <CardDetail post={{ ...post, ages, tags, pic }} />;
+  if (cardType === 'recruit') {
+    const newPost = {
+      ...post,
+      tags,
+      author,
+      likeMembers,
+      like: false,
+    };
+    return <CardRecruit style={style} post={newPost} />;
+  }
+  if (cardType === 'detail') {
+    const pic = likeMembers.map((likes, idx) => {
+      if (idx < 3) return likes.profileImage;
+    });
+    const newPost = {
+      ...post,
+      tags,
+      pic,
+      author,
+      likeMembers,
+      like: false,
+    };
+    return <CardDetail style={style} post={newPost} />;
+  }
 };
 export default Card;
