@@ -5,27 +5,8 @@ import contact from './images/contact_calender.svg';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 
-const CardDetail = ({ cardType, style, post }) => {
-  // const {
-  //   age,
-  //   area,
-  //   author,
-  //   content,
-  //   category,
-  //   isRecruiting,
-  //   likeMembers,
-  //   members,
-  //   _id,
-  //   title,
-  //   image,
-  // } = post;
-  // const ages = `${age}대`;
-  // const tags = [area, ages];
-  // const pic = likeMembers.map((likes, idx) => {
-  //   if (idx < 3) return likes.profileImage;
-  // });
-  // return <></>;
-
+const CardDetail = ({ style, post }) => {
+  let { members, tags, likeMembers, like, pic, isRecruiting } = post;
   return (
     <div style={style} className={`${styles['card']} ${styles['detail-card']}`}>
       <div className={styles['tags']}>
@@ -90,25 +71,6 @@ const CardDetail = ({ cardType, style, post }) => {
       </div>
     </div>
   );
-  return <></>;
 };
-
-// Card.defaultProps = {
-//   cardType: 'create',
-//   tags: [],
-//   age: 0,
-//   area: 'area',
-//   author: {},
-//   content: 'content',
-//   category: 'category',
-//   createdAt: 'createdAt',
-//   isRecruiting: false,
-//   likeMembers: [],
-//   members: [],
-//   preMembers: [],
-//   updatedAt: 'updateAt',
-//   _id: 'id',
-//   title: 'title',
-// };
 
 export default CardDetail;
