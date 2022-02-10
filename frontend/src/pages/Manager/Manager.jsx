@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Avatar from '../../components/Avatar/Avatar';
+import Button from '../../components/Button/Button';
 import Header from '../../components/Header/Header';
 import Tab from '../../components/Tab/Tab';
 import styles from './Manager.module.css';
@@ -24,6 +25,8 @@ const Manager = (props) => {
               <th>지역</th>
               <th>나이</th>
               <th>소개말</th>
+              <th></th>
+              <th></th>
             </tr>
             <tr>
               <td>
@@ -34,6 +37,27 @@ const Manager = (props) => {
               <td>서울특별시 무슨동</td>
               <td>1988</td>
               <td>안녕하세요. 같이 자전거 타고 싶어요~ </td>
+              <td>
+                <Button
+                  text='거절'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  bg='var(--box-color)'
+                  color='var(--text-color-light)'
+                />
+              </td>
+              <td>
+                <Button
+                  text='승인'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  color='var(--text-color-light)'
+                />
+              </td>
             </tr>
             <tr>
               <td>
@@ -44,6 +68,27 @@ const Manager = (props) => {
               <td>서울특별시 무슨동</td>
               <td>1988</td>
               <td>안녕하세요. 같이 자전거 타고 싶어요~ </td>
+              <td>
+                <Button
+                  text='거절'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  bg='var(--box-color)'
+                  color='var(--text-color-light)'
+                />
+              </td>
+              <td>
+                <Button
+                  text='승인'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  color='var(--text-color-light)'
+                />
+              </td>
             </tr>
             <tr>
               <td>
@@ -54,6 +99,27 @@ const Manager = (props) => {
               <td>서울특별시 무슨동</td>
               <td>1988</td>
               <td>안녕하세요. 같이 자전거 타고 싶어요~ </td>
+              <td>
+                <Button
+                  text='거절'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  bg='var(--box-color)'
+                  color='var(--text-color-light)'
+                />
+              </td>
+              <td>
+                <Button
+                  text='승인'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  color='var(--text-color-light)'
+                />
+              </td>
             </tr>
           </table>
         </div>
@@ -67,6 +133,7 @@ const Manager = (props) => {
               <th>지역</th>
               <th>나이</th>
               <th>소개말</th>
+              <th></th>
             </tr>
             <tr>
               <td>
@@ -77,6 +144,17 @@ const Manager = (props) => {
               <td>서울특별시 무슨동</td>
               <td>1988</td>
               <td>안녕하세요. 같이 자전거 타고 싶어요~ </td>
+              <td>
+                <Button
+                  text='퇴출'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  bg='var(--box-color)'
+                  color='var(--text-color-light)'
+                />
+              </td>
             </tr>
             <tr>
               <td>
@@ -87,6 +165,17 @@ const Manager = (props) => {
               <td>서울특별시 무슨동</td>
               <td>1988</td>
               <td>안녕하세요. 같이 자전거 타고 싶어요~ </td>
+              <td>
+                <Button
+                  text='퇴출'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  bg='var(--box-color)'
+                  color='var(--text-color-light)'
+                />
+              </td>
             </tr>
             <tr>
               <td>
@@ -97,6 +186,17 @@ const Manager = (props) => {
               <td>서울특별시 무슨동</td>
               <td>1988</td>
               <td>안녕하세요. 같이 자전거 타고 싶어요~ </td>
+              <td>
+                <Button
+                  text='퇴출'
+                  width='5rem'
+                  height='3rem'
+                  radius='2rem'
+                  ftsize='1.3rem'
+                  bg='var(--box-color)'
+                  color='var(--text-color-light)'
+                />
+              </td>
             </tr>
           </table>
         </div>

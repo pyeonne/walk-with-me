@@ -51,11 +51,11 @@ td:not(:last-child) {
   white-space: nowrap;
 }
 
-td:last-child {
-  width: 60%;
+td:nth-child(6) {
+  width: 40%;
 }
 
-th:last-child,
-td:last-child {
+th:nth-child(6),
+td:nth-child(6) {
   text-align: left;
 }
