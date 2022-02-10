@@ -145,7 +145,7 @@
   cursor: pointer;
 }
 .likes button:active {
-  background-color: red;
+  background-color: #dddddd;
 }
 .author {
   display: flex;
