@@ -6,6 +6,7 @@ import SignIn from './pages/auth/SignIn';
 import PasswordFind from './pages/auth/PasswordFind';
 import ProfileRegister from './pages/profile/ProfileRegister';
 import Chatting from './pages/Chatting/Chatting';
+import Manager from './pages/Manager/Manager';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
       <Route path='/chatting' element={<Chatting />} />
+      <Route path='/manager' element={<Manager />} />
     </Routes>
   );
 }
