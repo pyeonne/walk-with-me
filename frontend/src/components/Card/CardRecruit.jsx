@@ -5,8 +5,7 @@ import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 
 const CardRecruit = ({ style, post }) => {
-  const { author, tags, title, content, likeMembers, image } = post;
-  const like = true;
+  let { author, tags, title, content, likeMembers, image, like } = post;
   return (
     <div
       style={style}
@@ -69,23 +68,6 @@ const CardRecruit = ({ style, post }) => {
       </div>
     </div>
   );
-};
-
-CardRecruit.defaultProps = {
-  post: {
-    cardType: 'recruit',
-    tags: [],
-    author: { nickname: '', profileImage: '' },
-    content: 'content',
-    category: 'category',
-    createdAt: 'createdAt',
-    isRecruiting: false,
-    likeMembers: [],
-    members: [],
-    _id: 'id',
-    title: 'title',
-    image: 'image',
-  },
 };
 
 export default CardRecruit;
