@@ -9,7 +9,6 @@ import React, { forwardRef } from 'react';
 
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: ${(props) => props.marginBottom || '1rem'};
   i {
     width: 24px;
     height: 24px;
