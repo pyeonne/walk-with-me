@@ -187,6 +187,7 @@ exports.management = asyncHandler(async (req, res) => {
     .populate('preMembers');
 
   res.status(200).json({
+    _id,
     members: post.members,
     preMembers: post.preMembers,
   });
