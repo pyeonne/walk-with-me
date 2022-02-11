@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Header.module.css';
 import darkMode from './images/darkMode.svg';
-import profile from './images/profile.svg';
-import { useNavigate } from 'react-router-dom';
+import Avatar from '../Avatar/Avatar';
+import { Link } from 'react-router-dom';
 import Logo from './Logo.jsx';
+import { Context } from '../../context';
+import { CHANGE_USER_INFO } from '../../context/actionTypes';
+import { apiClient } from '../../api/api';
 
 const Header = (props) => {
-  const navigate = useNavigate();
+  const [state, dispatch] = useContext(Context);
+  const user = state.user;
 
-  const onClickHandler = () => {
-    navigate('/');
+  const clickHandler = async () => {
+    dispatch({ type: CHANGE_USER_INFO, payload: null });
+    await apiClient.get('/api/auth/signout');
   };
 
   return (
@@ -17,25 +22,23 @@ const Header = (props) => {
       <div className={styles.wrapper}>
         <Logo className={styles.logo} type='row' />
         <div className={styles.right}>
-          {props.isLoggedIn ? (
-            <img className={styles['profile-image']} src={profile} />
+          {user ? (
+            <Avatar src={user?.profileImgURL} width='4rem' height='4rem' />
           ) : (
-            <button className={styles['sign-in']}>로그인</button>
+            <button className={styles['sign-in']}>
+              <Link to='/signin'>로그인</Link>
+            </button>
           )}
-          <button
-            className={styles['sign-up']}
-            onClick={
-              props.isLoggedIn
-                ? () => {
-                    navigate('/');
-                  }
-                : () => {
-                    navigate('/signup');
-                  }
-            }
-          >
-            {props.isLoggedIn ? '로그아웃' : '회원가입'}
-          </button>
+
+          {user ? (
+            <button className={styles['logout']} onClick={clickHandler}>
+              로그아웃
+            </button>
+          ) : (
+            <button className={styles['sign-up']}>
+              <Link to='/signup'>회원가입</Link>
+            </button>
+          )}
           <img className={styles['dark-mode']} src={darkMode} />
         </div>
       </div>

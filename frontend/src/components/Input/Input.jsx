@@ -51,6 +51,10 @@ const Input = forwardRef((props, ref) => {
         <StyledTextArea
           style={{ width: props.width, height: props.height }}
           placeholder={props.placeholder}
+          minLength={props.minLength}
+          maxLength={props.maxLength}
+          onChange={props.onChange}
+          required={props.required}
         />
       </InputWrapper>
     );
@@ -68,6 +72,7 @@ const Input = forwardRef((props, ref) => {
           min='1960'
           max='2022'
           step='1'
+          ref={ref}
         />
       </InputWrapper>
     );
@@ -86,7 +91,9 @@ const Input = forwardRef((props, ref) => {
         name={props.name}
         type={props.type}
         placeholder={props.placeholder}
+        onChange={props.onChange}
         ref={ref}
+        required={props.required}
       />
     </InputWrapper>
   );

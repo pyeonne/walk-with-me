@@ -25,7 +25,6 @@ const Recruit = () => {
   const udmenuClick = () => {
     setModalOnoff(!modalOnOff);
   };
-  // /api/posts/:id
   const recruitModify = () => {
     navigate('/');
   };
@@ -85,12 +84,9 @@ const Recruit = () => {
   useEffect(() => {
     getPost();
   }, []);
-  console.log(state);
   // console.log(
   //   `포스트 작성자 아디 ${post.author._id}  유저 아디${state.user._id}`
   // );
-
-  // state.user._id
 
   if (loading) {
     return <div>로딩 중</div>;
@@ -98,7 +94,10 @@ const Recruit = () => {
 
   return (
     <div>
-      <Header />
+      <Header
+        isLoggedIn={state.user !== null}
+        src={state.user !== null ? state.user.profileImagePath : null}
+      />
       <div className={styles['content-container']}>
         <Tab
           currTab={currTab}
@@ -170,36 +169,3 @@ const Recruit = () => {
 };
 
 export default Recruit;
-
-// post:
-// age: 20
-// area: "매탄동"
-// author:
-// applyPosts: [{…}]
-// area: "매탄동"
-// birthYear: 1994
-// email: "ansrud45@gmail.com"
-// gender: "남"
-// joinedPosts: []
-// likePosts: []
-// nickname: "뽀꼬로꼬"
-// password: "7110eda4d09e062aa5e4a390b0a572ac0d2c0220"
-// profileImagePath: "/Users/dinomoon/dev/walk-with-me/backend/uploads/1644541567604.png"
-// __v: 0
-// _id: "6204aad85d19a0c564d0572b"
-// [[Prototype]]: Object
-// category: "walk"
-// content: "content"
-// createdAt: "2022-02-10T06:04:47.314Z"
-// isRecruiting: true
-// likeMembers: []
-// members: []
-// preMembers: ['6204aad85d19a0c564d0572b']
-// title: "testTitle"
-// updatedAt: "2022-02-10T06:05:11.069Z"
-// __v: 0
-// _id: "6204aaff5d19a0c564d05730"
-// [[Prototype]]: Object
-// posts: []
-// user: null
-// [[Prototype]]: Object
