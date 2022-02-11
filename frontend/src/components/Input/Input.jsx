@@ -5,16 +5,16 @@ import Area from './icons/Area';
 import Title from './icons/Title';
 import Nickname from './icons/Nickname';
 import BirthYear from './icons/BirthYear';
+import React, { forwardRef } from 'react';
 
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: ${(props) => props.marginBottom || '1rem'};
   i {
     width: 24px;
     height: 24px;
     position: absolute;
     top: 50%;
-    left: 1rem;
+    left: 2rem;
     transform: translateY(-50%);
   }
   input,
@@ -34,7 +34,7 @@ const InputWrapper = styled.div`
 const StyledInput = styled.input`
   width: ${(props) => props.width || '50rem'};
   height: ${(props) => props.height || '6rem'};
-  padding-left: 4rem;
+  padding-left: 6rem;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -44,7 +44,7 @@ const StyledTextArea = styled.textarea`
   line-height: 1.4;
 `;
 
-const Input = (props) => {
+const Input = forwardRef((props, ref) => {
   if (props.name === 'content') {
     return (
       <InputWrapper style={{ marginBottom: props.marginBottom }}>
@@ -86,13 +86,10 @@ const Input = (props) => {
         name={props.name}
         type={props.type}
         placeholder={props.placeholder}
-        autoComplete={props.autoComplete}
-        value={props.value}
-        onChange={props.onChange}
-        required={props.required}
+        ref={ref}
       />
     </InputWrapper>
   );
-};
+});
 
 export default Input;

@@ -2,7 +2,7 @@
   width: 16rem;
   height: 5rem;
   font-size: 1.4rem;
-  padding-left: 4rem;
+  padding-left: 6rem;
   border-color: #ccc;
   color: #666;
   border-radius: 4px;
@@ -15,20 +15,20 @@
 
 .select.status {
   background-image: url('./images/status.svg'), url('./images/arrow_down.svg');
-  background-position: left 1rem center, right 1rem center;
+  background-position: left 2rem center, right 2rem center;
 }
 
 .select.category {
   background-image: url('./images/category.svg'), url('./images/arrow_down.svg');
-  background-position: left 1rem center, right 1rem center;
+  background-position: left 2rem center, right 2rem center;
 }
 
 .select.age {
   background-image: url('./images/age.svg'), url('./images/arrow_down.svg');
-  background-position: left 1rem center, right 1rem center;
+  background-position: left 2rem center, right 2rem center;
 }
 
 .select.gender {
   background-image: url('./images/age.svg'), url('./images/arrow_down.svg');
-  background-position: left 1rem center, right 1rem center;
+  background-position: left 2rem center, right 2rem center;
 }
