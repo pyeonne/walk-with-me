@@ -12,7 +12,7 @@ const Card = ({ style, post, cardType }) => {
 
   let { age, area, author, likeMembers } = post;
   if (!author) author = { nickname: '이름없음', profileImage: '사진없음' };
-  if (!likeMembers && typeof likeMembers !== 'Array') likeMembers = [];
+  if (!likeMembers && typeof Array.isArray(likeMembers)) likeMembers = [];
 
   const tags = [`#${area}`, `#${age}대`];
 
