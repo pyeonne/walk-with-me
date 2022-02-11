@@ -1,11 +1,23 @@
-.content {
-  margin: 12rem auto auto auto;
+.modal__container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 36rem;
+}
+.modal__header {
+  margin-bottom: 2rem;
+}
+.modal__header h2 {
+  font-size: 1.8rem;
+  /* font-weight: initial; */
+  color: var(--first-color);
+}
+.form__group {
+  display: flex;
+  flex-direction: column;
 }
 .btn__group {
   display: flex;
   justify-content: space-between;
+  margin-top: 2rem;
 }
