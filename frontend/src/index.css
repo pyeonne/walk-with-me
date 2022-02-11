@@ -9,18 +9,22 @@
   --first-color: #7eda8b;
   --first-color-light: #d0f3d5;
   --text-color: #292a2c;
-  --text-color-light: #f9fafc;
+  --text-color-light: #333;
   --body-color: #f0f1f3;
   --line-color: #e1e2e4;
   --error-color: red;
   --success-color: #3498db;
+  --box-color: #f4f4f4;
+  --recruit-title-color: #666666;
+  --recruit-author-color: #5a5a5a;
+  --recruit-author-date: #757575;
 }
 
 /* Variables Dark Theme */
 body.darkTheme {
   --first-color: #b2f2bb;
   --text-color: #f9fafc;
-  --text-color-light: #333;
+  --text-color-light: #f9fafc;
   --body-color: #333;
 }
 

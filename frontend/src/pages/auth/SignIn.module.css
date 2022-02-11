@@ -1,0 +1,53 @@
+.logoArea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+.socialGroup {
+  margin: 2rem 0;
+}
+.socialGroup button {
+  margin-bottom: 1rem;
+}
+.forget {
+  display: flex;
+  justify-content: end;
+  margin: 2rem 0;
+}
+.forgetTxt {
+  color: var(--first-color);
+  font-size: 1.6rem;
+}
+.footer {
+  text-align: center;
+}
+.footer p {
+  font-size: 1.6rem;
+}
+.intxt {
+  color: var(--first-color);
+}
+/* 또는 */
+.or {
+  position: relative;
+  text-align: center;
+  margin: 2rem 0;
+}
+.or::before {
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50);
+  left: 0;
+  right: 0;
+  content: '';
+  border-bottom: 1px solid #cccccc;
+}
+.or span {
+  z-index: 9999;
+  background-color: #ffffff;
+  padding: 0 6rem;
+  color: #666666;
+  font-size: 1.6rem;
+}

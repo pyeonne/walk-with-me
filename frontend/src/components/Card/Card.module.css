@@ -104,12 +104,11 @@
   flex-direction: column;
 }
 .recruit-card .tags {
-  margin: 0.5rem 1.5rem;
   height: 3rem;
 }
 .recruit-img {
   width: 30rem;
-  height: 27rem;
+  min-height: 29rem;
   object-fit: cover;
 }
 .recruit-text {
@@ -118,34 +117,39 @@
 }
 .recruit-title {
   font-weight: bold;
-  font-size: 2rem;
-  margin: 0.5rem 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
 }
-
+.recruit-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30rem;
+  padding: 1.6rem;
+  height: 100%;
+}
 .recruit-subtitle {
-  font-size: 1.5rem;
-  margin: 0.5rem 1.5rem;
+  font-size: 1.4rem;
   color: #666666;
   word-break: keep-all;
   line-height: 2rem;
 }
 .recruit-bottom {
   display: flex;
-  justify-content: space-around;
-  height: 6rem;
+  justify-content: space-between;
   align-items: center;
-  width: 30rem;
 }
 .recruit-bottom img {
   width: 2.5rem;
   height: 2.5rem;
-  margin-right: 1.5rem;
+  margin-right: 0.5rem;
+  /* margin-right: 1.5rem; */
 }
 .recruit-text .tags button {
   cursor: pointer;
 }
 .likes button:active {
-  background-color: red;
+  background-color: #dddddd;
 }
 .author {
   display: flex;

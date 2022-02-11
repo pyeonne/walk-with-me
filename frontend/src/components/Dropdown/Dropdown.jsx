@@ -17,17 +17,11 @@ const Dropdown = forwardRef((props, ref) => {
     age: [
       { value: '', text: '나이' },
       { value: '10', text: '10대' },
-      { value: '10', text: '10대' },
       { value: '20', text: '20대' },
       { value: '30', text: '30대' },
       { value: '40', text: '40대' },
       { value: '50', text: '50대' },
       { value: '60', text: '60대' },
-    ],
-    gender: [
-      { value: '', text: '성별' },
-      { value: '남', text: '남자' },
-      { value: '여', text: '여자' },
     ],
   };
 
@@ -40,7 +34,11 @@ const Dropdown = forwardRef((props, ref) => {
       className={`${classes.select} ${classes[props.type]}`}
       ref={ref}
       onChange={props.onChange}
+<<<<<<< HEAD
       required={props.required}
+=======
+      data-type={props.type}
+>>>>>>> ee91d163fd7f8d69f9a98bfa11360f5435edd57c
     >
       {options.map((option, idx) => (
         <option key={idx} value={option.value}>

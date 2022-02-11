@@ -13,7 +13,7 @@
 }
 
 .label {
-  color: #666666;
+  color: var(--recruit-title-color);
   margin-right: 1.8rem;
 }
 
