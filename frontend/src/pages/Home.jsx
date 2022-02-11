@@ -13,9 +13,6 @@ import { ADD_POSTS } from '../context/actionTypes';
 
 const Home = () => {
   const [state, dispatch] = useContext(Context);
-<<<<<<< HEAD
-  console.log(state);
-=======
   const dropstyle = ['status', 'category', 'age'];
   const [filter, setFilter] = useState('');
   const [status, setStatus] = useState('ing');
@@ -69,7 +66,6 @@ const Home = () => {
     getPosts();
   }, []);
 
->>>>>>> 7901d8a67cdc1fd112401a931dfa12ccc43296cc
   return (
     <>
       <Header />
