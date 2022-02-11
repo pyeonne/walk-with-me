@@ -5,6 +5,7 @@ const generatePassword = require('../utils/generate-password');
 const nodeMailer = require('../utils/node-mailer');
 const passport = require('passport');
 const axios = require('axios');
+const fs = require('fs');
 
 // 회원 가입
 exports.signUp = asyncHandler(async (req, res) => {
@@ -71,10 +72,9 @@ exports.signOut = (req, res) => {
 
 // 회원 정보 등록
 // POST /api/users/:id/profile
-// nickname, gender, area, birtYear, profileUrl
 exports.update = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { nickname, gender, area, birthYear, profileUrl } = req.body;
+  const { nickname, gender, area, birthYear } = req.body;
   const user = await User.findByIdAndUpdate(
     id,
     {
@@ -82,12 +82,32 @@ exports.update = asyncHandler(async (req, res) => {
       gender,
       area,
       birthYear,
-      profileUrl,
     },
     { new: true }
   );
 
   res.status(200).json(user);
+});
+
+// 회원 정보 등록 이미지
+exports.updateImg = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { path } = req.file;
+  const profileImagePath = `${process.cwd()}/${path}`;
+
+  await User.findByIdAndUpdate(id, {
+    profileImagePath,
+  });
+
+  res.status(200).json({ success: '프로필 이미지 등록' });
+});
+
+exports.getImage = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  res.sendFile(user.profileImagePath);
 });
 
 // 회원 정보 조회
