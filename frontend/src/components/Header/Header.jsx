@@ -1,16 +1,12 @@
 import React from 'react';
 import styles from './Header.module.css';
 import darkMode from './images/darkMode.svg';
-import profile from './images/profile.svg';
+import Avatar from '../Avatar/Avatar';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo.jsx';
 
 const Header = (props) => {
   const navigate = useNavigate();
-
-  const onClickHandler = () => {
-    navigate('/');
-  };
 
   return (
     <header className={styles['nav-bar']}>
@@ -18,9 +14,11 @@ const Header = (props) => {
         <Logo className={styles.logo} type='row' />
         <div className={styles.right}>
           {props.isLoggedIn ? (
-            <img className={styles['profile-image']} src={profile} />
+            <Avatar src={props.src} width='4rem' height='4rem' />
           ) : (
-            <button className={styles['sign-in']}>로그인</button>
+            <button className={styles['sign-in']} onClick={navigate('/signin')}>
+              로그인
+            </button>
           )}
           <button
             className={styles['sign-up']}

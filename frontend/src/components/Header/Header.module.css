@@ -23,17 +23,12 @@
   height: 9rem;
 }
 
-.profile-image {
-  width: 4rem;
-  height: 4rem;
-  margin-right: 2rem;
-}
-
 .sign-in {
   color: #1e0e62;
   background-color: white;
   border: none;
   font-size: 1.6rem;
+  margin-left: 2rem;
   margin-right: 2rem;
 }
 
@@ -45,6 +40,7 @@
   border: none;
   border-radius: 5rem;
   font-size: 1.6rem;
+  margin-left: 2rem;
   margin-right: 2rem;
 }
 
