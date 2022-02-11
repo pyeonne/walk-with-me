@@ -8,8 +8,10 @@ import axios from 'axios';
 import FileInput from '../../components/Input/ImageFileInput';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileRegister = memo(() => {
+  const navigate = useNavigate();
   const formRef = useRef();
   const nameRef = useRef();
   const genderRef = useRef();
@@ -17,9 +19,8 @@ const ProfileRegister = memo(() => {
   const areaRef = useRef();
   const [imgURL, setImgURL] = useState(null);
   const [state, dispatch] = useContext(Context);
-  console.log(state);
-  // const { _id: userId } = state.user;
-  const userId = '6204aad85d19a0c564d0572b';
+  const { _id: userId } = state.user;
+  // const userId = '6204aad85d19a0c564d0572b';
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile-image`;
   const INFO_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile`;
 
@@ -57,6 +58,7 @@ const ProfileRegister = memo(() => {
     const response = await axios.post(INFO_REGISTER_URL, data);
 
     dispatch({ type: CHANGE_USER_INFO, payload: response.data });
+    navigate('/');
   };
 
   return (

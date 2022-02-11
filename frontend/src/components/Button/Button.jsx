@@ -72,6 +72,7 @@ const Button = memo((props) => {
           border={props.border}
           onClick={props.onClick}
         >
+          {props.children}
           {props.text}
         </StyledButton>
       )}
