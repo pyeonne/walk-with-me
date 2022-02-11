@@ -1,12 +1,12 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useRef } from 'react';
 import Camera from './icons/Camera';
-import styles from './image_file_input.module.css';
+import styles from './ImageFileInput.module.css';
 
 const DEFAULT_IMAGE = '/images/default_profile.jpg';
 
-const ImageFileInput = memo(({ name, fileURL, onFileChange }) => {
+const ImageFileInput = memo(({ name, imgURL, onFileChange }) => {
   const inputRef = useRef();
-  const url = fileURL || DEFAULT_IMAGE;
+  const url = imgURL || DEFAULT_IMAGE;
 
   const onImageClick = (event) => {
     event.preventDefault();
@@ -26,11 +26,10 @@ const ImageFileInput = memo(({ name, fileURL, onFileChange }) => {
       <div className={styles.wrapper} onClick={onImageClick}>
         <img
           className={`${styles.profile} ${name ? styles.pink : styles.grey}`}
-          // src='/Users/dinomoon/dev/walk-with-me/backend/uploads/1644477402293.png'
           src={url}
           alt='profile'
         />
-        {!fileURL && (
+        {!imgURL && (
           <div className={styles.camera}>
             <Camera />
           </div>
