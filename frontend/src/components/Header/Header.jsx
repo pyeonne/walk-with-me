@@ -6,14 +6,15 @@ import { Link } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
+import { apiClient } from '../../api/api';
 
 const Header = (props) => {
   const [state, dispatch] = useContext(Context);
   const user = state.user;
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
     dispatch({ type: CHANGE_USER_INFO, payload: null });
-    fetch('http://localhost:4000/api/auth/signout');
+    await apiClient.get('/api/auth/signout');
   };
 
   return (
