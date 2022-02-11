@@ -1,8 +1,8 @@
 import styles from './Wrapper.module.css';
 
-const Wrapper = ({ props, children }) => {
+const Wrapper = ({ style, props, children }) => {
   return (
-    <div style={{ ...props }} className={styles.wrapper}>
+    <div style={{ style }} className={styles.wrapper}>
       {children}
     </div>
   );
