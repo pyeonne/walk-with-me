@@ -7,6 +7,11 @@ const Dropdown = forwardRef((props, ref) => {
       { value: 'ing', text: '모집 중' },
       { value: 'end', text: '모집 완료' },
     ],
+    gender: [
+      { value: '', text: '성별' },
+      { value: '남', text: '남자' },
+      { value: '여', text: '여자' },
+    ],
     category: [
       { value: '', text: '카테고리' },
       { value: 'running', text: '달리기' },
