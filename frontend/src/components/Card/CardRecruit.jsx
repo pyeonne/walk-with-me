@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Card.module.css';
 import Button from '../Button/Button';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
-import { Context } from '../../context';
 
 const CardRecruit = ({ post }) => {
-  const [state, dispatch] = useContext(Context);
   const [profileImgURL, setProfileImgURL] = useState(null);
   let { author, tags, title, content, likeMembers, image, like } = post;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${author?._id}/profile-image`;

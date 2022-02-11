@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context } from '../context';
 import { Link } from 'react-router-dom';
-import Wrapper from '../components/Wrapper/Wrapper';
 import Header from '../components/Header/Header';
 import axios from 'axios';
 import Card from '../components/Card/Card';
@@ -9,7 +8,7 @@ import Dropdown from '../components/Dropdown/Dropdown';
 import styles from './Home.module.css';
 
 import Pagination from '../components/Pagination/Pagination';
-import { ADD_POSTS, CHANGE_USER_INFO } from '../context/actionTypes';
+import { ADD_POSTS } from '../context/actionTypes';
 
 const Home = () => {
   const [state, dispatch] = useContext(Context);
