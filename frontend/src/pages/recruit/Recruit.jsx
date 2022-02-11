@@ -3,7 +3,6 @@ import Card from '../../components/Card/Card';
 import Avartar from '../../components/Avatar/Avatar';
 import Tab from '../../components/Tab/Tab';
 import Header from '../../components/Header/Header';
-
 import styles from './Recruit.module.css';
 import udmenu from './images/udmenu.svg';
 import { useState, useEffect, useContext } from 'react';
@@ -41,6 +40,7 @@ const Recruit = () => {
         console.log(err);
       }
     }
+    return;
   };
 
   const getPost = async () => {
