@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from './Header.module.css';
 import darkMode from './images/darkMode.svg';
 import Avatar from '../Avatar/Avatar';
@@ -8,9 +8,26 @@ import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
 
-const Header = (props) => {
+const Header = () => {
   const [state, dispatch] = useContext(Context);
   const user = state.user;
+  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
+
+  const getProfileImage = async () => {
+    const response = await fetch(IMG_REGISTER_URL);
+    const blobImg = await response.blob();
+    const profileImgURL = URL.createObjectURL(blobImg);
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: { ...state.user, profileImgURL },
+    });
+  };
+
+  useEffect(() => {
+    if (user?._id) {
+      getProfileImage();
+    }
+  }, []);
 
   const clickHandler = async () => {
     dispatch({ type: CHANGE_USER_INFO, payload: null });

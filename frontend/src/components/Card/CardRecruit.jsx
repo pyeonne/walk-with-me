@@ -9,8 +9,6 @@ const CardRecruit = ({ post }) => {
   const [state, dispatch] = useContext(Context);
   let { author, tags, title, content, likeMembers, image, like } = post;
 
-  console.log(post);
-
   return (
     <div className={`${styles['card']} ${styles['recruit-card']}`}>
       <img src={image} className={styles['recruit-img']} />

@@ -18,8 +18,6 @@ const Home = () => {
   const [status, setStatus] = useState('ing');
   const [category, setCategory] = useState('');
   const [age, setAge] = useState('');
-  console.log(state.user);
-  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${state.user?._id}/profile-image`;
 
   const getPosts = async () => {
     try {
@@ -30,21 +28,8 @@ const Home = () => {
     }
   };
 
-  const getProfileImage = async () => {
-    const response = await fetch(IMG_REGISTER_URL);
-    const blobImg = await response.blob();
-    const profileImgURL = URL.createObjectURL(blobImg);
-    dispatch({
-      type: CHANGE_USER_INFO,
-      payload: { ...state.user, profileImgURL },
-    });
-  };
-
   useEffect(() => {
     getPosts();
-    if (state.user?._id) {
-      getProfileImage();
-    }
   }, []);
 
   const changeHandler = async (e) => {
