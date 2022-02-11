@@ -14,7 +14,7 @@ function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
-      <Route path='/recruit' element={<Recruit />} />
+      <Route path='/:postId' element={<Recruit />} />
     </Routes>
   );
 }
