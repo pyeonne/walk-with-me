@@ -28,8 +28,9 @@
   background-color: white;
   border: none;
   font-size: 1.6rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  padding: 2rem;
+  margin-right: 1rem;
+  cursor: pointer;
 }
 
 .sign-up {
@@ -40,11 +41,12 @@
   border: none;
   border-radius: 5rem;
   font-size: 1.6rem;
-  margin-left: 2rem;
   margin-right: 2rem;
+  cursor: pointer;
 }
 
 .dark-mode {
   width: 2.4rem;
   height: 2.4rem;
+  cursor: pointer;
 }
