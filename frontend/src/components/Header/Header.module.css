@@ -18,6 +18,11 @@
   align-items: center;
 }
 
+.right img {
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
 .logo {
   width: 25.3rem;
   height: 9rem;
@@ -28,12 +33,17 @@
   background-color: white;
   border: none;
   font-size: 1.6rem;
-  padding: 2rem;
-  margin-right: 1rem;
   cursor: pointer;
 }
 
-.sign-up {
+.sign-in a {
+  display: block;
+  padding: 2rem;
+  margin-right: 1rem;
+}
+
+.sign-up,
+.logout {
   width: 10rem;
   height: 4rem;
   color: #1e0e62;
