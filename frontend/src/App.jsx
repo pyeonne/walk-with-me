@@ -11,6 +11,7 @@ import { networkService } from './api/api';
 console.log('import.meta.env :: ', import.meta.env);
 console.log('VITE_API_SERVER_URL :: ', import.meta.env.VITE_API_SERVER_URL);
 networkService.setupInterceptors();
+import Recruit from './pages/recruit/Recruit';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
       <Route path='/chatting' element={<Chatting />} />
+      <Route path='/:postId' element={<Recruit />} />
     </Routes>
   );
 }

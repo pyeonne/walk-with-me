@@ -27,7 +27,7 @@ postRouter.get('/', postCtrl.read);
 router.get('/', postCtrl.list);
 router.post('/', checkLogin, postCtrl.create);
 postRouter.put('/', checkLogin, checkOwnPost, postCtrl.update);
-postRouter.delete('/', checkLogin, checkOwnPost, postCtrl.delete);
+postRouter.delete('/', postCtrl.delete);
 
 // 모집 상태 변경
 postRouter.put('/status', checkLogin, checkOwnPost, postCtrl.changeStatus);
