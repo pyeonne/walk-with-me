@@ -7,6 +7,9 @@ import PasswordFind from './pages/auth/PasswordFind';
 import ProfileRegister from './pages/profile/ProfileRegister';
 import Chatting from './pages/Chatting/Chatting';
 
+console.log('import.meta.env :: ', import.meta.env);
+console.log('VITE_API_SERVER_URL :: ', import.meta.env.VITE_API_SERVER_URL);
+
 function App() {
   return (
     <Routes>
