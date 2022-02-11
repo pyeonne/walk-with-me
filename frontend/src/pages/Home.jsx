@@ -9,7 +9,7 @@ import Dropdown from '../components/Dropdown/Dropdown';
 import styles from './Home.module.css';
 
 import Pagination from '../components/Pagination/Pagination';
-import { ADD_POSTS } from '../context/actionTypes';
+import { ADD_POSTS, CHANGE_USER_INFO } from '../context/actionTypes';
 
 const Home = () => {
   const [state, dispatch] = useContext(Context);
@@ -18,7 +18,8 @@ const Home = () => {
   const [status, setStatus] = useState('ing');
   const [category, setCategory] = useState('');
   const [age, setAge] = useState('');
-  console.log(filter);
+  console.log(state.user);
+  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${state.user?._id}/profile-image`;
 
   const getPosts = async () => {
     try {
@@ -28,6 +29,24 @@ const Home = () => {
       alert('게시물 불러오기에 실패했습니다.');
     }
   };
+
+  const getProfileImage = async () => {
+    const response = await fetch(IMG_REGISTER_URL);
+    const blobImg = await response.blob();
+    const profileImgURL = URL.createObjectURL(blobImg);
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: { ...state.user, profileImgURL },
+    });
+  };
+
+  useEffect(() => {
+    getPosts();
+    if (state.user?._id) {
+      getProfileImage();
+    }
+  }, []);
+
   const changeHandler = async (e) => {
     const type = e.currentTarget.dataset['type'];
     const { value } = e.currentTarget;
@@ -62,51 +81,25 @@ const Home = () => {
 
     dispatch({ type: ADD_POSTS, payload: response.data });
   };
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   return (
     <>
       <Header />
       <div className={styles.container}>
         <div className={styles.filter}>
-          {dropstyle.map((style, idx) => {
-            return <Dropdown key={idx} type={style} onChange={changeHandler} />;
-          })}
+          {dropstyle.map((style, idx) => (
+            <Dropdown key={idx} type={style} onChange={changeHandler} />
+          ))}
         </div>
         <div className={styles['card-wrapper']}>
-          {state.posts.map((post, idx) => {
-            if (!idx)
-              return (
-                <Link to='/' key={idx}>
-                  <Card
-                    key={`create_post_${idx}`}
-                    cardType='create'
-                    style={{ margin: '1rem' }}
-                  />
-                </Link>
-              );
-            if (idx < 8)
-              return (
-                <Link
-                  to={post._id}
-                  key={idx}
-                  style={{
-                    textDecoration: 'none',
-                    // color: 'var(--text-color)',
-                    color: 'black',
-                  }}
-                >
-                  <Card
-                    key={`recruit_post_${idx}`}
-                    post={post}
-                    cardType='recruit'
-                    style={{ margin: '1rem' }}
-                  />
-                </Link>
-              );
-          })}
+          <Link to='/RecruitRegister'>
+            <Card cardType='create' />
+          </Link>
+          {state.posts.map((post, idx) => (
+            <Link to={post._id} key={idx}>
+              <Card post={post} cardType='recruit' />
+            </Link>
+          ))}
         </div>
       </div>
       <Pagination currPage={1} pageCount={5} />

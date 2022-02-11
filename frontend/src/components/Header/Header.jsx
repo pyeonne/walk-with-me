@@ -23,7 +23,7 @@ const Header = (props) => {
         <Logo className={styles.logo} type='row' />
         <div className={styles.right}>
           {user ? (
-            <Avatar src={props.src} width='4rem' height='4rem' />
+            <Avatar src={user?.profileImgURL} width='4rem' height='4rem' />
           ) : (
             <button className={styles['sign-in']}>
               <Link to='/signin'>로그인</Link>
