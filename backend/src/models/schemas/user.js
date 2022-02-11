@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     min: 2,
     max: 10,
   },
-  profileImage: Buffer,
+  profileImagePath: String,
   gender: String,
   birthYear: Number,
   area: String,
