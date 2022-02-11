@@ -16,7 +16,10 @@ const Header = (props) => {
           {props.isLoggedIn ? (
             <Avatar src={props.src} width='4rem' height='4rem' />
           ) : (
-            <button className={styles['sign-in']} onClick={navigate('/signin')}>
+            <button
+              className={styles['sign-in']}
+              onClick={() => navigate('/signin')}
+            >
               로그인
             </button>
           )}
