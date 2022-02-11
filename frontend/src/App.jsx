@@ -7,6 +7,7 @@ import PasswordFind from './pages/auth/PasswordFind';
 import ProfileRegister from './pages/profile/ProfileRegister';
 import Chatting from './pages/Chatting/Chatting';
 import { networkService } from './api/api';
+import Profile from './pages/profile/Profile';
 
 console.log('import.meta.env :: ', import.meta.env);
 console.log('VITE_API_SERVER_URL :: ', import.meta.env.VITE_API_SERVER_URL);
@@ -21,6 +22,7 @@ function App() {
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
       <Route path='/chatting' element={<Chatting />} />
+      <Route path='/profile' element={<Profile />} />
     </Routes>
   );
 }
