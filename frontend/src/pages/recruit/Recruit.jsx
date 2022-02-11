@@ -20,31 +20,27 @@ const Recruit = () => {
   let [currTab, setCurrTab] = useState('소개');
   let [modalOnOff, setModalOnoff] = useState(false);
 
-  const handleClickTab = (tab) => {
-    setCurrTab(tab);
-    switch (tab) {
-      case '소개':
-        navigate('/');
-        break;
-      case '채팅방':
-        navigate('/signin');
-        break;
-      case '회원 관리':
-        navigate('/password-find');
-        break;
-    }
-  };
+  const post = state.post;
+  const loading = post === null;
 
   const udmenuClick = () => {
     setModalOnoff(!modalOnOff);
   };
-
+  // /api/posts/:id
   const recruitModify = () => {
     navigate('/');
   };
 
-  const recruitDelete = () => {
-    navigate('/');
+  const recruitDelete = async () => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      try {
+        await axios.delete('http://localhost:4000/api/posts/' + postId);
+        alert('삭제 되었습니다');
+        navigate('/');
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const getPost = async () => {
@@ -63,15 +59,39 @@ const Recruit = () => {
     }
   };
 
+  const getType = () => {
+    if (state.user !== null) {
+      if (post.author._id === state.user._id) return 'leader';
+      if (post.members.indexOf(state.user._id) !== -1) return 'member';
+    }
+    return 'visitor';
+  };
+
+  const handleClickTab = (tab) => {
+    setCurrTab(tab);
+    switch (tab) {
+      case '소개':
+        navigate('/');
+        break;
+      case '채팅방':
+        navigate('/signin');
+        break;
+      case '회원 관리':
+        navigate('/password-find');
+        break;
+    }
+  };
+
   useEffect(() => {
     getPost();
   }, []);
   console.log(state);
-  // console.log(state.user);
+  // console.log(
+  //   `포스트 작성자 아디 ${post.author._id}  유저 아디${state.user._id}`
+  // );
 
   // state.user._id
-  const loading = state.post === null;
-  const post = state.post;
+
   if (loading) {
     return <div>로딩 중</div>;
   }
@@ -80,7 +100,11 @@ const Recruit = () => {
     <div>
       <Header />
       <div className={styles['content-container']}>
-        <Tab currTab={currTab} onClick={handleClickTab} />
+        <Tab
+          currTab={currTab}
+          onClick={getType() === 'visitor' ? null : handleClickTab}
+          type={getType()}
+        />
         <div className={styles['img-card-container']}>
           <img
             className={styles['recruit-image']}

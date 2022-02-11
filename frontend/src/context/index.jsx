@@ -2,7 +2,7 @@ import { createContext, useReducer } from 'react';
 import { ADD_POSTS, CHANGE_USER_INFO, NOW_POST } from './actionTypes';
 
 const initialState = {
-  user: null,
+  user: { _id: '6204aad85d19a0c564d0572b' },
   posts: [],
   post: null,
 };
