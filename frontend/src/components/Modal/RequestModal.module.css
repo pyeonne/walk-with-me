@@ -1,0 +1,11 @@
+.content {
+  margin: 12rem auto auto auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 36rem;
+}
+.btn__group {
+  display: flex;
+  justify-content: space-between;
+}
