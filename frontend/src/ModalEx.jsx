@@ -1,9 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import RequestModal from './components/Modal/RequestModal';
 
 const ModalEx = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [content, setContent] = React.useState('');
+
+  useEffect(() => {
+    if (isOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
+  }, [isOpen]);
   const setModal = () => {
     console.log('called ');
     setIsOpen((prev) => !prev);
@@ -17,54 +22,38 @@ const ModalEx = () => {
       <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
-      </p>
-      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
       </p>
