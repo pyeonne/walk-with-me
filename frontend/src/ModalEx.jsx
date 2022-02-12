@@ -18,7 +18,60 @@ const ModalEx = () => {
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
         aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
       </p>
-      <RequestModal isOpen={isOpen} onClick={setModal} onChange={onChange} />
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+      </p>
+
+      {isOpen && (
+        <RequestModal isOpen={isOpen} onClick={setModal} onChange={onChange} />
+      )}
     </div>
   );
 };
