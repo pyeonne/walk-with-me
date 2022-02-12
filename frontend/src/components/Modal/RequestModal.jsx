@@ -1,10 +1,33 @@
+import React from 'react';
 import Button from '../Button/Button';
 import styles from './RequestModal.module.css';
 import Input from '../Input/Input';
 const RequestModal = (props) => {
+  const { onClick } = props;
+
+  // React.useEffect(() => {
+  //   const containerEl = document.getElementById('container');
+
+  //   containerEl.addEventListener('click', () => {
+  //     onClick();
+  //   });
+  // }, []);
   return (
-    <div className={props.isOpen ? styles.overlay : styles.none}>
-      <div className={styles['modal__window']}>
+    <div
+      // id='container'
+      onClick={() => {
+        // close modal when outside of modal is clicked
+        onClick();
+      }}
+      className={props.isOpen ? styles.overlay : styles.none}
+    >
+      <div
+        onClick={(e) => {
+          // do not close modal if anything inside modal content is clicked
+          e.stopPropagation();
+        }}
+        className={styles['modal__window']}
+      >
         <div className={styles['modal__container']}>
           <div className={styles['modal__header']}>
             <h2>자기소개를 입력해주세요!</h2>

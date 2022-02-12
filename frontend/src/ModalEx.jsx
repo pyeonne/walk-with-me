@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import RequestModal from './components/Modal/RequestModal';
 
 const ModalEx = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState('');
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [content, setContent] = React.useState('');
   const setModal = () => {
-    setIsOpen(!isOpen);
+    console.log('called ');
+    setIsOpen((prev) => !prev);
   };
   const onChange = (e) => setContent(e.target.value);
   return (
