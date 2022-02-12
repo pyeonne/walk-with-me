@@ -110,8 +110,9 @@ const Recruit = () => {
             src='https://cdn.pixabay.com/photo/2020/04/22/10/14/running-5077128_960_720.jpg'
           />
           <Card
-            cardType='detail-card'
+            cardType='detail'
             style={{ width: '28rem', height: '46rem' }}
+            post={post}
           />
         </div>
         <div className={styles['title-menu-container']}>
@@ -120,11 +121,12 @@ const Recruit = () => {
           {state.user === null
             ? null
             : post.author._id === state.user._id && (
-                <img
+                <button
                   className={styles['recruit-menu-button']}
-                  src={udmenu}
                   onClick={udmenuClick}
-                />
+                >
+                  <img src={udmenu} />
+                </button>
               )}
         </div>
         <div>

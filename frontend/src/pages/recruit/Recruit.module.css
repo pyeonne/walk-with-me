@@ -31,8 +31,9 @@ Header {
 .title-menu-container {
   display: flex;
   justify-content: space-between;
+  height: 4.001rem;
   width: 78rem;
-  margin-bottom: 1.601rem;
+  margin-bottom: 0;
 }
 
 .recruit-title {
@@ -42,9 +43,18 @@ Header {
 }
 
 .recruit-menu-button {
+  width: 4rem;
+  cursor: pointer;
+  position: relative;
+  background-color: #ffffff;
+}
+
+.recruit-menu-button img {
   width: 0.417rem;
   height: 1.867rem;
-  margin-right: 1.044rem;
+  position: absolute;
+  top: 0;
+  right: 1.044rem;
 }
 
 .recruit-menu-modal {

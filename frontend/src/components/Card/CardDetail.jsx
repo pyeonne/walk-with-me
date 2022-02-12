@@ -11,7 +11,7 @@ const CardDetail = ({ style, post }) => {
     <div style={style} className={`${styles['card']} ${styles['detail-card']}`}>
       <div className={styles['tags']}>
         {tags.map((tag) => {
-          const hashTag = `#${tag}`;
+          const hashTag = `${tag}`;
           return (
             <Button
               height='3rem'
@@ -37,6 +37,7 @@ const CardDetail = ({ style, post }) => {
           text={isRecruiting === true ? '모집중' : '모집완료'}
           radius='140px'
           bg='#ffffff'
+          className={styles['recruit-button']}
         />
         <Button
           width='26rem'
