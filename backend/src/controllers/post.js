@@ -20,6 +20,7 @@ exports.list = asyncHandler(async (req, res) => {
 
   if (Object.keys(queryObj).length === 0) {
     const posts = await Post.find().populate('author');
+
     res.status(200).json(posts);
     return;
   }
@@ -28,19 +29,19 @@ exports.list = asyncHandler(async (req, res) => {
   if (!category && !age)
     posts = await Post.find({
       $and: [{ isRecruiting }],
-    });
+    }).populate('author');
   else if (!category)
     posts = await Post.find({
       $and: [{ age }, { isRecruiting }],
-    });
+    }).populate('author');
   else if (!age)
     posts = await Post.find({
       $and: [{ category }, { isRecruiting }],
-    });
+    }).populate('author');
   else
     posts = await Post.find({
       $and: [{ age }, { category }, { isRecruiting }],
-    });
+    }).populate('author');
 
   res.status(200).json(posts);
 });
