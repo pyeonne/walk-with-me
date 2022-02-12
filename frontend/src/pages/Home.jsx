@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../context';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import Card from '../components/Card/Card';
 import Dropdown from '../components/Dropdown/Dropdown';
 import styles from './Home.module.css';
-
+import { v4 as uuidv4 } from 'uuid';
 import Pagination from '../components/Pagination/Pagination';
 import { ADD_POSTS } from '../context/actionTypes';
 
@@ -58,10 +58,12 @@ const Home = () => {
           <Link to='/RecruitRegister'>
             <Card cardType='create' />
           </Link>
-          {state.posts.map((post, idx) => (
-            <Link to={post._id} key={idx}>
-              <Card post={post} cardType='recruit' />
-            </Link>
+          {state.posts.map((post) => (
+            <React.Fragment key={uuidv4()}>
+              <Link to={post._id}>
+                <Card post={post} cardType='recruit' />
+              </Link>
+            </React.Fragment>
           ))}
         </div>
       </div>

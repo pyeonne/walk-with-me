@@ -3,6 +3,7 @@ import styles from './Card.module.css';
 import Button from '../Button/Button';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
+import { v4 as uuidv4 } from 'uuid';
 
 const CardRecruit = ({ post }) => {
   const [profileImgURL, setProfileImgURL] = useState(null);
@@ -28,21 +29,22 @@ const CardRecruit = ({ post }) => {
       <div className={styles['recruit-info']}>
         <div className={styles['recruit-text']}>
           <div className={styles['tags']}>
-            {tags.map((tag, idx) => {
+            {tags.map((tag) => {
               return (
-                <Button
-                  key={idx}
-                  height='1.7rem'
-                  radius='25px'
-                  ftsize='1.2rem'
-                  text={tag}
-                  bg='#ffffff'
-                  color='#7EDA8B'
-                  border='#7EDA8B solid 1px'
-                  style={{
-                    flexBasis: 'content',
-                  }}
-                />
+                <React.Fragment key={uuidv4()}>
+                  <Button
+                    height='1.7rem'
+                    radius='25px'
+                    ftsize='1.2rem'
+                    text={tag}
+                    bg='#ffffff'
+                    color='#7EDA8B'
+                    border='#7EDA8B solid 1px'
+                    style={{
+                      flexBasis: 'content',
+                    }}
+                  />
+                </React.Fragment>
               );
             })}
           </div>

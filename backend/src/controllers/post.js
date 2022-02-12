@@ -24,25 +24,23 @@ exports.list = asyncHandler(async (req, res) => {
     return;
   }
 
-  //
   let posts;
-  if (!category) {
-    posts = await Post.find({
-      $and: [{ age }, { isRecruiting }],
-    });
-  } else if (!age) {
-    posts = await Post.find({
-      $and: [{ category }, { isRecruiting }],
-    });
-  } else if (!category && !age) {
+  if (!category && !age)
     posts = await Post.find({
       $and: [{ isRecruiting }],
     });
-  } else {
+  else if (!category)
+    posts = await Post.find({
+      $and: [{ age }, { isRecruiting }],
+    });
+  else if (!age)
+    posts = await Post.find({
+      $and: [{ category }, { isRecruiting }],
+    });
+  else
     posts = await Post.find({
       $and: [{ age }, { category }, { isRecruiting }],
     });
-  }
 
   res.status(200).json(posts);
 });
