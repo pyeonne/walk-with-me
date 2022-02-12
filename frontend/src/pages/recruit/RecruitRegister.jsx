@@ -1,16 +1,13 @@
 import Header from '../../components/Header/Header';
-import Wrapper from '../../components/Wrapper/Wrapper';
 import Input from '../../components/Input/Input';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Button from '../../components/Button/Button';
 import styles from './RecruitRegister.module.css';
-import styled from 'styled-components';
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiClient } from '../../api/api';
 
 const RecruitRegister = () => {
-  const URL = 'http://localhost:4000';
   const navigate = useNavigate();
   const [area, setArea] = useState('');
   const [category, SetCategory] = useState('');
@@ -51,7 +48,7 @@ const RecruitRegister = () => {
 
   const apiCall = async () => {
     try {
-      const response = await axios.post(`${URL}/api/posts`, {
+      const response = await apiClient.post(`${URL}/api/posts`, {
         area,
         category,
         age,
