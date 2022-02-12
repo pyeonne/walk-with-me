@@ -104,8 +104,12 @@ exports.updateImg = asyncHandler(async (req, res) => {
 
 exports.getImage = asyncHandler(async (req, res) => {
   const { id } = req.params;
-
+  const defaultImagePath = `${process.cwd()}/default-image/Avatar.png`;
   const user = await User.findById(id);
+
+  if (!user.profileImagePath) {
+    return res.sendFile(defaultImagePath);
+  }
 
   res.sendFile(user.profileImagePath);
 });

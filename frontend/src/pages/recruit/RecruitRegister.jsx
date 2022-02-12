@@ -17,9 +17,15 @@ const RecruitRegister = () => {
   const [image, setImage] = useState('');
   const [imageName, setImageName] = useState('');
 
-  const onImageHandler = (event) => {
+  const onImageHandler = async (event) => {
     setImageName(event.currentTarget.files[0].name);
     setImage(event.currentTarget.value);
+
+    const formData = new FormData();
+    formData.append('img', event.target.files[0]);
+
+    const response = await apiClient.post('/api/posts/images', formData);
+    console.log(response);
   };
 
   const onAreaHandler = (event) => {
@@ -48,7 +54,7 @@ const RecruitRegister = () => {
 
   const apiCall = async () => {
     try {
-      const response = await apiClient.post(`${URL}/api/posts`, {
+      const response = await apiClient.post('/api/posts', {
         area,
         category,
         age,
@@ -63,7 +69,7 @@ const RecruitRegister = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    // apiCall();
+    apiCall();
   };
   return (
     <>
