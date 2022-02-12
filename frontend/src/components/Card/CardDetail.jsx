@@ -4,9 +4,95 @@ import Button from '../Button/Button';
 import contact from './images/contact_calender.svg';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
+import { apiClient } from '../../api/api';
+import { Context } from '../../context';
+import { useEffect, useState, useContext } from 'react';
+import { NOW_POST } from '../../context/actionTypes';
 
 const CardDetail = ({ style, post }) => {
+  let [state, dispatch] = useContext(Context);
   let { members, tags, likeMembers, like, pic, isRecruiting } = post;
+  let [buttonText, setButtonText] = useState('참가하기');
+  const user = state.user;
+
+  const getPost = async () => {
+    try {
+      const response = await apiClient.get('/api/posts/' + state.post._id);
+      console.log(response.data);
+      dispatch({
+        type: NOW_POST,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // const joinRequest = async () => {
+  //   try {
+  //     await apiClient.post('/api/posts/' + post._id + '/apply', {
+  //       postId: post._id,
+  //       userId: user._id,
+  //     });
+  //     getPost();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const joinRequestCancel = async () => {
+    try {
+      await apiClient.post('/api/posts/' + state.post._id + '/cancel');
+      getPost();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const withdraw = async () => {
+    try {
+      await apiClient.delete(
+        '/api/posts/' + state.post._id + '/management/' + user._id
+      );
+      getPost();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const joinRequest = () => {
+    console.log('hi');
+  };
+
+  const buttonHandler = (buttonText) => {
+    if (buttonText === '참가 취소하기') {
+      joinRequestCancel();
+      return;
+    }
+    if (buttonText === '탈퇴하기') {
+      withdraw();
+      return;
+    }
+    if (buttonText === '참가하기') {
+      joinRequest();
+      return;
+    }
+  };
+
+  const decideButtonText = () => {
+    if (state.post.preMembers.indexOf(user?._id) !== -1) {
+      setButtonText('참가 취소하기');
+      return;
+    }
+    if (state.post.members.indexOf(user?._id) !== -1) {
+      setButtonText('탈퇴하기');
+      return;
+    }
+  };
+
+  useEffect(() => {
+    decideButtonText();
+  }, []);
+
   return (
     <div style={style} className={`${styles['card']} ${styles['detail-card']}`}>
       <div className={styles['tags']}>
@@ -42,10 +128,18 @@ const CardDetail = ({ style, post }) => {
         <Button
           width='26rem'
           height='6rem'
-          color='#666666'
-          text='참가 신청'
+          color={
+            user === null || post.author._id === user._id
+              ? '#CCCCCC'
+              : '#666666'
+          }
+          text={buttonText}
           radius='140px'
           bg='#B2F2BB'
+          disabled={user === null || post.author._id === user._id}
+          onClick={() => {
+            buttonHandler(buttonText);
+          }}
         />
       </div>
 

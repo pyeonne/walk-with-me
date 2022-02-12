@@ -162,7 +162,6 @@ POST /api/posts/:id/cancel
 exports.cancel = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
-  const { bio } = req.body;
 
   await Post.findByIdAndUpdate(postId, {
     $pull: {
