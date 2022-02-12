@@ -1,32 +1,43 @@
-import { useState } from 'react';
 import RequestModal from './components/Modal/RequestModal';
 
-const Sss = () => {
-  const [modal, setModal] = useState(false);
-  const [content, setContent] = useState('');
-  const onModal = () => {
-    setModal((curr) => !curr);
-  };
-  const onSubmit = (event) => {
-    event.preventDefault();
-    console.log('온서브밋');
-  };
-  const onChange = (event) => {
-    setContent(event.target.value);
-  };
-  console.log(content);
+const ModalEx = () => {
   return (
     <div>
-      <button onClick={setModal}>클릭</button>
-      <RequestModal
-        isOpen={modal}
-        onClick={onModal}
-        onSubmit={onSubmit}
-        value={content}
-        onChange={onChange}
-      />
+      <p style={{ fontSize: '3.2rem' }}>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptate
+        aspernatur autem, distinctio eum ipsam veniam modi quibusdam eos amet
+        dolores itaque quo alias tempore. Accusantium commodi ex deleniti magnam
+        modi. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt
+        quis est vel debitis fugiat, temporibus nobis molestiae dolore saepe, a,
+        consequatur iste libero cum consequuntur unde ea. Ut, vero totam. Lorem
+        ipsum dolor sit, amet consectetur adipisicing elit. Voluptate aspernatur
+        autem, distinctio eum ipsam veniam modi quibusdam eos amet dolores
+        itaque quo alias tempore. Accusantium commodi ex deleniti magnam modi.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt quis
+        est vel debitis fugiat, temporibus nobis molestiae dolore saepe, a,
+        consequatur iste libero cum consequuntur unde ea. Ut, vero totam. Lorem
+        ipsum dolor sit, amet consectetur adipisicing elit. Voluptate aspernatur
+        autem, distinctio eum ipsam veniam modi quibusdam eos amet dolores
+        itaque quo alias tempore. Accusantium commodi ex deleniti magnam modi.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt quis
+        est vel debitis fugiat, temporibus nobis molestiae dolore saepe, a,
+        consequatur iste libero cum consequuntur unde ea. Ut, vero totam. Lorem
+        ipsum dolor sit, amet consectetur adipisicing elit. Voluptate aspernatur
+        autem, distinctio eum ipsam veniam modi quibusdam eos amet dolores
+        itaque quo alias tempore. Accusantium commodi ex deleniti magnam modi.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt quis
+        est vel debitis fugiat, temporibus nobis molestiae dolore saepe, a,
+        consequatur iste libero cum consequuntur unde ea. Ut, vero totam. Lorem
+        ipsum dolor sit, amet consectetur adipisicing elit. Voluptate aspernatur
+        autem, distinctio eum ipsam veniam modi quibusdam eos amet dolores
+        itaque quo alias tempore. Accusantium commodi ex deleniti magnam modi.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt quis
+        est vel debitis fugiat, temporibus nobis molestiae dolore saepe, a,
+        consequatur iste libero cum consequuntur unde ea. Ut, vero totam.
+      </p>
+      <RequestModal />
     </div>
   );
 };
 
-export default Sss;
+export default ModalEx;
