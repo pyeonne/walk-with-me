@@ -3,82 +3,11 @@ import Button from '../Button/Button';
 import styles from './RequestModal.module.css';
 import Input from '../Input/Input';
 
-// left: 37, up: 38, right: 39, down: 40,
-// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
-
-function preventDefault(e) {
-  e.preventDefault();
-}
-
-function preventDefaultForScrollKeys(e) {
-  if (keys[e.keyCode]) {
-    preventDefault(e);
-    return false;
-  }
-}
-
-// modern Chrome requires { passive: false } when adding event
-var supportsPassive = false;
-try {
-  window.addEventListener(
-    'test',
-    null,
-    Object.defineProperty({}, 'passive', {
-      get: function () {
-        supportsPassive = true;
-      },
-    })
-  );
-} catch (e) {}
-
-var wheelOpt = supportsPassive ? { passive: false } : false;
-var wheelEvent =
-  'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
-
-// call this to Disable
-function disableScroll() {
-  window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
-  window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
-  window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
-  window.addEventListener('keydown', preventDefaultForScrollKeys, false);
-}
-
-// call this to Enable
-function enableScroll() {
-  console.log('called ! ');
-  window.removeEventListener('DOMMouseScroll', preventDefault, false);
-  window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
-  window.removeEventListener('touchmove', preventDefault, wheelOpt);
-  window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
-}
-
 const RequestModal = (props) => {
-  const { onClick } = props;
-  React.useEffect(() => {
-    disableScroll();
-    return () => {
-      enableScroll();
-    };
-  }, []);
   return (
-    <div
-      onClick={() => {
-        // close modal when outside of modal is clicked
-        onClick();
-      }}
-      style={{
-        overflow: 'hidden',
-      }}
-      className={styles.overlay}
-    >
-      <div
-        onClick={(e) => {
-          // do not close modal if anything inside modal content is clicked
-          e.stopPropagation();
-        }}
-        className={styles['modal__window']}
-      >
+    <>
+      <div className={styles.backdrop} onClick={props.onClick} />
+      <div className={styles['modal__window']}>
         <div className={styles['modal__container']}>
           <div className={styles['modal__header']}>
             <h2>자기소개를 입력해주세요!</h2>
@@ -114,7 +43,7 @@ const RequestModal = (props) => {
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

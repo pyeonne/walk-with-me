@@ -1,3 +1,13 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
 .overlay {
   position: fixed;
   z-index: 9999;
@@ -17,13 +27,17 @@
   display: none;
 }
 .modal__window {
-  /* position: fixed; */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background-color: #ffffff;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   width: 50rem;
   height: 38.5rem;
   padding: 1rem;
   border-radius: 0.5rem;
+  z-index: 100;
 }
 
 .modal__container {
