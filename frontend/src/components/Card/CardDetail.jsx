@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Card.module.css';
 import Button from '../Button/Button';
 import contact from './images/contact_calender.svg';
@@ -6,13 +5,15 @@ import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 import { apiClient } from '../../api/api';
 import { Context } from '../../context';
-import { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { NOW_POST } from '../../context/actionTypes';
+import { v4 as uuidv4 } from 'uuid';
 
 const CardDetail = ({ style, post }) => {
   let [state, dispatch] = useContext(Context);
-  let { members, tags, likeMembers, like, pic, isRecruiting } = post;
+  let { members, tags, likeMembers, pic, isRecruiting } = post;
   let [buttonText, setButtonText] = useState('참가하기');
+  const [like, setLike] = useState(post.like);
   const user = state.user;
 
   const getPost = async () => {
@@ -78,6 +79,11 @@ const CardDetail = ({ style, post }) => {
     }
   };
 
+  const likeHandler = async (e) => {
+    e.preventDefault();
+    setLike((prev) => !prev);
+  };
+
   const decideButtonText = () => {
     if (state.post.preMembers.indexOf(user?._id) !== -1) {
       setButtonText('참가 취소하기');
@@ -99,14 +105,17 @@ const CardDetail = ({ style, post }) => {
         {tags.map((tag) => {
           const hashTag = `${tag}`;
           return (
-            <Button
-              height='3rem'
-              radius='25px'
-              ftsize='1.2rem'
-              text={hashTag}
-              bg='#F3F5F8'
-              color='#666666'
-            />
+            // component에 key props 을 넘길 시 컴포넌트가 항상 리랜더를 하게 됨 (리랜더 최적화 불가)
+            <React.Fragment key={uuidv4()}>
+              <Button
+                height='3rem'
+                radius='25px'
+                ftsize='1.2rem'
+                text={hashTag}
+                bg='#F3F5F8'
+                color='#666666'
+              />
+            </React.Fragment>
           );
         })}
       </div>
@@ -146,23 +155,25 @@ const CardDetail = ({ style, post }) => {
       <div className={styles['detail-buttons-bottom']}>
         <div className={styles['likes-people']}>
           {pic.map((p) => {
-            return <img src={p} />;
+            return <img key={uuidv4()} src={p} />;
           })}
         </div>
-
-        <Button
-          width='10rem'
-          height='4.6rem'
-          border='1px solid #dddddd'
-          color='#666666'
-          radius='140px'
-          flexBasis='center'
-          bg='#ffffff'
-          text={likeMembers.length}
-          ftsize='1.6rem'
-        >
-          {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
-        </Button>
+        <div className={styles['likes']}>
+          <Button
+            width='10rem'
+            height='4.6rem'
+            border='1px solid #dddddd'
+            color='#666666'
+            radius='140px'
+            flexBasis='center'
+            bg='#ffffff'
+            text={likeMembers.length}
+            ftsize='1.6rem'
+            onClick={(e) => likeHandler(e)}
+          >
+            {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
+          </Button>
+        </div>
       </div>
     </div>
   );
