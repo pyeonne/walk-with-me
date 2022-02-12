@@ -16,7 +16,7 @@ GET /api/posts?age=20&category=running
  */
 exports.list = asyncHandler(async (req, res) => {
   const queryObj = req.query;
-  const { age, category, area } = queryObj;
+  const { age, category, isRecruiting } = queryObj;
 
   if (Object.keys(queryObj).length === 0) {
     const posts = await Post.find().populate('author');
@@ -25,7 +25,7 @@ exports.list = asyncHandler(async (req, res) => {
   }
 
   const posts = await Post.find({
-    $or: [{ age }, { category }, { area }],
+    $or: [{ age }, { category }, { isRecruiting }],
   });
 
   res.status(200).json(posts);
