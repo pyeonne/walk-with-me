@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Card.module.css';
 import Button from '../Button/Button';
 import contact from './images/contact_calender.svg';
@@ -6,12 +6,18 @@ import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 import { v4 as uuidv4 } from 'uuid';
 const CardDetail = ({ style, post }) => {
-  let { members, tags, likeMembers, like, pic, isRecruiting } = post;
+  let { members, tags, likeMembers, pic, isRecruiting } = post;
+  const [like, setLike] = useState(post.like);
+  const likeHandler = async (e) => {
+    e.preventDefault();
+    setLike((prev) => !prev);
+  };
+
   return (
     <div style={style} className={`${styles['card']} ${styles['detail-card']}`}>
       <div className={styles['tags']}>
         {tags.map((tag) => {
-          const hashTag = `#${tag}`;
+          const hashTag = `${tag}`;
           return (
             // component에 key props 을 넘길 시 컴포넌트가 항상 리랜더를 하게 됨 (리랜더 최적화 불가)
             <React.Fragment key={uuidv4()}>
@@ -57,20 +63,22 @@ const CardDetail = ({ style, post }) => {
             return <img key={uuidv4()} src={p} />;
           })}
         </div>
-
-        <Button
-          width='10rem'
-          height='4.6rem'
-          border='1px solid #dddddd'
-          color='#666666'
-          radius='140px'
-          flexBasis='center'
-          bg='#ffffff'
-          text={likeMembers.length}
-          ftsize='1.6rem'
-        >
-          {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
-        </Button>
+        <div className={styles['likes']}>
+          <Button
+            width='10rem'
+            height='4.6rem'
+            border='1px solid #dddddd'
+            color='#666666'
+            radius='140px'
+            flexBasis='center'
+            bg='#ffffff'
+            text={likeMembers.length}
+            ftsize='1.6rem'
+            onClick={(e) => likeHandler(e)}
+          >
+            {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
+          </Button>
+        </div>
       </div>
     </div>
   );
