@@ -54,6 +54,6 @@ manageRouter.post('/allow', postCtrl.allow);
 manageRouter.post('/deny', postCtrl.deny);
 
 // 회원 퇴출
-manageRouter.delete('/', postCtrl.kick);
+manageRouter.delete('/kick', postCtrl.kick);
 
 module.exports = router;
