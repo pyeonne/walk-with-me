@@ -7,7 +7,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const CardRecruit = ({ post }) => {
   const [profileImgURL, setProfileImgURL] = useState(null);
-  let { author, tags, title, content, likeMembers, image, like } = post;
+  const [like, setLike] = useState(post.like);
+  const [likes, setLikes] = useState(post.likeMembers.length);
+  let { author, tags, title, content, likeMembers, image } = post;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${author?._id}/profile-image`;
 
   const getProfileImage = async () => {
@@ -16,7 +18,10 @@ const CardRecruit = ({ post }) => {
     const profileImgURL = URL.createObjectURL(blobImg);
     setProfileImgURL(profileImgURL);
   };
-
+  const likeHandler = async (e) => {
+    e.preventDefault();
+    setLike((prev) => !prev);
+  };
   useEffect(() => {
     if (author?._id) {
       getProfileImage();
@@ -73,8 +78,9 @@ const CardRecruit = ({ post }) => {
               radius='140px'
               flexBasis='center'
               bg='#ffffff'
-              text={likeMembers.length}
+              text={likes}
               ftsize='1.6rem'
+              onClick={(e) => likeHandler(e)}
             >
               {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
             </Button>
