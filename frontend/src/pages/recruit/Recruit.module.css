@@ -17,6 +17,10 @@ Header {
   margin-bottom: 3rem;
 }
 
+.img-card-container div {
+  margin: 0;
+}
+
 .recruit-image {
   width: 78rem;
   height: 46rem;

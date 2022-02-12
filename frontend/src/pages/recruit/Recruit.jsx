@@ -111,7 +111,7 @@ const Recruit = () => {
           />
           <Card
             cardType='detail-card'
-            style={{ width: '28rem', height: '45.5rem' }}
+            style={{ width: '28rem', height: '46rem' }}
           />
         </div>
         <div className={styles['title-menu-container']}>
