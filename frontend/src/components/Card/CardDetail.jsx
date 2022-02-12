@@ -4,7 +4,7 @@ import Button from '../Button/Button';
 import contact from './images/contact_calender.svg';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
-
+import { v4 as uuidv4 } from 'uuid';
 const CardDetail = ({ style, post }) => {
   let { members, tags, likeMembers, like, pic, isRecruiting } = post;
   return (
@@ -13,14 +13,17 @@ const CardDetail = ({ style, post }) => {
         {tags.map((tag) => {
           const hashTag = `#${tag}`;
           return (
-            <Button
-              height='3rem'
-              radius='25px'
-              ftsize='1.2rem'
-              text={hashTag}
-              bg='#F3F5F8'
-              color='#666666'
-            />
+            // component에 key props 을 넘길 시 컴포넌트가 항상 리랜더를 하게 됨 (리랜더 최적화 불가)
+            <React.Fragment key={uuidv4()}>
+              <Button
+                height='3rem'
+                radius='25px'
+                ftsize='1.2rem'
+                text={hashTag}
+                bg='#F3F5F8'
+                color='#666666'
+              />
+            </React.Fragment>
           );
         })}
       </div>
@@ -51,7 +54,7 @@ const CardDetail = ({ style, post }) => {
       <div className={styles['detail-buttons-bottom']}>
         <div className={styles['likes-people']}>
           {pic.map((p) => {
-            return <img src={p} />;
+            return <img key={uuidv4()} src={p} />;
           })}
         </div>
 
