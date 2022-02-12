@@ -2,13 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import styles from './Header.module.css';
 import darkMode from './images/darkMode.svg';
 import Avatar from '../Avatar/Avatar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
 
 const Header = () => {
+  const navigate = useNavigate();
   const [state, dispatch] = useContext(Context);
   const user = state.user;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
@@ -30,6 +31,7 @@ const Header = () => {
   }, []);
 
   const clickHandler = async () => {
+    navigate('/');
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
   };

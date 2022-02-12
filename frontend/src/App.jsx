@@ -7,12 +7,14 @@ import PasswordFind from './pages/auth/PasswordFind';
 import ProfileRegister from './pages/profile/ProfileRegister';
 import RecruitRegister from './pages/recruit/RecruitRegister';
 import Chatting from './pages/Chatting/Chatting';
+import Management from './pages/Management/Management';
+import Recruit from './pages/recruit/Recruit';
 import { networkService } from './api/api';
+import Profile from './pages/profile/Profile';
 
 console.log('import.meta.env :: ', import.meta.env);
 console.log('VITE_API_SERVER_URL :: ', import.meta.env.VITE_API_SERVER_URL);
 networkService.setupInterceptors();
-import Recruit from './pages/recruit/Recruit';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
       <Route path='/profile-register' element={<ProfileRegister />} />
       <Route path='/RecruitRegister' element={<RecruitRegister />} />
       <Route path='/chatting' element={<Chatting />} />
+      <Route path='/profile' element={<Profile />} />
+      <Route path='/:id/management' element={<Management />} />
       <Route path='/:postId' element={<Recruit />} />
     </Routes>
   );

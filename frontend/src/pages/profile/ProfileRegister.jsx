@@ -75,6 +75,7 @@ const ProfileRegister = memo(() => {
             name='nickname'
             placeholder='닉네임'
             className={styles.input}
+            required
           />
           <Dropdown
             ref={genderRef}
@@ -82,17 +83,20 @@ const ProfileRegister = memo(() => {
             type='gender'
             width='50rem'
             height='6rem'
+            required
           />
           <Input
             ref={ageRef}
             name='birthyear'
             placeholder='태어난 연도'
             type='number'
+            required
           />
           <Input
             ref={areaRef}
             name='area'
             placeholder='동 · 읍 · 면을 입력해주세요.'
+            required
           />
           <Button text='등록하기' />
         </form>
