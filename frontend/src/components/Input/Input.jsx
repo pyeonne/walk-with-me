@@ -73,6 +73,7 @@ const Input = forwardRef((props, ref) => {
           max='2022'
           step='1'
           ref={ref}
+          required={props.required}
         />
       </InputWrapper>
     );
