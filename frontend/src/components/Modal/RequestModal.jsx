@@ -3,7 +3,7 @@ import styles from './RequestModal.module.css';
 import Input from '../Input/Input';
 const RequestModal = (props) => {
   return (
-    <div className={styles.overlay}>
+    <div className={props.isOpen ? styles.overlay : styles.none}>
       <div className={styles['modal__window']}>
         <div className={styles['modal__container']}>
           <div className={styles['modal__header']}>
@@ -45,20 +45,3 @@ const RequestModal = (props) => {
 };
 
 export default RequestModal;
-// <Modal
-//   isOpen={props.isOpen}
-//   ariaHideApp={false}
-//   ref={el}
-//   style={{
-//     content: {
-//       height: '38.5rem',
-//       width: '50rem',
-//       left: '50%',
-//       top: '50%',
-//       padding: '1rem',
-//       transform: 'translate(-50%, -50%)',
-//     },
-//   }}
-// >
-
-// </Modal>
