@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="text/javascript">
+      function OKClicked() {
+        window.opener.setValue('Hello'); //I want to return true here
+        window.close(); //Close this child window
+      }
+      OKClicked();
+    </script>
+  </head>
+  <body>
+    <div>Loading...</div>
+  </body>
+</html>
