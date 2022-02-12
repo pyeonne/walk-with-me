@@ -6,6 +6,7 @@ const {
   checkPostExist,
 } = require('../middlewares/post');
 const { checkLogin, checkUserId } = require('../middlewares/auth');
+const upload = require('../utils/multer');
 
 const router = Router();
 const postRouter = Router();
@@ -27,7 +28,12 @@ postRouter.get('/', postCtrl.read);
 router.get('/', postCtrl.list);
 router.post('/', checkLogin, postCtrl.create);
 postRouter.put('/', checkLogin, checkOwnPost, postCtrl.update);
-postRouter.delete('/', checkLogin, checkOwnPost, postCtrl.delete);
+postRouter.delete('/', postCtrl.delete);
+
+// 포스트 사진 등록, 조회
+router.post('/images', upload.single('img'), (req, res) => {
+  console.log(req.file);
+});
 
 // 모집 상태 변경
 postRouter.put('/status', checkLogin, checkOwnPost, postCtrl.changeStatus);

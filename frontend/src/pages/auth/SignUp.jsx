@@ -1,13 +1,12 @@
-import Wrapper from '../../components/Wrapper/Wrapper';
 import Button from '../../components/Button/Button';
 import Logo from '../../components/Header/Logo';
 import Input from '../../components/Input/Input';
 import { useState, useContext } from 'react';
 import styles from './SignUp.module.css';
-import axios from 'axios';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { Link, useNavigate } from 'react-router-dom';
+import { apiClient } from '../../api/api';
 
 const SignUp = () => {
   const [state, dispatch] = useContext(Context);
@@ -72,13 +71,10 @@ const SignUp = () => {
   };
   const apiCall = async () => {
     try {
-      const response = await axios.post(
-        'http://localhost:4000/api/auth/signup',
-        {
-          email,
-          password,
-        }
-      );
+      const response = await apiClient.post('/api/auth/signup', {
+        email,
+        password,
+      });
       dispatch({
         type: CHANGE_USER_INFO,
         payload: response.data,
@@ -93,82 +89,82 @@ const SignUp = () => {
     apiCall();
   };
   return (
-    <Wrapper>
-      <div>
-        <div className={styles.logoArea}>
-          <Logo type='col' />
-        </div>
-        <article className={styles.content}>
-          <form method='POST' onSubmit={onSubmitHandler}>
-            <Input
-              type='email'
-              name='email'
-              placeholder='이메일'
-              autoComplete='off'
-              value={email}
-              onChange={emailHandler}
-              marginBottom='1rem'
-              required
-            />
-            {email.length > 0 && (
-              <div className={styles.txtArea}>
-                <small className={chkEmail ? styles.success : styles.error}>
-                  {emailMessage}
-                </small>
-              </div>
-            )}
-            <Input
-              type='password'
-              name='password'
-              placeholder='비밀번호'
-              autoComplete='off'
-              value={password}
-              onChange={passwordHandler}
-              required
-            />
-            {password.length > 0 && (
-              <div className={styles.txtArea}>
-                <small className={chkPassword ? styles.success : styles.error}>
-                  {passwordMessage}
-                </small>
-              </div>
-            )}
-            <Input
-              type='password'
-              name='confirmPassword'
-              placeholder='비밀번호 확인'
-              autoComplete='off'
-              value={confirmPassword}
-              onChange={confirmPasswrdHandler}
-              required
-            />
-            {confirmPassword.length > 0 && (
-              <div className={styles.txtArea}>
-                <small
-                  className={chkConfirmPassword ? styles.success : styles.error}
-                >
-                  {confirmPasswordMessage}
-                </small>
-              </div>
-            )}
-
-            <Button
-              type='submit'
-              text='회원가입'
-              disabled={!(chkEmail && chkPassword && chkConfirmPassword)}
-            />
-          </form>
-          <div className={styles.footer}>
-            <p>
-              이미 계정이 있으신가요?{' '}
-              <Link to='/signin' className={styles.logtxt}>
-                로그인하기
-              </Link>
-            </p>
-          </div>
-        </article>
+    <div className={styles.container}>
+      <div className={styles.logoArea}>
+        <Logo type='col' />
       </div>
-    </Wrapper>
+      <article className={styles.content}>
+        <form method='POST' onSubmit={onSubmitHandler}>
+          <Input
+            type='email'
+            name='email'
+            placeholder='이메일'
+            autoComplete='off'
+            value={email}
+            onChange={emailHandler}
+            marginBottom='1rem'
+            required
+          />
+          {email.length > 0 && (
+            <div className={styles.txtArea}>
+              <small className={chkEmail ? styles.success : styles.error}>
+                {emailMessage}
+              </small>
+            </div>
+          )}
+          <Input
+            type='password'
+            name='password'
+            placeholder='비밀번호'
+            autoComplete='off'
+            value={password}
+            onChange={passwordHandler}
+            marginBottom='1rem'
+            required
+          />
+          {password.length > 0 && (
+            <div className={styles.txtArea}>
+              <small className={chkPassword ? styles.success : styles.error}>
+                {passwordMessage}
+              </small>
+            </div>
+          )}
+          <Input
+            type='password'
+            name='confirmPassword'
+            placeholder='비밀번호 확인'
+            autoComplete='off'
+            value={confirmPassword}
+            onChange={confirmPasswrdHandler}
+            marginBottom='1rem'
+            required
+          />
+          {confirmPassword.length > 0 && (
+            <div className={styles.txtArea}>
+              <small
+                className={chkConfirmPassword ? styles.success : styles.error}
+              >
+                {confirmPasswordMessage}
+              </small>
+            </div>
+          )}
+
+          <Button
+            type='submit'
+            text='회원가입'
+            disabled={!(chkEmail && chkPassword && chkConfirmPassword)}
+          />
+        </form>
+        <div className={styles.footer}>
+          <p>
+            이미 계정이 있으신가요?{' '}
+            <Link to='/signin' className={styles.logtxt}>
+              로그인하기
+            </Link>
+          </p>
+        </div>
+      </article>
+    </div>
   );
 };
 export default SignUp;
