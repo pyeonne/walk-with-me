@@ -8,7 +8,6 @@ import ProfileRegister from './pages/profile/ProfileRegister';
 import RecruitRegister from './pages/recruit/RecruitRegister';
 import Chatting from './pages/Chatting/Chatting';
 import { networkService } from './api/api';
-import Sss from './Sss';
 console.log('import.meta.env :: ', import.meta.env);
 console.log('VITE_API_SERVER_URL :: ', import.meta.env.VITE_API_SERVER_URL);
 networkService.setupInterceptors();
@@ -25,7 +24,6 @@ function App() {
       <Route path='/RecruitRegister' element={<RecruitRegister />} />
       <Route path='/chatting' element={<Chatting />} />
       <Route path='/:postId' element={<Recruit />} />
-      <Route path='/123' element={<Sss />} />
     </Routes>
   );
 }

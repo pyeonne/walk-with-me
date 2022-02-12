@@ -1,16 +1,13 @@
 import Header from '../../components/Header/Header';
-import Wrapper from '../../components/Wrapper/Wrapper';
 import Input from '../../components/Input/Input';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Button from '../../components/Button/Button';
 import styles from './RecruitRegister.module.css';
-import styled from 'styled-components';
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiClient } from '../../api/api';
 
 const RecruitRegister = () => {
-  const URL = 'http://localhost:4000';
   const navigate = useNavigate();
   const [area, setArea] = useState('');
   const [category, SetCategory] = useState('');
@@ -20,9 +17,15 @@ const RecruitRegister = () => {
   const [image, setImage] = useState('');
   const [imageName, setImageName] = useState('');
 
-  const onImageHandler = (event) => {
+  const onImageHandler = async (event) => {
     setImageName(event.currentTarget.files[0].name);
     setImage(event.currentTarget.value);
+
+    const formData = new FormData();
+    formData.append('img', event.target.files[0]);
+
+    const response = await apiClient.post('/api/posts/images', formData);
+    console.log(response);
   };
 
   const onAreaHandler = (event) => {
@@ -51,7 +54,7 @@ const RecruitRegister = () => {
 
   const apiCall = async () => {
     try {
-      const response = await axios.post(`${URL}/api/posts`, {
+      const response = await apiClient.post('/api/posts', {
         area,
         category,
         age,
@@ -66,7 +69,7 @@ const RecruitRegister = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    // apiCall();
+    apiCall();
   };
   return (
     <>

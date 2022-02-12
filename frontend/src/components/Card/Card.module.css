@@ -144,7 +144,7 @@
   width: 2.5rem;
   height: 2.5rem;
   margin-right: 0.5rem;
-  /* margin-right: 1.5rem; */
+  border-radius: 50%;
 }
 .recruit-text .tags button {
   cursor: pointer;
