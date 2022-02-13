@@ -51,10 +51,11 @@ const CardDetail = ({ style, post }) => {
           bio,
         }
       );
-      console.log('응답 ', response);
       getPost();
+      alert('참가 신청이 완료 되었습니다!');
+      modalHandler();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

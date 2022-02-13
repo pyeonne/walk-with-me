@@ -5,7 +5,7 @@ const { ObjectId } = mongoose.Types;
 
 exports.checkTokenAndSetUser = asyncHandler(async (req, res, next) => {
   const { token } = req.cookies;
-  console.log('응답', token);
+  // console.log('응답', token);
   if (!token) return next();
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
