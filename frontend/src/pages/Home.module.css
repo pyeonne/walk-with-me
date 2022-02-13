@@ -1,0 +1,23 @@
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.filter {
+  display: flex;
+  justify-content: right;
+  margin-bottom: 3rem;
+}
+
+.filter select {
+  margin-right: 1rem;
+}
+
+.card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card-wrapper a {
+  text-decoration: none;
+}

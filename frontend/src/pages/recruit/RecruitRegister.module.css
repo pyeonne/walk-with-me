@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 90px);
+}
+.title-area {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+.title-area h2 {
+  font-size: 2.2rem;
+  font-weight: lighter;
+  color: var(--first-color);
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.imgInput {
+  margin-bottom: 2rem;
+}
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+article select {
+  margin-bottom: 1rem;
+}
+/* 인풋 파일 */
+.filebox {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.file-name {
+  display: inline-block;
+  height: 3rem;
+  padding: 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  width: 80%;
+  color: #999999;
+  background-color: #ffffff;
+}
+
+.filebox label {
+  display: inline-block;
+  padding: 1rem 2rem;
+  color: #ffffff;
+  background-color: var(--first-color);
+  cursor: pointer;
+  height: 3rem;
+  border-radius: 0.4rem;
+  transition: background-color 0.4s;
+}
+
+.filebox label:hover {
+  background-color: #7eda8b;
+  transition: background-color 0.4s;
+}
+
+.filebox input[type='file'] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
