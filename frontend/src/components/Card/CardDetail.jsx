@@ -8,6 +8,7 @@ import { Context } from '../../context';
 import React, { useEffect, useState, useContext } from 'react';
 import { NOW_POST } from '../../context/actionTypes';
 import { v4 as uuidv4 } from 'uuid';
+import RequestModal from '../Modal/RequestModal';
 
 const CardDetail = ({ style, post }) => {
   let [state, dispatch] = useContext(Context);
@@ -15,6 +16,19 @@ const CardDetail = ({ style, post }) => {
   let [buttonText, setButtonText] = useState('참가하기');
   const [like, setLike] = useState(post.like);
   const user = state.user;
+
+  // 모달
+  const [isOpen, setIsOpen] = useState(false);
+  const [bio, setBio] = useState('');
+  useEffect(() => {
+    if (isOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
+  }, [isOpen]);
+
+  const modalHandler = () => {
+    setIsOpen((curr) => !curr);
+  };
+  const contentHandler = (event) => setBio(event.currentTarget.value);
 
   const getPost = async () => {
     try {
@@ -28,17 +42,21 @@ const CardDetail = ({ style, post }) => {
       console.log(err);
     }
   };
-  // const joinRequest = async () => {
-  //   try {
-  //     await apiClient.post('/api/posts/' + post._id + '/apply', {
-  //       postId: post._id,
-  //       userId: user._id,
-  //     });
-  //     getPost();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const joinRequest = async (event) => {
+    try {
+      event.preventDefault();
+      const response = await apiClient.post(
+        '/api/posts/' + post._id + '/apply',
+        {
+          bio,
+        }
+      );
+      console.log('응답 ', response);
+      getPost();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const joinRequestCancel = async () => {
     try {
@@ -60,10 +78,6 @@ const CardDetail = ({ style, post }) => {
     }
   };
 
-  const joinRequest = () => {
-    console.log('hi');
-  };
-
   const buttonHandler = (buttonText) => {
     if (buttonText === '참가 취소하기') {
       joinRequestCancel();
@@ -74,11 +88,10 @@ const CardDetail = ({ style, post }) => {
       return;
     }
     if (buttonText === '참가하기') {
-      joinRequest();
+      modalHandler();
       return;
     }
   };
-
   const likeHandler = async (e) => {
     e.preventDefault();
     setLike((prev) => !prev);
@@ -100,82 +113,95 @@ const CardDetail = ({ style, post }) => {
   }, []);
 
   return (
-    <div style={style} className={`${styles['card']} ${styles['detail-card']}`}>
-      <div className={styles['tags']}>
-        {tags.map((tag) => {
-          const hashTag = `${tag}`;
-          return (
-            // component에 key props 을 넘길 시 컴포넌트가 항상 리랜더를 하게 됨 (리랜더 최적화 불가)
-            <React.Fragment key={uuidv4()}>
-              <Button
-                height='3rem'
-                radius='25px'
-                ftsize='1.2rem'
-                text={hashTag}
-                bg='#F3F5F8'
-                color='#666666'
-              />
-            </React.Fragment>
-          );
-        })}
-      </div>
-      <div className={styles['detail-text']}>
-        <img src={contact} />
-        <span>{members.length}명</span>
-      </div>
-      <div className={styles['detail-buttons-middle']}>
-        <Button
-          width='26rem'
-          height='6rem'
-          border='1px solid #7EDA8B'
-          color='#7EDA8B'
-          text={isRecruiting === true ? '모집중' : '모집완료'}
-          radius='140px'
-          bg='#ffffff'
-          className={styles['recruit-button']}
-        />
-        <Button
-          width='26rem'
-          height='6rem'
-          color={
-            user === null || post.author._id === user._id
-              ? '#CCCCCC'
-              : '#666666'
-          }
-          text={buttonText}
-          radius='140px'
-          bg='#B2F2BB'
-          disabled={user === null || post.author._id === user._id}
-          onClick={() => {
-            buttonHandler(buttonText);
-          }}
-        />
-      </div>
-
-      <div className={styles['detail-buttons-bottom']}>
-        <div className={styles['likes-people']}>
-          {pic.map((p) => {
-            return <img key={uuidv4()} src={p} />;
+    <>
+      <div
+        style={style}
+        className={`${styles['card']} ${styles['detail-card']}`}
+      >
+        <div className={styles['tags']}>
+          {tags.map((tag) => {
+            const hashTag = `${tag}`;
+            return (
+              // component에 key props 을 넘길 시 컴포넌트가 항상 리랜더를 하게 됨 (리랜더 최적화 불가)
+              <React.Fragment key={uuidv4()}>
+                <Button
+                  height='3rem'
+                  radius='25px'
+                  ftsize='1.2rem'
+                  text={hashTag}
+                  bg='#F3F5F8'
+                  color='#666666'
+                />
+              </React.Fragment>
+            );
           })}
         </div>
-        <div className={styles['likes']}>
+        <div className={styles['detail-text']}>
+          <img src={contact} />
+          <span>{members.length}명</span>
+        </div>
+        <div className={styles['detail-buttons-middle']}>
           <Button
-            width='10rem'
-            height='4.6rem'
-            border='1px solid #dddddd'
-            color='#666666'
+            width='26rem'
+            height='6rem'
+            border='1px solid #7EDA8B'
+            color='#7EDA8B'
+            text={isRecruiting === true ? '모집중' : '모집완료'}
             radius='140px'
-            flexBasis='center'
             bg='#ffffff'
-            text={likeMembers.length}
-            ftsize='1.6rem'
-            onClick={(e) => likeHandler(e)}
-          >
-            {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
-          </Button>
+            className={styles['recruit-button']}
+          />
+          <Button
+            width='26rem'
+            height='6rem'
+            color={
+              user === null || post.author._id === user._id
+                ? '#CCCCCC'
+                : '#666666'
+            }
+            text={buttonText}
+            radius='140px'
+            bg='#B2F2BB'
+            disabled={user === null || post.author._id === user._id}
+            onClick={() => {
+              buttonHandler(buttonText);
+            }}
+          />
+        </div>
+        <div className={styles['detail-buttons-bottom']}>
+          <div className={styles['likes-people']}>
+            {pic.map((p) => {
+              return <img key={uuidv4()} src={p} />;
+            })}
+          </div>
+          <div className={styles['likes']}>
+            <Button
+              width='10rem'
+              height='4.6rem'
+              border='1px solid #dddddd'
+              color='#666666'
+              radius='140px'
+              flexBasis='center'
+              bg='#ffffff'
+              text={likeMembers.length}
+              ftsize='1.6rem'
+              onClick={(e) => likeHandler(e)}
+            >
+              {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+      {isOpen && (
+        <RequestModal
+          isOpen={isOpen}
+          value={bio}
+          onClick={modalHandler}
+          onChange={contentHandler}
+          onSubmit={joinRequest}
+        />
+      )}
+    </>
   );
 };
 
