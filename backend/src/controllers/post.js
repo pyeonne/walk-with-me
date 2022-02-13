@@ -16,17 +16,32 @@ GET /api/posts?age=20&category=running
  */
 exports.list = asyncHandler(async (req, res) => {
   const queryObj = req.query;
-  const { age, category, area } = queryObj;
+  const { age, category, isRecruiting } = queryObj;
 
   if (Object.keys(queryObj).length === 0) {
     const posts = await Post.find().populate('author');
+
     res.status(200).json(posts);
     return;
   }
 
-  const posts = await Post.find({
-    $or: [{ age }, { category }, { area }],
-  });
+  let posts;
+  if (!category && !age)
+    posts = await Post.find({
+      $and: [{ isRecruiting }],
+    }).populate('author');
+  else if (!category)
+    posts = await Post.find({
+      $and: [{ age }, { isRecruiting }],
+    }).populate('author');
+  else if (!age)
+    posts = await Post.find({
+      $and: [{ category }, { isRecruiting }],
+    }).populate('author');
+  else
+    posts = await Post.find({
+      $and: [{ age }, { category }, { isRecruiting }],
+    }).populate('author');
 
   res.status(200).json(posts);
 });
@@ -187,6 +202,7 @@ exports.management = asyncHandler(async (req, res) => {
     .populate('preMembers');
 
   res.status(200).json({
+    _id,
     members: post.members,
     preMembers: post.preMembers,
   });
@@ -199,6 +215,7 @@ exports.allow = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
 
+  console.log(userId);
   const user = await User.findById(userId);
   await user.deleteApplyPost(postId);
 

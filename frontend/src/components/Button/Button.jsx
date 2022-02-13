@@ -1,5 +1,5 @@
 import React, { memo, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import kakao from './images/kakao.svg';
 import google from './images/google.svg';
 
@@ -47,6 +47,7 @@ const Button = memo((props) => {
     <>
       {image ? (
         <StyledButton
+          type={props.type}
           width={props.width}
           height={props.height}
           bg={props.bg}
@@ -55,12 +56,14 @@ const Button = memo((props) => {
           ftsize={props.ftsize}
           border={props.border}
           onClick={props.onClick}
+          disabled={props.disabled}
         >
           <BtnImage image={props.image} />
           {props.text}
         </StyledButton>
       ) : (
         <StyledButton
+          type={props.type}
           width={props.width}
           height={props.height}
           bg={props.bg}
@@ -69,7 +72,9 @@ const Button = memo((props) => {
           ftsize={props.ftsize}
           border={props.border}
           onClick={props.onClick}
+          disabled={props.disabled}
         >
+          {props.children}
           {props.text}
         </StyledButton>
       )}
