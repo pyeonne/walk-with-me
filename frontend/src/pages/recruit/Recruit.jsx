@@ -73,10 +73,10 @@ const Recruit = () => {
         navigate('/');
         break;
       case '채팅방':
-        navigate('/signin');
+        navigate(`/${post._id}/chatting`);
         break;
       case '회원 관리':
-        navigate('/password-find');
+        navigate(`/${post._id}/management`);
         break;
     }
   };

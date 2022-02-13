@@ -25,7 +25,7 @@ function App() {
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
       <Route path='/recruit-register' element={<RecruitRegister />} />
-      <Route path='/chatting' element={<Chatting />} />
+      <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
       <Route path='/:postId' element={<Recruit />} />

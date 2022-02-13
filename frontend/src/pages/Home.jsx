@@ -55,7 +55,7 @@ const Home = () => {
           />
         </div>
         <div className={styles['card-wrapper']}>
-          <Link to='/RecruitRegister'>
+          <Link to='/recruit-register'>
             <Card cardType='create' />
           </Link>
           {state.posts.map((post) => (
