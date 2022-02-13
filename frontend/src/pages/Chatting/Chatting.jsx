@@ -5,7 +5,7 @@ import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
 
 const Chatting = (props) => {
-  const [currTab, setCurrTab] = useState('소개');
+  const [currTab, setCurrTab] = useState('채팅방');
   const handleClickTab = (tab) => {
     setCurrTab(tab);
   };

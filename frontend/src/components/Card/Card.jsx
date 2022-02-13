@@ -4,7 +4,6 @@ import CardDetail from './CardDetail';
 import React from 'react';
 
 const Card = ({ style, post, cardType }) => {
-  console.log(post);
   if (cardType === 'create') return <CardCreate style={style} />;
 
   if (!post) {

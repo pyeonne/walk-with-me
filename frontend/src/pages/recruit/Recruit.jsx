@@ -47,7 +47,6 @@ const Recruit = () => {
       const response = await axios.get(
         'http://localhost:4000/api/posts/' + postId
       );
-      console.log(response.data);
 
       dispatch({
         type: NOW_POST,
@@ -101,7 +100,7 @@ const Recruit = () => {
       <div className={styles['content-container']}>
         <Tab
           currTab={currTab}
-          onClick={getType() === 'visitor' ? null : handleClickTab}
+          onClick={getType() === 'visitor' ? () => {} : handleClickTab}
           type={getType()}
         />
         <div className={styles['img-card-container']}>

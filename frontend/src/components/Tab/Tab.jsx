@@ -4,14 +4,14 @@ import styles from './Tab.module.css';
 const Tab = ({ currTab, onClick, type }) => {
   const leaderTab = ['소개', '채팅방', '회원 관리'];
   const memberTab = ['소개', '채팅방'];
-  let tab;
+  let tabs;
 
-  if (type === 'leader') tab = leaderTab;
-  else tab = memberTab;
+  if (type === 'leader') tabs = leaderTab;
+  else tabs = memberTab;
 
   return (
     <div className={styles.container}>
-      {tab.map((tab, i) => {
+      {tabs.map((tab, i) => {
         return (
           <span
             className={type === 'visitor' ? styles.notMemeberTab : styles.tab}
