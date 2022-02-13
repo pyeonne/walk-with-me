@@ -102,8 +102,8 @@ const SignIn = () => {
               required
             />
             <div className={styles.forget}>
-              <Link to='/' className={styles.forgetTxt}>
-                <p>비밀번호를 잊어버리셨나요?</p>
+              <Link to='/password-find' className={styles.forgetTxt}>
+                비밀번호를 잊어버리셨나요?
               </Link>
             </div>
             <Button
