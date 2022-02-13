@@ -24,9 +24,9 @@ function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
-      <Route path='/RecruitRegister' element={<RecruitRegister />} />
+      <Route path='/recruit-register' element={<RecruitRegister />} />
       <Route path='/chatting' element={<Chatting />} />
-      <Route path='/profile' element={<Profile />} />
+      <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
       <Route path='/:postId' element={<Recruit />} />
     </Routes>
