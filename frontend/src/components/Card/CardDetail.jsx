@@ -14,7 +14,7 @@ const CardDetail = ({ style, post }) => {
   let [state, dispatch] = useContext(Context);
   let { members, tags, likeMembers, pic, isRecruiting } = post;
   let [buttonText, setButtonText] = useState('참가하기');
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(false);
   const user = state.user;
 
   // 모달
@@ -92,14 +92,34 @@ const CardDetail = ({ style, post }) => {
     }
   };
 
-  // const Like = async () => {
-  //   try {
+  const likeEvent = async () => {
+    try {
+      await apiClient.post('/api/posts/' + state.post._id + '/likes');
+      likeHandler();
+      getPost();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //   }
-  // }
+  const unLikeEvent = async () => {
+    try {
+      await apiClient.delete('/api/posts/' + state.post._id + '/likes');
+      likeHandler();
+      getPost();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const isLike = (like) => {
+    if (like) {
+      unLikeEvent();
+      return;
+    }
+    likeEvent();
+    return;
+  };
 
   const buttonHandler = (buttonText) => {
     if (buttonText === '참가 취소하기') {
@@ -115,8 +135,8 @@ const CardDetail = ({ style, post }) => {
       return;
     }
   };
-  const likeHandler = async (e) => {
-    e.preventDefault();
+  const likeHandler = async () => {
+    // event.preventDefault();
     setLike((prev) => !prev);
   };
 
@@ -133,6 +153,7 @@ const CardDetail = ({ style, post }) => {
 
   useEffect(() => {
     decideButtonText();
+    setLike(state.post.likeMembers.indexOf(user?._id) !== -1);
   }, []);
 
   return (
@@ -206,11 +227,24 @@ const CardDetail = ({ style, post }) => {
               radius='140px'
               flexBasis='center'
               bg='#ffffff'
-              text={likeMembers.length}
               ftsize='1.6rem'
-              onClick={(e) => likeHandler(e)}
+              onClick={
+                user === null
+                  ? () => {
+                      alert('회원만 사용할 수 있는 기능입니다.');
+                    }
+                  : () => {
+                      isLike(like);
+                    }
+              }
             >
-              {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
+              <img
+                className={styles.heart}
+                src={like === true ? heartRed : heartGray}
+              />
+              <span className={styles.likeMembersNum}>
+                {likeMembers.length}
+              </span>
             </Button>
           </div>
         </div>

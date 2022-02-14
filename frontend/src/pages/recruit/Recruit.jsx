@@ -101,7 +101,7 @@ const Recruit = () => {
       <div className={styles['content-container']}>
         <Tab
           currTab={currTab}
-          onClick={getType() === 'visitor' ? null : handleClickTab}
+          onClick={getType() === 'visitor' ? () => null : handleClickTab}
           type={getType()}
         />
         <div className={styles['img-card-container']}>
