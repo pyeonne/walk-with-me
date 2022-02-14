@@ -120,7 +120,8 @@ exports.read = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const readUser = await User.findOne({ _id: id })
     .populate('likePosts')
-    .populate('joinedPosts');
+    .populate('joinedPosts')
+    .populate('applyPosts');
   console.log(readUser);
   if (!readUser) {
     const error = new Error('가입되지 않은 계정입니다.');

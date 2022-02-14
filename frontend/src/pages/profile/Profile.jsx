@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Avatar from '../../components/Avatar/Avatar';
 import { Context } from '../../context';
 import Header from '../../components/Header/Header';
 import Arrow from './icons/Arrow';
-import Explore from './icons/explore';
 import Face from './icons/Face';
 import styles from './profile.module.css';
-import Calendar from './icons/Calendar';
 import { apiClient } from '../../api/api';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
-import { v4 as uuidv4 } from 'uuid';
+import MyProfile from './MyProfile';
+import List from './List';
 
 const Profile = (props) => {
   const [state, dispatch] = useContext(Context);
@@ -17,21 +15,20 @@ const Profile = (props) => {
   const [my, setMy] = useState(false);
   const [apply, setApply] = useState(false);
   const id = window.location.pathname.split('/')[1];
-  const loading = 'loading...';
-
-  const activeLike = (event) => {
+  const [load, setLoad] = useState(true);
+  const activeLike = () => {
     setLike(!like);
   };
-  const activeMy = (event) => {
+  const activeMy = () => {
     setMy(!my);
   };
-  const activeApply = (event) => {
+  const activeApply = () => {
     setApply(!apply);
   };
   const getUserInfo = async () => {
     try {
       const res = await apiClient.get(`/api/auth/${id}/profile`);
-      console.log(res.data);
+      // console.log(res.data);
       dispatch({ type: CHANGE_USER_INFO, payload: res.data });
     } catch (err) {
       alert(err);
@@ -48,34 +45,20 @@ const Profile = (props) => {
       payload: { ...state.user, profileImgURL },
     });
   };
+  const changeState = async () => {
+    setLoad(false);
+  };
   useEffect(() => {
-    getUserInfo();
-    getProfileImage();
+    getUserInfo().then(getProfileImage());
+    // getProfileImage();
   }, []);
-  // return <>ddddd</>;
-  if (state.user.likePosts === undefined) return <>{loading}</>;
+  // if (load) return <>load</>;
   return (
     <div>
       <Header />
       {/* 회원 프로필 정보 */}
       <div className={styles.container}>
-        <h2 className={styles.title}>나의 정보</h2>
-        <div className={styles.profile}>
-          <div className={styles.avatar}>
-            <Avatar width='8rem' height='8rem' src={state.user.profileImgURL} />
-          </div>
-          <div className={styles.info}>
-            <div className={styles.name}>
-              <h3>{state.user.nickname}</h3>
-              <p className={styles.date}>{state.user.birthYear}년생</p>
-            </div>
-            <div className={styles.areaWrapper}>
-              <Explore />
-              <h3 className={styles.area}>{state.user.area}</h3>
-            </div>
-          </div>
-        </div>
-        {/* 목록 */}
+        <MyProfile user={state.user} />
         {/* 내 관심 모임 */}
         <section className={styles.histories}>
           <div className={styles.wrapper} onClick={activeLike}>
@@ -89,36 +72,7 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${like && styles.open}`}>
-              {state.user.likePosts.map((post) => {
-                // console.log(post);
-                return (
-                  <div key={uuidv4()} className={styles.article}>
-                    <div className={styles.img}>
-                      <img src={post.image} alt='' />
-                    </div>
-                    <div className={styles.summary}>
-                      <h3>{post.title}</h3>
-                      <div className={styles.tags}>
-                        {[
-                          `#${post.area}`,
-                          `#${post.age}대`,
-                          `#${post.category}`,
-                        ].map((tag) => {
-                          return (
-                            <p key={uuidv4()} className={styles.tag}>
-                              {tag}
-                            </p>
-                          );
-                        })}
-                      </div>
-                      <div className={styles.count}>
-                        <Calendar />
-                        <p>{post.members.length}명</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              <List type='likePosts' user={state.user} />
             </div>
           </div>
           {/* 내 모임 */}
@@ -133,35 +87,7 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${my && styles.open}`}>
-              {state.user.joinedPosts.map((post) => {
-                return (
-                  <div key={uuidv4()} className={styles.article}>
-                    <div className={styles.img}>
-                      <img src={post.image} alt='' />
-                    </div>
-                    <div className={styles.summary}>
-                      <h3>{post.title}</h3>
-                      <div className={styles.tags}>
-                        {[
-                          `#${post.area}`,
-                          `#${post.age}대`,
-                          `#${post.category}`,
-                        ].map((tag) => {
-                          return (
-                            <p key={uuidv4()} className={styles.tag}>
-                              {tag}
-                            </p>
-                          );
-                        })}
-                      </div>
-                      <div className={styles.count}>
-                        <Calendar />
-                        <p>{post.members.length}명</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              <List type='joinedPosts' user={state.user} />
             </div>
           </div>
           {/* 가입 신청한 모임 */}
@@ -176,6 +102,7 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${apply && styles.open}`}>
+              {/* <List type='applyPosts' user={state.user} /> */}
               {/* {state.user.applyPosts.map((post) => {
                 return (
                   <div key={uuidv4()} className={styles.article}>
