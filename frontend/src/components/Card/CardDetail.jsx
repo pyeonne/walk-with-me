@@ -42,18 +42,17 @@ const CardDetail = ({ style, post }) => {
       console.log(err);
     }
   };
+
   const joinRequest = async (event) => {
     try {
       event.preventDefault();
-      const response = await apiClient.post(
-        '/api/posts/' + post._id + '/apply',
-        {
-          bio,
-        }
-      );
+      await apiClient.post('/api/posts/' + post._id + '/apply', {
+        bio,
+      });
       getPost();
       alert('참가 신청이 완료 되었습니다!');
       modalHandler();
+      setButtonText('참가 취소하기');
     } catch (err) {
       // console.log(err);
     }
@@ -61,19 +60,33 @@ const CardDetail = ({ style, post }) => {
 
   const joinRequestCancel = async () => {
     try {
-      await apiClient.post('/api/posts/' + state.post._id + '/cancel');
-      getPost();
+      let isCancel;
+
+      isCancel = confirm('참가 신청을 취소하시겠습니까?');
+
+      if (isCancel) {
+        await apiClient.post('/api/posts/' + state.post._id + '/cancel');
+        getPost();
+        alert('참가 신청이 취소되었습니다.');
+        setButtonText('참가하기');
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const withdraw = async () => {
+  const leave = async () => {
     try {
-      await apiClient.delete(
-        '/api/posts/' + state.post._id + '/management/' + user._id
-      );
-      getPost();
+      let isLeave;
+
+      isLeave = confirm('탈퇴하시겠습니까?');
+
+      if (isLeave) {
+        await apiClient.post('/api/posts/' + state.post._id + '/leave');
+        getPost();
+        alert('모임에서 탈퇴되었습니다.');
+        setButtonText('참가하기');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +98,7 @@ const CardDetail = ({ style, post }) => {
       return;
     }
     if (buttonText === '탈퇴하기') {
-      withdraw();
+      leave();
       return;
     }
     if (buttonText === '참가하기') {
