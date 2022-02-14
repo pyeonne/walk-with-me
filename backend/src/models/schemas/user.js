@@ -29,8 +29,14 @@ const UserSchema = new mongoose.Schema({
   ],
   applyPosts: [
     {
+      type: mongoose.Types.ObjectId,
+      ref: 'Post',
+    },
+  ],
+  bio: [
+    {
       _id: mongoose.Types.ObjectId,
-      bio: {
+      text: {
         type: String,
         min: 2,
         max: 100,
