@@ -6,6 +6,8 @@ export const apiClient = axios.create({
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
   },
+  credentials: 'include',
+  withCredentials: true,
 });
 
 export const networkService = {

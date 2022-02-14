@@ -8,7 +8,7 @@ exports.checkPostId = (req, res, next) => {
   if (ObjectId.isValid(id)) {
     return next();
   }
-
+  console.log('나호출됨');
   res.status(400); // Bad Request
   const error = new Error('잘못된 접근입니다.');
   return next(error);

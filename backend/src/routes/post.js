@@ -12,6 +12,13 @@ const router = Router();
 const postRouter = Router();
 const manageRouter = Router();
 
+// 포스트 사진 등록, 조회
+router.post('/images', upload.single('img'), (req, res) => {
+  const { path } = req.file;
+  const postImagePath = `${process.cwd()}/${path}`;
+  res.status(200).json({ postImagePath });
+});
+
 router.use('/:id', checkPostId, checkPostExist, postRouter);
 router.use(
   '/:id/management/:userId',
@@ -29,11 +36,6 @@ router.get('/', postCtrl.list);
 router.post('/', checkLogin, postCtrl.create);
 postRouter.put('/', checkLogin, checkOwnPost, postCtrl.update);
 postRouter.delete('/', postCtrl.delete);
-
-// 포스트 사진 등록, 조회
-router.post('/images', upload.single('img'), (req, res) => {
-  console.log(req.file);
-});
 
 // 모집 상태 변경
 postRouter.put('/status', checkLogin, checkOwnPost, postCtrl.changeStatus);

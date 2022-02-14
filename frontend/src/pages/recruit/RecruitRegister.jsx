@@ -3,7 +3,8 @@ import Input from '../../components/Input/Input';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Button from '../../components/Button/Button';
 import styles from './RecruitRegister.module.css';
-import { useState } from 'react';
+import { Context } from '../../context';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../../api/api';
 
@@ -16,16 +17,19 @@ const RecruitRegister = () => {
   const [content, SetContent] = useState('');
   const [image, setImage] = useState('');
   const [imageName, setImageName] = useState('');
-
+  const [state, dispatch] = useContext(Context);
+  // const { _id: userId } = state.user;
+  const { _id: author } = state.user;
+  // console.log(author);
   const onImageHandler = async (event) => {
     setImageName(event.currentTarget.files[0].name);
     setImage(event.currentTarget.value);
 
     const formData = new FormData();
     formData.append('img', event.target.files[0]);
-
     const response = await apiClient.post('/api/posts/images', formData);
-    console.log(response);
+    const { postImagePath } = response.data;
+    setImage(postImagePath);
   };
 
   const onAreaHandler = (event) => {
@@ -55,6 +59,8 @@ const RecruitRegister = () => {
   const apiCall = async () => {
     try {
       const response = await apiClient.post('/api/posts', {
+        postImagePath: image,
+        author,
         area,
         category,
         age,
