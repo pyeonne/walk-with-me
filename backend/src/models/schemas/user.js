@@ -68,8 +68,13 @@ UserSchema.methods.generateToken = function () {
 
 UserSchema.methods.deleteApplyPost = async function (postId) {
   this.applyPosts = this.applyPosts.filter(
+    (applyPostId) => applyPostId.toString() !== postId.toString()
+  );
+
+  this.bio = this.bio.filter(
     (post) => post._id.toString() !== postId.toString()
   );
+
   await this.save();
 };
 
