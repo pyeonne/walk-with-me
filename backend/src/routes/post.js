@@ -44,6 +44,9 @@ postRouter.delete('/likes', checkLogin, postCtrl.unlike);
 postRouter.post('/apply', checkLogin, postCtrl.apply);
 postRouter.post('/cancel', checkLogin, postCtrl.cancel);
 
+// 모임 탈퇴
+postRouter.delete('/leave', checkLogin, postCtrl.leave);
+
 // 회원 관리 페이지
 postRouter.get('/management', checkLogin, checkOwnPost, postCtrl.management);
 
