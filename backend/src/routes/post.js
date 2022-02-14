@@ -19,6 +19,14 @@ router.post('/images', upload.single('img'), (req, res) => {
   res.status(200).json({ postImagePath });
 });
 
+// 사진 조회
+// router.get('/images', (req, res) => {
+//   const { path } = req.body;
+//   console.log(path);
+//   // const postImagePath = `${process.cwd()}/${path}`;
+//   res.sendFile(path);
+// });
+
 router.use('/:id', checkPostId, checkPostExist, postRouter);
 router.use(
   '/:id/management/:userId',
