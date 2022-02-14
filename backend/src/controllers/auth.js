@@ -118,16 +118,17 @@ exports.getImage = asyncHandler(async (req, res) => {
 // GET /api/users/:id/profile
 exports.read = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const readUser = await User.findOne({ _id: id });
-
+  const readUser = await User.findOne({ _id: id })
+    .populate('likePosts')
+    .populate('joinedPosts');
+  console.log(readUser);
   if (!readUser) {
     const error = new Error('가입되지 않은 계정입니다.');
     res.status(401);
     throw error;
   }
 
-  const { nickname, gender, area, birthYear, profileUrl } = readUser;
-  res.status(200).json({ nickname, gender, area, birthYear, profileUrl });
+  res.status(200).json(readUser);
 });
 
 // 비밀번호 찾기

@@ -30,10 +30,7 @@ const Profile = (props) => {
   };
   const getUserInfo = async () => {
     try {
-      // const res = await apiClient.get(`/api/auth/${id}/profile`);
-      const res = await apiClient.get(
-        `/api/auth/62091d412f72bc2c485af260/profile`
-      );
+      const res = await apiClient.get(`/api/auth/${id}/profile`);
       console.log(res.data);
       dispatch({ type: CHANGE_USER_INFO, payload: res.data });
     } catch (err) {
@@ -42,8 +39,7 @@ const Profile = (props) => {
   };
 
   const getProfileImage = async () => {
-    // const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${id}/profile-image`;
-    const IMG_REGISTER_URL = `http://localhost:4000/api/auth/62091d412f72bc2c485af260/profile-image`;
+    const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${id}/profile-image`;
     const response = await fetch(IMG_REGISTER_URL);
     const blobImg = await response.blob();
     const profileImgURL = URL.createObjectURL(blobImg);
@@ -53,7 +49,8 @@ const Profile = (props) => {
     });
   };
   useEffect(() => {
-    getUserInfo().then(getProfileImage());
+    getUserInfo();
+    getProfileImage();
   }, []);
   // return <>ddddd</>;
   if (state.user.likePosts === undefined) return <>{loading}</>;
@@ -168,7 +165,7 @@ const Profile = (props) => {
             </div>
           </div>
           {/* 가입 신청한 모임 */}
-          {/* <div className={styles.wrapper} onClick={activeApply}>
+          <div className={styles.wrapper} onClick={activeApply}>
             <div className={styles.apply}>
               <div className={styles.subtitle}>
                 <Face />
@@ -179,7 +176,7 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${apply && styles.open}`}>
-              {state.user.applyPosts.map((post) => {
+              {/* {state.user.applyPosts.map((post) => {
                 return (
                   <div key={uuidv4()} className={styles.article}>
                     <div className={styles.img}>
@@ -207,9 +204,9 @@ const Profile = (props) => {
                     </div>
                   </div>
                 );
-              })}
+              })} */}
             </div>
-          </div> */}
+          </div>
         </section>
       </div>
     </div>
