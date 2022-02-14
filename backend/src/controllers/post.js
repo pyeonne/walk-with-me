@@ -192,7 +192,6 @@ POST /api/posts/:id/cancel
 exports.cancel = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
-  const { bio } = req.body;
 
   await Post.findByIdAndUpdate(postId, {
     $pull: {
@@ -203,6 +202,29 @@ exports.cancel = asyncHandler(async (req, res) => {
   const user = await User.findById(userId);
   await user.deleteApplyPost(postId);
 
+  res.status(200).json(user);
+});
+
+/* 모임 탈퇴
+POST /api/posts/:id/leave
+*/
+exports.leave = asyncHandler(async (req, res) => {
+  const { _id: postId } = res.locals.post;
+  const { _id: userId } = res.locals.user;
+
+  await Post.findByIdAndUpdate(postId, {
+    $pull: {
+      members: userId,
+    },
+  });
+
+  await User.findByIdAndUpdate(userId, {
+    $pull: {
+      joinedPosts: userId,
+    },
+  });
+
+  const user = await User.findById(userId);
   res.status(200).json(user);
 });
 

@@ -17,7 +17,7 @@ Header {
   margin-bottom: 3rem;
 }
 
-.img-card-container div {
+.img-card-container > div {
   margin: 0;
 }
 
