@@ -12,20 +12,8 @@ const router = Router();
 const postRouter = Router();
 const manageRouter = Router();
 
-// 포스트 사진 등록, 조회
-router.post('/images', upload.single('img'), (req, res) => {
-  const { path } = req.file;
-  const postImagePath = `${process.cwd()}/${path}`;
-  res.status(200).json({ postImagePath });
-});
-
-// 사진 조회
-// router.get('/images', (req, res) => {
-//   const { path } = req.body;
-//   console.log(path);
-//   // const postImagePath = `${process.cwd()}/${path}`;
-//   res.sendFile(path);
-// });
+// 포스트 사진 등록
+router.post('/images', upload.single('img'), postCtrl.registerImage);
 
 router.use('/:id', checkPostId, checkPostExist, postRouter);
 router.use(
