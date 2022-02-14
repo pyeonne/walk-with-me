@@ -82,7 +82,7 @@ const CardDetail = ({ style, post }) => {
       isLeave = confirm('탈퇴하시겠습니까?');
 
       if (isLeave) {
-        await apiClient.post('/api/posts/' + state.post._id + '/leave');
+        await apiClient.delete('/api/posts/' + state.post._id + '/leave');
         getPost();
         alert('모임에서 탈퇴되었습니다.');
         setButtonText('참가하기');
@@ -91,6 +91,15 @@ const CardDetail = ({ style, post }) => {
       console.log(err);
     }
   };
+
+  // const Like = async () => {
+  //   try {
+
+  //   }
+  //   catch(err){
+  //     console.log(err);
+  //   }
+  // }
 
   const buttonHandler = (buttonText) => {
     if (buttonText === '참가 취소하기') {
