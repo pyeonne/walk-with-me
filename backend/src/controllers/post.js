@@ -36,19 +36,27 @@ exports.list = asyncHandler(async (req, res) => {
   if (!category && !age)
     posts = await Post.find({
       $and: [{ isRecruiting }],
-    }).populate('author');
+    })
+      .sort({ createdAt: -1 })
+      .populate('author');
   else if (!category)
     posts = await Post.find({
       $and: [{ age }, { isRecruiting }],
-    }).populate('author');
+    })
+      .sort({ createdAt: -1 })
+      .populate('author');
   else if (!age)
     posts = await Post.find({
       $and: [{ category }, { isRecruiting }],
-    }).populate('author');
+    })
+      .sort({ createdAt: -1 })
+      .populate('author');
   else
     posts = await Post.find({
       $and: [{ age }, { category }, { isRecruiting }],
-    }).populate('author');
+    })
+      .sort({ createdAt: -1 })
+      .populate('author');
 
   res.status(200).json(posts);
 });
