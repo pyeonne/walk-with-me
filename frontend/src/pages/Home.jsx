@@ -67,7 +67,8 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <Pagination currPage={1} pageCount={5} />
+      {/* <Pagination pageCount={Math.floor(state.posts.length / 8) + 1} /> */}
+      <Pagination pageCount={10} />
     </>
   );
 };

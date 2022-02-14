@@ -1,8 +1,14 @@
-import React from 'react';
-import Arrow from './icons/Arrow.jsx';
+import React, { useState } from 'react';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ currPage, pageCount, onClickPage, isDark }) => {
+const Pagination = ({ pageCount, isDark }) => {
+  const [currPage, setCurrPage] = useState(0);
+  console.log(currPage);
+
+  const onClickPage = (page) => {
+    setCurrPage(page);
+  };
+
   const MAX_PAGE_COUNT = 9;
 
   const getPageNumbers = (currPage, total) => {
@@ -20,11 +26,11 @@ const Pagination = ({ currPage, pageCount, onClickPage, isDark }) => {
   return (
     <div className={styles.container}>
       <button
-        className={styles.arrow}
-        onClick={() => currPage > 0 && onClickPage(currPage - 1)}
+        className={`${styles.arrow} ${styles.left}`}
+        onClick={() => onClickPage(currPage - 1)}
         disabled={currPage <= 0}
       >
-        <Arrow isDark={isDark} />
+        <span>&lt;</span>
       </button>
       {getPageNumbers(currPage, pageCount).map((page) => {
         return (
@@ -39,12 +45,11 @@ const Pagination = ({ currPage, pageCount, onClickPage, isDark }) => {
         );
       })}
       <button
-        className={styles.arrow}
-        onClick={() => currPage < pageCount - 1 && onClickPage(currPage + 1)}
-        flip='true'
+        className={`${styles.arrow} ${styles.right}`}
+        onClick={() => onClickPage(currPage + 1)}
         disabled={currPage >= pageCount - 1}
       >
-        <Arrow isDark={isDark} />
+        <span>&gt;</span>
       </button>
     </div>
   );
