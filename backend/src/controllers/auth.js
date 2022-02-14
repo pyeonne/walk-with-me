@@ -130,6 +130,23 @@ exports.read = asyncHandler(async (req, res) => {
   res.status(200).json({ nickname, gender, area, birthYear, profileUrl });
 });
 
+// 회원 정보 수정
+exports.modify = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { nickname, gender, area, birthYear } = req.body;
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      nickname,
+      gender,
+      area,
+      birthYear,
+    },
+    { new: true }
+  );
+  res.status(200).json(user);
+});
+
 // 비밀번호 찾기
 exports.findPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;

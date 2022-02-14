@@ -1,4 +1,4 @@
-import { memo, useRef, useContext, useState } from 'react';
+import { memo, useRef, useContext, useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Header from '../../components/Header/Header';
@@ -9,8 +9,9 @@ import FileInput from '../../components/Input/ImageFileInput';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { useNavigate } from 'react-router-dom';
+import { apiClient } from '../../api/api';
 
-const ProfileRegister = memo(() => {
+const ProfileEdit = memo(() => {
   const navigate = useNavigate();
   const formRef = useRef();
   const nameRef = useRef();
@@ -19,10 +20,26 @@ const ProfileRegister = memo(() => {
   const areaRef = useRef();
   const [imgURL, setImgURL] = useState(null);
   const [state, dispatch] = useContext(Context);
-  const { _id: userId } = state.user;
-  // const userId = '6204aad85d19a0c564d0572b';
+  const {
+    _id: userId,
+    nickname,
+    gender,
+    birthYear,
+    area,
+    profileImgURL,
+  } = state.user;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile-image`;
-  const INFO_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile`;
+  const INFO_REGISTER_URL = `/api/auth/${userId}/profile`;
+
+  console.log(state.user);
+
+  useEffect(async () => {
+    nameRef.current.value = nickname;
+    genderRef.current.value = gender;
+    ageRef.current.value = birthYear;
+    areaRef.current.value = area;
+    setImgURL(profileImgURL);
+  }, []);
 
   const onFileChange = async (e) => {
     const formData = new FormData();
@@ -43,11 +60,6 @@ const ProfileRegister = memo(() => {
     const { value: birthYear } = ageRef.current;
     const { value: area } = areaRef.current;
 
-    if (!nickname || !gender || !birthYear || !area) {
-      alert('이미지를 제외한 항목들은 필수 항목입니다.');
-      return;
-    }
-
     const data = {
       nickname,
       gender,
@@ -55,10 +67,11 @@ const ProfileRegister = memo(() => {
       area,
     };
 
-    const response = await axios.post(INFO_REGISTER_URL, data);
+    const response = await apiClient.put(INFO_REGISTER_URL, data);
 
     dispatch({ type: CHANGE_USER_INFO, payload: response.data });
-    navigate('/');
+    alert('수정이 완료되었습니다!');
+    navigate(`/${userId}/profile`);
   };
 
   return (
@@ -66,9 +79,7 @@ const ProfileRegister = memo(() => {
       <Header />
       <div className={styles.container}>
         <form ref={formRef} className={styles.form} onSubmit={onSubmit}>
-          <h2 className={styles.title}>
-            처음 오셨군요? 기본 정보를 입력해주세요!
-          </h2>
+          <h2 className={styles.title}>수정할 정보를 입력해 주세요!</h2>
           <FileInput onFileChange={onFileChange} imgURL={imgURL} />
           <Input
             ref={nameRef}
@@ -98,11 +109,11 @@ const ProfileRegister = memo(() => {
             placeholder='동 · 읍 · 면을 입력해주세요.'
             required
           />
-          <Button text='등록하기' />
+          <Button text='수정하기' />
         </form>
       </div>
     </>
   );
 });
 
-export default ProfileRegister;
+export default ProfileEdit;
