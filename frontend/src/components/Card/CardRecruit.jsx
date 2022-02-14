@@ -26,6 +26,7 @@ const CardRecruit = ({ post }) => {
     if (author?._id) {
       getProfileImage();
     }
+    return () => setProfileImgURL(profileImgURL);
   }, []);
 
   return (
