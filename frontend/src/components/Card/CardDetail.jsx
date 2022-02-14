@@ -193,19 +193,19 @@ const CardDetail = ({ style, post }) => {
             text={isRecruiting === true ? '모집중' : '모집완료'}
             radius='140px'
             bg='#ffffff'
-            className={styles['recruit-button']}
+            disabled={true}
           />
           <Button
             width='26rem'
             height='6rem'
-            color={
-              user === null || post.author._id === user._id
-                ? '#CCCCCC'
-                : '#666666'
-            }
+            color={'#666666'}
             text={buttonText}
             radius='140px'
-            bg='#B2F2BB'
+            bg={
+              user === null || post.author._id === user._id
+                ? '#CCCCCC'
+                : '#B2F2BB'
+            }
             disabled={user === null || post.author._id === user._id}
             onClick={() => {
               buttonHandler(buttonText);

@@ -84,9 +84,6 @@ const Recruit = () => {
   useEffect(() => {
     getPost();
   }, []);
-  // console.log(
-  //   `포스트 작성자 아디 ${post.author._id}  유저 아디${state.user._id}`
-  // );
 
   if (loading) {
     return <div>로딩 중</div>;
@@ -132,7 +129,7 @@ const Recruit = () => {
         <div>
           <div className={styles['author-date-container']}>
             <Avartar
-              className={styles['recruit-profile']}
+              src={post.author.profileImagePath}
               height='2.4rem'
               width='2.4rem'
             />
