@@ -94,8 +94,8 @@ const CardDetail = ({ style, post }) => {
 
   const likeEvent = async () => {
     try {
-      await apiClient.post('/api/posts/' + state.post._id + '/likes');
       likeHandler();
+      await apiClient.post('/api/posts/' + state.post._id + '/likes');
       getPost();
     } catch (err) {
       console.log(err);
@@ -104,8 +104,8 @@ const CardDetail = ({ style, post }) => {
 
   const unLikeEvent = async () => {
     try {
-      await apiClient.delete('/api/posts/' + state.post._id + '/likes');
       likeHandler();
+      await apiClient.delete('/api/posts/' + state.post._id + '/likes');
       getPost();
     } catch (err) {
       console.log(err);
@@ -149,6 +149,24 @@ const CardDetail = ({ style, post }) => {
       setButtonText('탈퇴하기');
       return;
     }
+  };
+
+  const likeNumFormat = (num) => {
+    let result;
+    if (num >= 100000) {
+      result = String(num / 10000) + '만';
+      return result;
+    }
+    if (num >= 10000) {
+      result = String(num / 10000) + '.' + String(num / 1000) + '만';
+      return result;
+    }
+    if (num >= 1000) {
+      result = String(num / 1000) + '.' + String(num / 100) + '천';
+      return result;
+    }
+    result = String(num);
+    return result;
   };
 
   useEffect(() => {
@@ -243,7 +261,7 @@ const CardDetail = ({ style, post }) => {
                 src={like === true ? heartRed : heartGray}
               />
               <span className={styles.likeMembersNum}>
-                {likeMembers.length}
+                {likeNumFormat(likeMembers.length)}
               </span>
             </Button>
           </div>
