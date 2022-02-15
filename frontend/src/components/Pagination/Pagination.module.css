@@ -3,42 +3,55 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 6rem;
+  margin: 6rem 0;
 }
 
 .arrow {
-  margin: 0 0 0 1.4rem;
   background: transparent;
+  cursor: pointer;
 }
 
-.arrow svg {
-  display: block;
-  color: var(--text-color);
+.arrow.left,
+.arrow.right {
+  color: #333;
+  font-size: 2rem;
+  user-select: none;
 }
 
-[flip] {
-  margin: 0 1.4rem 0 0;
-  transform: scaleX(-1);
+.arrow.left {
+  margin-right: 2rem;
+}
+
+.arrow.right {
+  margin-left: 2rem;
+}
+
+.arrow:disabled span {
+  color: #ccc;
+  cursor: default;
 }
 
 .page {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   color: var(--text-color);
-  width: 2rem;
-  height: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   background: transparent;
+  cursor: pointer;
+  user-select: none;
 }
 
 .page + .page {
-  margin-left: 0.6rem;
+  margin-left: 1rem;
 }
 
-[active='true'] {
-  color: var(--text-color-light);
+.page[active='true'] {
+  color: #fff;
   background: var(--first-color);
   border-radius: 0.25rem;
+  font-weight: bold;
 }
