@@ -5,6 +5,9 @@ const passportSettingRouter = require('./passport');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
+// 소캣연습
+const http = require('http');
+const { Server } = require('socket.io');
 const { checkTokenAndSetUser } = require('./middlewares/auth');
 
 // router
@@ -30,11 +33,36 @@ app.use(
     credentials: true,
   })
 );
+// 소캣
+const server = http.createServer(app);
 
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
 app.use(checkTokenAndSetUser);
 app.use('/api', apiRouter);
 
-app.listen(PORT, () => {
+// 연결 됐을때
+io.on('connection', (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on('join_room', (data) => {
+    socket.join(data);
+    console.log(`User wiht ID: ${socket.id} joined room: ${data}`);
+  });
+  socket.on('send_message', (data) => {
+    socket.to(data.room).emit('receive_message', data);
+  });
+  // 연결 끊으려 할때 콜백
+  socket.on('disconnect', () => {
+    console.log('User Disconnected', socket.id);
+  });
+});
+
+server.listen(PORT, () => {
   console.log('Server is running on port ' + PORT);
 });
 
