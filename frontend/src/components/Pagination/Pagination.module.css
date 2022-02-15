@@ -15,6 +15,7 @@
 .arrow.right {
   color: #333;
   font-size: 2rem;
+  user-select: none;
 }
 
 .arrow.left {
@@ -37,10 +38,11 @@
   font-size: 1.6rem;
   line-height: 2rem;
   color: var(--text-color);
-  width: 2rem;
-  height: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   background: transparent;
   cursor: pointer;
+  user-select: none;
 }
 
 .page + .page {

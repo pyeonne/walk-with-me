@@ -4,8 +4,8 @@ import classes from './Dropdown.module.css';
 const Dropdown = forwardRef((props, ref) => {
   const optionsObj = {
     status: [
-      { value: 'ing', text: '모집 중' },
-      { value: 'end', text: '모집 완료' },
+      { value: 'true', text: '모집 중' },
+      { value: 'false', text: '모집 완료' },
     ],
     gender: [
       { value: '', text: '성별' },

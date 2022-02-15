@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Pagination.module.css';
 
-const Pagination = ({ pageCount, isDark }) => {
-  const [currPage, setCurrPage] = useState(0);
-  console.log(currPage);
-
-  const onClickPage = (page) => {
-    setCurrPage(page);
-  };
-
+const Pagination = ({ currPage, pageCount, onClickPage }) => {
   const MAX_PAGE_COUNT = 9;
 
   const getPageNumbers = (currPage, total) => {

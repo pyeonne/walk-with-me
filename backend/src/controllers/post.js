@@ -20,45 +20,43 @@ exports.registerImage = asyncHandler(async (req, res) => {
 /* 포스트 목록
 GET /api/posts
 GET /api/posts?age=20&category=running
+GET /api/posts?page=2
+GET /api/posts?page=2&age=20
  */
 exports.list = asyncHandler(async (req, res) => {
   const queryObj = req.query;
-  const { age, category, isRecruiting } = queryObj;
+  const { page, age, category, isRecruiting } = queryObj;
 
-  if (Object.keys(queryObj).length === 0) {
-    const posts = await Post.find().populate('author');
+  const count = await Post.countDocuments();
+  let posts;
+  if (parseInt(page, 10) >= 2) {
+    posts = await Post.find({
+      $and: [
+        { age: age === '' ? { $ne: '' } : age },
+        { category: category === '' ? { $ne: '' } : category },
+        { isRecruiting },
+      ],
+    })
+      .limit(7)
+      .skip((parseInt(page, 10) - 1) * 8)
+      .sort({ createdAt: -1 })
+      .populate('author');
 
-    res.status(200).json(posts);
-    return;
+    return res.status(200).json({ posts, count });
   }
 
-  let posts;
-  if (!category && !age)
-    posts = await Post.find({
-      $and: [{ isRecruiting }],
-    })
-      .sort({ createdAt: -1 })
-      .populate('author');
-  else if (!category)
-    posts = await Post.find({
-      $and: [{ age }, { isRecruiting }],
-    })
-      .sort({ createdAt: -1 })
-      .populate('author');
-  else if (!age)
-    posts = await Post.find({
-      $and: [{ category }, { isRecruiting }],
-    })
-      .sort({ createdAt: -1 })
-      .populate('author');
-  else
-    posts = await Post.find({
-      $and: [{ age }, { category }, { isRecruiting }],
-    })
-      .sort({ createdAt: -1 })
-      .populate('author');
+  posts = await Post.find({
+    $and: [
+      { age: age === '' ? { $ne: '' } : age },
+      { category: category === '' ? { $ne: '' } : category },
+      { isRecruiting },
+    ],
+  })
+    .limit(7)
+    .sort({ createdAt: -1 })
+    .populate('author');
 
-  res.status(200).json(posts);
+  return res.status(200).json({ posts, count });
 });
 
 /* 포스트 작성
