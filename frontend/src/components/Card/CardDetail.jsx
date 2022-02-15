@@ -203,7 +203,7 @@ const CardDetail = ({ style, post }) => {
         <div className={styles['detail-text']}>
           <img
             className={styles['detail-contact']}
-            src={true ? contactDark : contact}
+            src={state.darkMode ? contactDark : contact}
           />
           <span>{members.length}명</span>
         </div>

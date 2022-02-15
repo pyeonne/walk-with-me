@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo.jsx';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
+import { GET_DARK_MODE } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
 
 const Header = () => {
@@ -29,17 +30,17 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const bgMode = window.localStorage;
     if (user?._id) {
       getProfileImage();
     }
 
     if (window.localStorage.getItem('bgMode') === 'dark') {
       document.getElementsByTagName('body')[0].classList.add('darkTheme');
+      dispatch({
+        type: GET_DARK_MODE,
+        payload: true,
+      });
     }
-
-    console.log(bgMode);
-    console.log(theme);
   }, []);
 
   const clickHandler = async () => {
@@ -55,14 +56,20 @@ const Header = () => {
       document.getElementsByTagName('body')[0].classList.remove('darkTheme');
       window.localStorage.setItem('bgMode', 'light');
       setTheme(!theme);
-      console.log(window.localStorage);
-      console.log(theme);
+      dispatch({
+        type: GET_DARK_MODE,
+        payload: false,
+      });
       return;
     }
+
     document.getElementsByTagName('body')[0].classList.add('darkTheme');
     window.localStorage.setItem('bgMode', 'dark');
     setTheme(!theme);
-    console.log(window.localStorage);
+    dispatch({
+      type: GET_DARK_MODE,
+      payload: true,
+    });
     console.log(theme);
   };
 
