@@ -36,7 +36,6 @@ const Provider = ({ children }) => {
   const value = [state, dispatch];
   useEffect(() => {
     const loginUser = localStorage.getItem('loginUser');
-    console.log(loginUser);
     if (loginUser)
       dispatch({
         type: CHANGE_USER_INFO,
