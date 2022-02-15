@@ -2,6 +2,7 @@ import { useState } from 'react';
 import io from 'socket.io-client';
 import Chat from './Chat';
 
+// 소켓 서버 접속
 const socket = io.connect('http://localhost:4000');
 
 const Test = () => {
@@ -11,6 +12,7 @@ const Test = () => {
 
   const joinRoom = () => {
     if (username !== '' && room !== '') {
+      // room 참가
       socket.emit('join_room', room);
       setShowChat(true);
     }

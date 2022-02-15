@@ -4,7 +4,10 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 const Chat = ({ socket, username, room }) => {
   const [currMesaage, setCurrMEssage] = useState('');
   const [messageList, setMessageList] = useState([]);
-
+  /*
+    emit : 데이터 전송 (서버-> 클라이언트 / 클라이언트  -> 서버)
+    on :데이터를 받는다 (서버-> 클라이언트 / 클라이언트 -> 서버)
+  */
   const sendMessage = async () => {
     if (currMesaage !== '') {
       const messageData = {
@@ -15,7 +18,7 @@ const Chat = ({ socket, username, room }) => {
           Date.now()
         ).getMinutes()}`,
       };
-
+      // 클라에서 서버로 메세지 보냄
       await socket.emit('send_message', messageData);
       setMessageList((list) => [...list, messageData]);
       setCurrMEssage('');
@@ -23,6 +26,7 @@ const Chat = ({ socket, username, room }) => {
   };
 
   useEffect(() => {
+    // 서버에서 메세지 받음
     socket.on('receive_message', (data) => {
       setMessageList((list) => [...list, data]);
     });
@@ -63,6 +67,7 @@ const Chat = ({ socket, username, room }) => {
           onChange={(event) => {
             setCurrMEssage(event.target.value);
           }}
+          // 엔터 눌렀을때 클릭처럼 인풋 보내짐
           onKeyPress={(event) => {
             event.key === 'Enter' && sendMessage();
           }}
