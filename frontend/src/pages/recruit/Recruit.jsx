@@ -26,7 +26,7 @@ const Recruit = () => {
     setModalOnoff(!modalOnOff);
   };
   const recruitModify = () => {
-    navigate('/');
+    navigate(`/recruit-edit/${postId}`);
   };
 
   const recruitDelete = async () => {

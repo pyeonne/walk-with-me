@@ -41,6 +41,7 @@ const Dropdown = forwardRef((props, ref) => {
       onChange={props.onChange}
       required={props.required}
       data-type={props.type}
+      value={props.value}
     >
       {options.map((option, idx) => (
         <option key={idx} value={option.value}>

@@ -55,6 +55,7 @@ const Input = forwardRef((props, ref) => {
           maxLength={props.maxLength}
           onChange={props.onChange}
           required={props.required}
+          value={props.value}
         />
       </InputWrapper>
     );
@@ -95,6 +96,7 @@ const Input = forwardRef((props, ref) => {
         onChange={props.onChange}
         ref={ref}
         required={props.required}
+        value={props.value}
       />
     </InputWrapper>
   );

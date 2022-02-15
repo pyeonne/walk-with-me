@@ -10,6 +10,7 @@ import Chatting from './pages/Chatting/Chatting';
 import Management from './pages/Management/Management';
 import Recruit from './pages/recruit/Recruit';
 import ProfileEdit from './pages/profile/ProfileEdit';
+import RecruitEdit from './pages/recruit/RecruitEdit';
 import { networkService } from './api/api';
 import Profile from './pages/profile/Profile';
 
@@ -27,6 +28,7 @@ function App() {
       <Route path='/profile-register' element={<ProfileRegister />} />
       <Route path='/:id/profile-edit' element={<ProfileEdit />} />
       <Route path='/recruit-register' element={<RecruitRegister />} />
+      <Route path='/recruit-edit/:postId' element={<RecruitEdit />} />
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
