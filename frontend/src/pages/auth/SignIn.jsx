@@ -1,20 +1,28 @@
-import Wrapper from '../../components/Wrapper/Wrapper';
 import Button from '../../components/Button/Button';
 import Logo from '../../components/Header/Logo';
 import Input from '../../components/Input/Input';
 import styles from './SignIn.module.css';
-import axios from 'axios';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { apiClient } from '../../api/api';
 
 const SignIn = () => {
   const [state, dispatch] = useContext(Context);
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = React.useState({
+    email: '',
+    password: '',
+  });
+
+  const onFormChange = (event) => {
+    const { name, value } = event.currentTarget;
+    setForm((curr) => ({
+      ...curr,
+      [name]: value,
+    }));
+  };
 
   const onEmailHandler = (event) => {
     const currentEmail = event.currentTarget.value;
@@ -50,14 +58,10 @@ const SignIn = () => {
 
   const apiCall = async () => {
     try {
-      const response = await apiClient.post(
-        '/api/auth/signIn',
-        {
-          email,
-          password,
-        },
-        { withCredentials: true, credentials: 'include' }
-      );
+      const response = await apiClient.post('/api/auth/signIn', {
+        email: form.email,
+        password: form.password,
+      });
       dispatch({
         type: CHANGE_USER_INFO,
         payload: response.data,
@@ -87,8 +91,8 @@ const SignIn = () => {
               name='email'
               placeholder='이메일'
               autoComplete='off'
-              value={email}
-              onChange={onEmailHandler}
+              value={form.email}
+              onChange={onFormChange}
               marginBottom='1rem'
               required
             />
@@ -97,8 +101,8 @@ const SignIn = () => {
               name='password'
               placeholder='비밀번호'
               autoComplete='off'
-              value={password}
-              onChange={onPasswordHandler}
+              value={form.password}
+              onChange={onFormChange}
               required
             />
             <div className={styles.forget}>
@@ -109,7 +113,7 @@ const SignIn = () => {
             <Button
               type='submit'
               text='로그인'
-              disabled={!(email !== '' && password !== '')}
+              disabled={!(form.email !== '' && form.password !== '')}
             />
           </form>
         </div>
