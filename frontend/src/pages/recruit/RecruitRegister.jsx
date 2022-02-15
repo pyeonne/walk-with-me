@@ -77,7 +77,7 @@ const RecruitRegister = () => {
 
   const apiCall = async () => {
     try {
-      const response = await apiClient.post('/api/posts', {
+      await apiClient.post('/api/posts', {
         postImagePath: imageURL,
         author,
         area,
@@ -86,7 +86,6 @@ const RecruitRegister = () => {
         title,
         content,
       });
-      console.log(response);
       alert('모집 등록이 완료되었습니다!');
       navigate('/');
     } catch (err) {

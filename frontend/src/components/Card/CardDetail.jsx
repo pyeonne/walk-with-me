@@ -33,7 +33,6 @@ const CardDetail = ({ style, post }) => {
   const getPost = async () => {
     try {
       const response = await apiClient.get('/api/posts/' + state.post._id);
-      console.log(response.data);
       dispatch({
         type: NOW_POST,
         payload: response.data,

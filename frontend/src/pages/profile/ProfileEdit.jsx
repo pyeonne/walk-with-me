@@ -29,8 +29,6 @@ const ProfileEdit = memo(() => {
     profileImgURL,
   } = state.user;
 
-  console.log(state.user);
-
   useEffect(async () => {
     nameRef.current.value = nickname;
     genderRef.current.value = gender;

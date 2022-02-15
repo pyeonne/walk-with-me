@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button';
 import styles from './PasswordFind.module.css';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
+import { apiClient } from '../../api/api';
 
 const PasswordFind = () => {
   const [email, setEmail] = useState('');
@@ -28,12 +28,9 @@ const PasswordFind = () => {
 
   const apiCall = async () => {
     try {
-      const response = await axios.post(
-        'http://localhost:4000/api/auth/find-password',
-        {
-          email,
-        }
-      );
+      const response = await apiClient.post('/api/auth/find-password', {
+        email,
+      });
       alert(response.data.success);
     } catch (err) {
       alert('존재하지 않는 이메일입니다.');

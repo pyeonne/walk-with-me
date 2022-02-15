@@ -9,7 +9,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../context';
 import { NOW_POST } from '../../context/actionTypes';
-import axios from 'axios';
+import { apiClient } from '../../api/api';
 
 const Recruit = () => {
   const [state, dispatch] = useContext(Context);
@@ -32,7 +32,7 @@ const Recruit = () => {
   const recruitDelete = async () => {
     if (confirm('정말 삭제하시겠습니까?')) {
       try {
-        await axios.delete('http://localhost:4000/api/posts/' + postId);
+        await apiClient.delete('/api/posts/' + postId);
         alert('삭제 되었습니다');
         navigate('/');
       } catch (err) {
@@ -44,9 +44,7 @@ const Recruit = () => {
 
   const getPost = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:4000/api/posts/' + postId
-      );
+      const response = await apiClient.get('/api/posts/' + postId);
 
       dispatch({
         type: NOW_POST,

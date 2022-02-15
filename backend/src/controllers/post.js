@@ -251,7 +251,6 @@ exports.allow = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
 
-  console.log(userId);
   const user = await User.findById(userId);
   await user.deleteApplyPost(postId);
 
