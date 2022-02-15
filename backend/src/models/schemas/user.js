@@ -29,8 +29,14 @@ const UserSchema = new mongoose.Schema({
   ],
   applyPosts: [
     {
+      type: mongoose.Types.ObjectId,
+      ref: 'Post',
+    },
+  ],
+  bio: [
+    {
       _id: mongoose.Types.ObjectId,
-      bio: {
+      text: {
         type: String,
         min: 2,
         max: 100,
@@ -62,8 +68,13 @@ UserSchema.methods.generateToken = function () {
 
 UserSchema.methods.deleteApplyPost = async function (postId) {
   this.applyPosts = this.applyPosts.filter(
+    (applyPostId) => applyPostId.toString() !== postId.toString()
+  );
+
+  this.bio = this.bio.filter(
     (post) => post._id.toString() !== postId.toString()
   );
+
   await this.save();
 };
 

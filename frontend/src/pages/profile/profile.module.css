@@ -4,8 +4,7 @@
   text-align: center;
   width: 40%;
 
-  margin: 0 auto;
-  margin-top: 20rem;
+  margin: 10rem auto;
   gap: 2rem;
 }
 
@@ -151,12 +150,12 @@
 }
 
 .tag {
-  width: 5rem;
-  height: 2.5rem;
   background: var(--box-color);
   line-height: 2.5rem;
   border-radius: 1.4rem;
   font-size: 1.2rem;
+
+  padding: 0.5rem;
 }
 
 .tag + .tag {

@@ -160,7 +160,7 @@ POST /api/posts/:id/apply
 exports.apply = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
-  const { bio } = req.body;
+  const { text } = req.body;
 
   await Post.findByIdAndUpdate(postId, {
     $push: {
@@ -172,9 +172,10 @@ exports.apply = asyncHandler(async (req, res) => {
     userId,
     {
       $push: {
-        applyPosts: {
+        applyPosts: postId,
+        bio: {
           _id: postId,
-          bio,
+          text,
         },
       },
     },
