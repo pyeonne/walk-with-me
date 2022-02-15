@@ -10,7 +10,6 @@ const ModalEx = () => {
     else document.body.style.overflow = 'unset';
   }, [isOpen]);
   const setModal = () => {
-    console.log('called ');
     setIsOpen((prev) => !prev);
   };
   const onChange = (e) => setContent(e.target.value);

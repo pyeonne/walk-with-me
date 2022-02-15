@@ -1,9 +1,7 @@
-import Wrapper from '../../components/Wrapper/Wrapper';
 import Button from '../../components/Button/Button';
 import Logo from '../../components/Header/Logo';
 import Input from '../../components/Input/Input';
 import styles from './SignIn.module.css';
-import axios from 'axios';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { Link, useNavigate } from 'react-router-dom';

@@ -19,7 +19,6 @@ const StyledButton = styled.button`
     props.disabled &&
     css`
       cursor: default;
-      background-color: #e5e5e5;
     `}
 `;
 

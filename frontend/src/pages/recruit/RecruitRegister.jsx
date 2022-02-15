@@ -86,7 +86,6 @@ const RecruitRegister = () => {
         title,
         content,
       });
-      console.log(response);
       alert('모집 등록이 완료되었습니다!');
       navigate('/');
     } catch (err) {

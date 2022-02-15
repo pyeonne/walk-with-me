@@ -31,8 +31,6 @@ const ProfileEdit = memo(() => {
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile-image`;
   const INFO_REGISTER_URL = `/api/auth/${userId}/profile`;
 
-  console.log(state.user);
-
   useEffect(async () => {
     nameRef.current.value = nickname;
     genderRef.current.value = gender;

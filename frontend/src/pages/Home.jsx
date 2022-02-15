@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../context';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import axios from 'axios';
+import { apiClient } from '../api/api';
 import Card from '../components/Card/Card';
 import Dropdown from '../components/Dropdown/Dropdown';
 import styles from './Home.module.css';
@@ -18,9 +18,7 @@ const Home = () => {
 
   const getPosts = async (filter) => {
     try {
-      const response = await axios.get(
-        `http://localhost:4000/api/posts${filter}`
-      );
+      const response = await apiClient.get(`/api/posts${filter}`);
       dispatch({ type: ADD_POSTS, payload: response.data });
     } catch (err) {
       alert('게시물 불러오기에 실패했습니다.');
