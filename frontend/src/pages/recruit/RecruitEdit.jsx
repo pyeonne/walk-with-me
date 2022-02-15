@@ -34,7 +34,7 @@ const RecruitEdit = () => {
     SetContent(content);
   }, []);
 
-  const { _id: author } = state.user;
+  const author = state.user?._id;
   const reader = new FileReader();
 
   const onImageHandler = async (event) => {

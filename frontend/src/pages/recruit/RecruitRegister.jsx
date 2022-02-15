@@ -20,9 +20,8 @@ const RecruitRegister = () => {
   const [imageName, setImageName] = useState('');
   const [state, dispatch] = useContext(Context);
 
-  const { _id: author } = state.user;
+  const author = state.user?._id;
   const reader = new FileReader();
-
   const onImageHandler = async (event) => {
     // 이미지 미리보기
     reader.onload = (event) => {

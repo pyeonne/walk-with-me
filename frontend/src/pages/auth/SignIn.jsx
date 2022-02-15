@@ -66,10 +66,11 @@ const SignIn = () => {
         type: CHANGE_USER_INFO,
         payload: response.data,
       });
+
+      localStorage.setItem('loginUser', JSON.stringify(response.data));
       if (!response.data.nickname) navigate('/profile-register');
       else navigate('/');
     } catch (err) {
-      console.log(err);
       alert('이메일 또는 비밀번호를 확인해주세요.');
     }
   };

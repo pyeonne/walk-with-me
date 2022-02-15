@@ -32,6 +32,7 @@ const Header = () => {
 
   const clickHandler = async () => {
     navigate('/');
+    localStorage.clear();
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
   };

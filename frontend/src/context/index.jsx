@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import { ADD_POSTS, CHANGE_USER_INFO, NOW_POST } from './actionTypes';
 
 const initialState = {
@@ -34,6 +34,15 @@ const reducer = (state = initialState, action) => {
 const Provider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = [state, dispatch];
+  useEffect(() => {
+    const loginUser = localStorage.getItem('loginUser');
+    console.log(loginUser);
+    if (loginUser)
+      dispatch({
+        type: CHANGE_USER_INFO,
+        payload: JSON.parse(loginUser),
+      });
+  }, []);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
