@@ -115,7 +115,7 @@ Header {
 
 .recruit-text {
   width: 78rem;
-
+  color: var(--recruit-text-color);
   font-size: 1.6rem;
   margin-bottom: 10rem;
 }

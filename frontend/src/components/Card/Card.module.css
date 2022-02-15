@@ -1,7 +1,7 @@
 .card {
   width: 30rem;
   height: 46rem;
-  background: #ffffff;
+  background: var(--card-background-color);
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   display: inline-flex;
@@ -29,6 +29,7 @@
   margin-top: 3rem;
 }
 .detail-card {
+  border: 0.1rem var(--detail-card-border-color) solid;
   flex-direction: column;
   cursor: default;
 }
@@ -59,6 +60,7 @@
   cursor: default;
   margin: 0.5rem;
   align-items: center;
+  color: var(--recruit-text-color);
 }
 .detail-text img {
   width: 2.5rem;

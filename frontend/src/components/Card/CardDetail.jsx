@@ -1,6 +1,7 @@
 import styles from './Card.module.css';
 import Button from '../Button/Button';
 import contact from './images/contact_calender.svg';
+import contactDark from './images/contact_calender_dark.svg';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 import { apiClient } from '../../api/api';
@@ -14,6 +15,7 @@ const CardDetail = ({ style, post }) => {
   let [state, dispatch] = useContext(Context);
   let { members, tags, likeMembers, pic, isRecruiting } = post;
   let [buttonText, setButtonText] = useState('참가하기');
+
   const [like, setLike] = useState(false);
   const user = state.user;
 
@@ -191,15 +193,18 @@ const CardDetail = ({ style, post }) => {
                   radius='25px'
                   ftsize='1.2rem'
                   text={hashTag}
-                  bg='#F3F5F8'
-                  color='#666666'
+                  bg='var(--detail-card-tag-background-color)'
+                  color='var(--detail-card-tag-text-color)'
                 />
               </React.Fragment>
             );
           })}
         </div>
         <div className={styles['detail-text']}>
-          <img src={contact} />
+          <img
+            className={styles['detail-contact']}
+            src={true ? contactDark : contact}
+          />
           <span>{members.length}명</span>
         </div>
         <div className={styles['detail-buttons-middle']}>
@@ -210,7 +215,7 @@ const CardDetail = ({ style, post }) => {
             color='#7EDA8B'
             text={isRecruiting === true ? '모집중' : '모집완료'}
             radius='140px'
-            bg='#ffffff'
+            bg='var(--detail-card-recruit-button)'
             disabled={true}
           />
           <Button
@@ -241,10 +246,10 @@ const CardDetail = ({ style, post }) => {
               width='10rem'
               height='4.6rem'
               border='1px solid #dddddd'
-              color='#666666'
+              color='var(--recruit-text-color)'
               radius='140px'
               flexBasis='center'
-              bg='#ffffff'
+              bg='var(--body-background-color)'
               ftsize='1.6rem'
               onClick={
                 user === null
