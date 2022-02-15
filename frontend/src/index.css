@@ -28,6 +28,7 @@
   --detail-card-recruit-button: #ffffff;
   --detail-card-tag-background-color: #f3f5f8;
   --detail-card-tag-text-color: #666666;
+  --input-color: #666;
 }
 
 /* Variables Dark Theme */
@@ -48,6 +49,7 @@ body.darkTheme {
   --detail-card-recruit-button: #b2f2bb;
   --detail-card-tag-background-color: #343a40;
   --detail-card-tag-text-color: #cccccc;
+  --input-color: #ffffff;
 }
 
 html {
@@ -61,4 +63,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--body-background-color) inset;
+  -webkit-text-fill-color: var(--input-color) !important;
+  box-shadow: 0 0 0 1000px var(--body-background-color) inset;
 }

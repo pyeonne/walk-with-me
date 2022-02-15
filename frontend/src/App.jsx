@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { Context } from './context';
+import { GET_DARK_MODE } from './context/actionTypes';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './pages/auth/SignUp';
 import Home from './pages/Home';
@@ -19,6 +21,17 @@ console.log('VITE_API_SERVER_URL :: ', import.meta.env.VITE_API_SERVER_URL);
 networkService.setupInterceptors();
 
 function App() {
+  const [state, dispatch] = useContext(Context);
+  useEffect(() => {
+    if (window.localStorage.getItem('bgMode') === 'dark') {
+      document.getElementsByTagName('body')[0].classList.add('darkTheme');
+      dispatch({
+        type: GET_DARK_MODE,
+        payload: true,
+      });
+    }
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Home />} />
