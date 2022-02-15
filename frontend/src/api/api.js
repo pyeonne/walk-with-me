@@ -27,7 +27,7 @@ export const networkService = {
       }
     );
 
-    // // response
+    // response
     apiClient.interceptors.response.use(
       (response) => {
         return response;

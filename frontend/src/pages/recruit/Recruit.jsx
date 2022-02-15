@@ -13,13 +13,13 @@ import axios from 'axios';
 
 const Recruit = () => {
   const [state, dispatch] = useContext(Context);
-  const postId = useParams().postId;
+  const { id: postId } = useParams();
 
   const navigate = useNavigate();
   let [currTab, setCurrTab] = useState('소개');
   let [modalOnOff, setModalOnoff] = useState(false);
 
-  const post = state.post;
+  const { user, post } = state;
   const loading = post === null;
 
   const udmenuClick = () => {
@@ -57,29 +57,6 @@ const Recruit = () => {
     }
   };
 
-  const getType = () => {
-    if (state.user !== null) {
-      if (post.author._id === state.user._id) return 'leader';
-      if (post.members.indexOf(state.user._id) !== -1) return 'member';
-    }
-    return 'visitor';
-  };
-
-  const handleClickTab = (tab) => {
-    setCurrTab(tab);
-    switch (tab) {
-      case '소개':
-        navigate('/');
-        break;
-      case '채팅방':
-        navigate(`/${post._id}/chatting`);
-        break;
-      case '회원 관리':
-        navigate(`/${post._id}/management`);
-        break;
-    }
-  };
-
   useEffect(() => {
     getPost();
   }, []);
@@ -95,11 +72,7 @@ const Recruit = () => {
         src={state.user !== null ? state.user.profileImagePath : null}
       />
       <div className={styles['content-container']}>
-        <Tab
-          currTab={currTab}
-          onClick={getType() === 'visitor' ? () => {} : handleClickTab}
-          type={getType()}
-        />
+        <Tab currTab={currTab} postId={post._id} post={post} user={user} />
         <div className={styles['img-card-container']}>
           <img
             className={styles['recruit-image']}

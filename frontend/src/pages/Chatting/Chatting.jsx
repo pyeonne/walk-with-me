@@ -8,21 +8,12 @@ import styles from './Chatting.module.css';
 
 const Chatting = (props) => {
   const [state, dispatch] = useContext(Context);
-  const postId = useParams().postId;
+  const { user, post } = state;
+  const { id: postId } = useParams();
 
   const [currTab, setCurrTab] = useState('채팅방');
   const handleClickTab = (tab) => {
     setCurrTab(tab);
-  };
-
-  const post = state.post;
-
-  const getType = () => {
-    if (state.user !== null) {
-      if (post.author._id === state.user._id) return 'leader';
-      if (post.members.indexOf(state.user._id) !== -1) return 'member';
-    }
-    return 'visitor';
   };
 
   return (
@@ -32,8 +23,9 @@ const Chatting = (props) => {
         <Tab
           currTab={currTab}
           onClick={handleClickTab}
-          postId={post._id}
-          type={getType()}
+          postId={postId}
+          post={post}
+          user={user}
         />
         <div className={styles.chatting}>
           <div className={styles.room}>

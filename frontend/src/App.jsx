@@ -25,12 +25,12 @@ function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
-      <Route path='/:id/profile-edit' element={<ProfileEdit />} />
       <Route path='/recruit-register' element={<RecruitRegister />} />
+      <Route path='/:id/profile-edit' element={<ProfileEdit />} />
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
-      <Route path='/:postId/management' element={<Management />} />
-      <Route path='/:postId' element={<Recruit />} />
+      <Route path='/:id/management' element={<Management />} />
+      <Route path='/:id' element={<Recruit />} />
     </Routes>
   );
 }
