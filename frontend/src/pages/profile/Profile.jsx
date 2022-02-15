@@ -8,51 +8,49 @@ import { apiClient } from '../../api/api';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import MyProfile from './MyProfile';
 import List from './List';
+import { useParams } from 'react-router-dom';
 
-const Profile = (props) => {
+const Profile = () => {
+  const { id: userId } = useParams();
   const [state, dispatch] = useContext(Context);
-  const [like, setLike] = useState(false);
-  const [my, setMy] = useState(false);
-  const [apply, setApply] = useState(false);
-  const id = window.location.pathname.split('/')[1];
-  const [load, setLoad] = useState(true);
+  const [like, setLike] = useState(true);
+  const [my, setMy] = useState(true);
+  const [apply, setApply] = useState(true);
+
   const activeLike = () => {
     setLike(!like);
   };
+
   const activeMy = () => {
     setMy(!my);
   };
+
   const activeApply = () => {
     setApply(!apply);
   };
+
   const getUserInfo = async () => {
     try {
-      const res = await apiClient.get(`/api/auth/${id}/profile`);
-      // console.log(res.data);
-      dispatch({ type: CHANGE_USER_INFO, payload: res.data });
+      const response = await apiClient.get(`/api/auth/${userId}/profile`);
+      const { likePosts, joinedPosts, applyPosts } = response.data;
+      dispatch({
+        type: CHANGE_USER_INFO,
+        payload: {
+          ...state.user,
+          likePosts,
+          joinedPosts,
+          applyPosts,
+        },
+      });
     } catch (err) {
       alert(err);
     }
   };
 
-  const getProfileImage = async () => {
-    const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${id}/profile-image`;
-    const response = await fetch(IMG_REGISTER_URL);
-    const blobImg = await response.blob();
-    const profileImgURL = URL.createObjectURL(blobImg);
-    dispatch({
-      type: CHANGE_USER_INFO,
-      payload: { ...state.user, profileImgURL },
-    });
-  };
-  const changeState = async () => {
-    setLoad(false);
-  };
   useEffect(() => {
-    getUserInfo().then(getProfileImage());
-    // getProfileImage();
+    getUserInfo();
   }, []);
-  // if (load) return <>load</>;
+
   return (
     <div>
       <Header />
@@ -102,36 +100,7 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${apply && styles.open}`}>
-              {/* <List type='applyPosts' user={state.user} /> */}
-              {/* {state.user.applyPosts.map((post) => {
-                return (
-                  <div key={uuidv4()} className={styles.article}>
-                    <div className={styles.img}>
-                      <img src={post.image} alt='' />
-                    </div>
-                    <div className={styles.summary}>
-                      <h3>{post.title}</h3>
-                      <div className={styles.tags}>
-                        {[
-                          `#${post.area}`,
-                          `#${post.age}대`,
-                          `#${post.category}`,
-                        ].map((tag) => {
-                          return (
-                            <p key={uuidv4()} className={styles.tag}>
-                              {tag}
-                            </p>
-                          );
-                        })}
-                      </div>
-                      <div className={styles.count}>
-                        <Calendar />
-                        <p>{post.members.length}명</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })} */}
+              <List type='applyPosts' user={state.user} />
             </div>
           </div>
         </section>

@@ -5,10 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 const List = (props) => {
   const { type, user } = props;
-  let posts = user[type];
-  if (posts === null || posts === undefined || posts === [])
-    posts = [{ area: '', age: '', category: '', title: '', members: [] }];
-  console.log('props.posts: ', posts[0]);
+  const posts = user[type];
+
+  if (typeof posts[0] === 'string') {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <>
       {posts.map((post) => {
@@ -32,7 +34,7 @@ const List = (props) => {
               </div>
               <div className={styles.count}>
                 <Calendar />
-                {/* <p>{post.members.length}명</p> */}
+                <p>{post.members.length}명</p>
               </div>
             </div>
           </div>

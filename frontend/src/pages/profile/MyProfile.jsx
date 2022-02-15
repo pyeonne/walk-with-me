@@ -4,12 +4,8 @@ import Explore from './icons/explore';
 import styles from './profile.module.css';
 
 const MyProfile = (props) => {
-  let { nickname, birthYear, area, profileImgURL } = props.user;
-  if (!nickname) nickname = '알수 없음';
-  if (!birthYear) birthYear = 'YYYY';
-  if (!area) area = '알수 없음';
-  if (!profileImgURL) profileImgURL = '';
-  // console.log('props.user: ', props.user);
+  const { nickname, birthYear, area, profileImgURL } = props.user;
+
   return (
     <>
       <h2 className={styles.title}>나의 정보</h2>
