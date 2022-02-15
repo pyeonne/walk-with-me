@@ -13,6 +13,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 0.1rem var(--detail-card-border-color) solid;
 }
 .recruit-card:active,
 .create-card:active {
@@ -27,6 +28,7 @@
   color: #333333;
   font-size: 1.6rem;
   margin-top: 3rem;
+  color: var(--create-card-color);
 }
 .detail-card {
   border: 0.1rem var(--detail-card-border-color) solid;
@@ -124,6 +126,7 @@
   align-items: flex-start;
   overflow: hidden;
   flex-direction: column;
+  border: 0.1rem var(--detail-card-border-color) solid;
 }
 .recruit-card .tags {
   height: 3rem;
@@ -140,7 +143,7 @@
 .recruit-title {
   font-weight: bold;
   font-size: 1.8rem;
-  color: #333;
+  color: var(--recruit-text-color);
 }
 .recruit-info {
   display: flex;
@@ -152,7 +155,7 @@
 }
 .recruit-subtitle {
   font-size: 1.4rem;
-  color: #666666;
+  color: var(--input-color);
   word-break: keep-all;
   line-height: 2rem;
 }
