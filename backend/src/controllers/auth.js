@@ -71,13 +71,14 @@ exports.signOut = (req, res) => {
 };
 
 // 회원 정보 등록
-// POST /api/users/:id/profile
+// POST /api/auth/:id/profile
 exports.update = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { nickname, gender, area, birthYear } = req.body;
+  const { profileImagePath, nickname, gender, area, birthYear } = req.body;
   const user = await User.findByIdAndUpdate(
     id,
     {
+      profileImagePath,
       nickname,
       gender,
       area,
@@ -91,15 +92,9 @@ exports.update = asyncHandler(async (req, res) => {
 
 // 회원 정보 등록 이미지
 exports.updateImg = asyncHandler(async (req, res) => {
-  const { id } = req.params;
   const { path } = req.file;
   const profileImagePath = `${process.cwd()}/${path}`;
-
-  await User.findByIdAndUpdate(id, {
-    profileImagePath,
-  });
-
-  res.status(200).json({ success: '프로필 이미지 등록' });
+  res.status(200).json({ profileImagePath });
 });
 
 exports.getImage = asyncHandler(async (req, res) => {

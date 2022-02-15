@@ -4,11 +4,11 @@ import Dropdown from '../../components/Dropdown/Dropdown';
 import Header from '../../components/Header/Header';
 import Input from '../../components/Input/Input';
 import styles from './ProfileRegister.module.css';
-import axios from 'axios';
 import FileInput from '../../components/Input/ImageFileInput';
 import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { useNavigate } from 'react-router-dom';
+import { apiClient } from '../../api/api';
 
 const ProfileRegister = memo(() => {
   const navigate = useNavigate();
@@ -18,22 +18,26 @@ const ProfileRegister = memo(() => {
   const ageRef = useRef();
   const areaRef = useRef();
   const [imgURL, setImgURL] = useState(null);
+  const [imgPath, setImgPath] = useState(null);
   const [state, dispatch] = useContext(Context);
+
   const { _id: userId } = state.user;
-  // const userId = '6204aad85d19a0c564d0572b';
-  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile-image`;
-  const INFO_REGISTER_URL = `http://localhost:4000/api/auth/${userId}/profile`;
+  const reader = new FileReader();
 
   const onFileChange = async (e) => {
+    reader.onload = (e) => {
+      setImgURL(e.currentTarget.result);
+    };
+    const imgFile = e.target.files[0];
+    reader.readAsDataURL(imgFile);
+
     const formData = new FormData();
     formData.append('img', e.target.files[0]);
 
-    await axios.post(IMG_REGISTER_URL, formData);
+    const response = await apiClient.post('/api/auth/profile-image', formData);
+    const { profileImagePath } = response.data;
 
-    const response = await fetch(IMG_REGISTER_URL);
-    const blobImg = await response.blob();
-    const imgURL = URL.createObjectURL(blobImg);
-    setImgURL(imgURL);
+    setImgPath(profileImagePath);
   };
 
   const onSubmit = async (event) => {
@@ -43,19 +47,15 @@ const ProfileRegister = memo(() => {
     const { value: birthYear } = ageRef.current;
     const { value: area } = areaRef.current;
 
-    if (!nickname || !gender || !birthYear || !area) {
-      alert('이미지를 제외한 항목들은 필수 항목입니다.');
-      return;
-    }
-
     const data = {
+      profileImagePath: imgPath,
       nickname,
       gender,
       birthYear,
       area,
     };
 
-    const response = await axios.post(INFO_REGISTER_URL, data);
+    const response = await apiClient.post(`/api/auth/${userId}/profile`, data);
 
     dispatch({ type: CHANGE_USER_INFO, payload: response.data });
     navigate('/');

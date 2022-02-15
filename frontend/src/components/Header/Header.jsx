@@ -43,7 +43,7 @@ const Header = () => {
         <div className={styles.right}>
           {user ? (
             <Link to={`/${user._id}/profile`}>
-              <Avatar src={user?.profileImgURL} width='4rem' height='4rem' />
+              <Avatar src={user.profileImgURL} width='4rem' height='4rem' />
             </Link>
           ) : (
             <button className={styles['sign-in']}>
