@@ -29,7 +29,7 @@ function App() {
       <Route path='/recruit-register' element={<RecruitRegister />} />
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
-      <Route path='/:id/management' element={<Management />} />
+      <Route path='/:postId/management' element={<Management />} />
       <Route path='/:postId' element={<Recruit />} />
     </Routes>
   );

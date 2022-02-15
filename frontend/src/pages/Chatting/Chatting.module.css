@@ -1,13 +1,16 @@
+Header {
+  margin-bottem: 2rem;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: center;
-  width: 60%;
+
+  width: 108.1rem;
   height: 100vh;
 
   margin: 0 auto;
-  margin-top: -6rem;
 }
 
 .chatting {
