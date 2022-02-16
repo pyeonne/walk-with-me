@@ -20,8 +20,8 @@ const InputWrapper = styled.div`
   input,
   textarea {
     font-size: 1.6rem;
-    color: #666;
-    border: 1px solid #ccc;
+    color: var(--input-color);
+    border: 1px solid var(--input-select-border-color);
     border-radius: 0.6rem;
 
     &:focus {
@@ -35,6 +35,7 @@ const StyledInput = styled.input`
   width: ${(props) => props.width || '50rem'};
   height: ${(props) => props.height || '6rem'};
   padding-left: 6rem;
+  background-color: var(--input-background-color);
 `;
 
 const StyledTextArea = styled.textarea`
@@ -42,6 +43,7 @@ const StyledTextArea = styled.textarea`
   height: ${(props) => props.height || '26rem'};
   padding: 1rem;
   line-height: 1.4;
+  background-color: var(--input-background-color);
 `;
 
 const Input = forwardRef((props, ref) => {
@@ -55,6 +57,7 @@ const Input = forwardRef((props, ref) => {
           maxLength={props.maxLength}
           onChange={props.onChange}
           required={props.required}
+          value={props.value}
         />
       </InputWrapper>
     );
@@ -95,6 +98,7 @@ const Input = forwardRef((props, ref) => {
         onChange={props.onChange}
         ref={ref}
         required={props.required}
+        value={props.value}
       />
     </InputWrapper>
   );

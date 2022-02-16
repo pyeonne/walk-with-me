@@ -1,4 +1,4 @@
-import { memo, useRef, useContext, useState } from 'react';
+import { memo, useRef, useContext, useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Header from '../../components/Header/Header';
@@ -10,7 +10,7 @@ import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../../api/api';
 
-const ProfileRegister = memo(() => {
+const ProfileEdit = memo(() => {
   const navigate = useNavigate();
   const formRef = useRef();
   const nameRef = useRef();
@@ -20,9 +20,22 @@ const ProfileRegister = memo(() => {
   const [imgURL, setImgURL] = useState(null);
   const [imgPath, setImgPath] = useState(null);
   const [state, dispatch] = useContext(Context);
+  const {
+    _id: userId,
+    nickname,
+    gender,
+    birthYear,
+    area,
+    profileImgURL,
+  } = state.user;
 
-  const { _id: userId } = state.user;
-  const reader = new FileReader();
+  useEffect(async () => {
+    nameRef.current.value = nickname;
+    genderRef.current.value = gender;
+    ageRef.current.value = birthYear;
+    areaRef.current.value = area;
+    setImgURL(profileImgURL);
+  }, []);
 
   const onFileChange = async (e) => {
     reader.onload = (e) => {
@@ -58,7 +71,8 @@ const ProfileRegister = memo(() => {
     const response = await apiClient.post(`/api/auth/${userId}/profile`, data);
 
     dispatch({ type: CHANGE_USER_INFO, payload: response.data });
-    navigate('/');
+    alert('수정이 완료되었습니다!');
+    navigate(`/${userId}/profile`);
   };
 
   return (
@@ -66,9 +80,7 @@ const ProfileRegister = memo(() => {
       <Header />
       <div className={styles.container}>
         <form ref={formRef} className={styles.form} onSubmit={onSubmit}>
-          <h2 className={styles.title}>
-            처음 오셨군요? 기본 정보를 입력해주세요!
-          </h2>
+          <h2 className={styles.title}>수정할 정보를 입력해 주세요!</h2>
           <FileInput onFileChange={onFileChange} imgURL={imgURL} />
           <Input
             ref={nameRef}
@@ -98,11 +110,11 @@ const ProfileRegister = memo(() => {
             placeholder='동 · 읍 · 면을 입력해주세요.'
             required
           />
-          <Button text='등록하기' />
+          <Button text='수정하기' />
         </form>
       </div>
     </>
   );
 });
 
-export default ProfileRegister;
+export default ProfileEdit;

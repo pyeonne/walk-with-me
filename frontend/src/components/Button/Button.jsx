@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import kakao from './images/kakao.svg';
 import google from './images/google.svg';
@@ -19,7 +19,6 @@ const StyledButton = styled.button`
     props.disabled &&
     css`
       cursor: default;
-      background-color: #e5e5e5;
     `}
 `;
 

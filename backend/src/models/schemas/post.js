@@ -32,6 +32,7 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    postImagePath: String,
     members: [
       {
         type: mongoose.Types.ObjectId,

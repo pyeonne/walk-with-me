@@ -1,11 +1,12 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
+import { Context } from '../../context';
 import classes from './Dropdown.module.css';
 
 const Dropdown = forwardRef((props, ref) => {
   const optionsObj = {
     status: [
-      { value: 'ing', text: '모집 중' },
-      { value: 'end', text: '모집 완료' },
+      { value: 'true', text: '모집 중' },
+      { value: 'false', text: '모집 완료' },
     ],
     gender: [
       { value: '', text: '성별' },
@@ -32,15 +33,22 @@ const Dropdown = forwardRef((props, ref) => {
 
   const options = optionsObj[props.type];
 
+  const [state, dispatch] = useContext(Context);
+
   return (
     <select
       name='filter'
       style={{ width: props.width, height: props.height }}
-      className={`${classes.select} ${classes[props.type]}`}
+      className={
+        state.darkMode
+          ? `${classes.select} ${classes[props.type]} ${classes.dark}`
+          : `${classes.select} ${classes[props.type]}`
+      }
       ref={ref}
       onChange={props.onChange}
       required={props.required}
       data-type={props.type}
+      value={props.value}
     >
       {options.map((option, idx) => (
         <option key={idx} value={option.value}>

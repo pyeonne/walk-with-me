@@ -30,6 +30,7 @@ const RequestModal = (props) => {
                   text='닫기'
                   height='5rem'
                   width='18.2rem'
+                  bg='#cccccc'
                   onClick={props.onClick}
                 />
                 <Button

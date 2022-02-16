@@ -18,19 +18,22 @@
 }
 .footer p {
   font-size: 1.6rem;
+  color: var(--input-color);
 }
 /* 메세지 공간 */
 .txtArea {
   margin: 0 0 1rem 1.2rem;
 }
 /* 에러 메세지 */
+.error,
+.success {
+  font-size: 1.4rem;
+}
 .error {
-  font-size: 1rem;
   color: var(--error-color);
 }
 /* 유효성 통과시 메세지 */
 .success {
-  font-size: 1rem;
   color: var(--success-color);
 }
 .logtxt {

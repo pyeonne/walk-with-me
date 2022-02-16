@@ -19,8 +19,11 @@ router.get('/signout', authCtrl.signOut);
 
 // 회원 정보 등록
 router.post('/:id/profile', authCtrl.update);
-router.post('/:id/profile-image', upload.single('img'), authCtrl.updateImg);
+router.post('/profile-image', upload.single('img'), authCtrl.updateImg);
 router.get('/:id/profile-image', authCtrl.getImage);
+
+//회원 정보 수정
+router.put('/:id/profile', authCtrl.modify);
 
 // 회원 정보 조회
 router.get('/:id/profile', checkLogin, authCtrl.read);

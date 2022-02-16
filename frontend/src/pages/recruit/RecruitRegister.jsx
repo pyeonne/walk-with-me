@@ -3,7 +3,8 @@ import Input from '../../components/Input/Input';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Button from '../../components/Button/Button';
 import styles from './RecruitRegister.module.css';
-import { useState } from 'react';
+import { Context } from '../../context';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../../api/api';
 
@@ -15,17 +16,38 @@ const RecruitRegister = () => {
   const [title, setTitle] = useState('');
   const [content, SetContent] = useState('');
   const [image, setImage] = useState('');
+  const [imageURL, setImageURL] = useState('');
   const [imageName, setImageName] = useState('');
+  const [state, dispatch] = useContext(Context);
 
+  const author = state.user?._id;
+  const reader = new FileReader();
   const onImageHandler = async (event) => {
+    // 이미지 미리보기
+    reader.onload = (event) => {
+      setImage(event.currentTarget.result);
+    };
+    const imgFile = event.target.files[0];
+    //readAsDataURL() 는 바이너리 파일을 읽어 들일 때 사용
+    reader.readAsDataURL(imgFile);
+
+    // 인풋창에 이미지 이름표시
     setImageName(event.currentTarget.files[0].name);
-    setImage(event.currentTarget.value);
 
     const formData = new FormData();
     formData.append('img', event.target.files[0]);
 
     const response = await apiClient.post('/api/posts/images', formData);
-    console.log(response);
+    const { postImagePath } = response.data;
+
+    // const response2 = await apiClient.get(`/api/posts/images`, {
+    //   path: postImagePath,
+    // });
+    // const blobImg = await response2.blob();
+    // const imgURL = URL.createObjectURL(blobImg);
+    // console.log('블랍', blobImg);
+    // console.log('유알엘', imgURL);
+    setImageURL(postImagePath);
   };
 
   const onAreaHandler = (event) => {
@@ -54,16 +76,19 @@ const RecruitRegister = () => {
 
   const apiCall = async () => {
     try {
-      const response = await apiClient.post('/api/posts', {
+      await apiClient.post('/api/posts', {
+        postImagePath: imageURL,
+        author,
         area,
         category,
         age,
         title,
         content,
       });
-      console.log(response);
+      alert('모집 등록이 완료되었습니다!');
+      navigate('/');
     } catch (err) {
-      console.log(err);
+      alert('모집 등록에 실패했습니다.');
     }
   };
 
@@ -81,6 +106,15 @@ const RecruitRegister = () => {
           </div>
           <form method='POST' onSubmit={onSubmitHandler}>
             <div className={styles['form-group']}>
+              <img
+                className={styles['preview__img']}
+                src={
+                  image
+                    ? image
+                    : 'https://cdn.pixabay.com/photo/2020/04/22/10/14/running-5077128_960_720.jpg'
+                }
+                alt='모임 대표 사진'
+              />
               <div className={styles.filebox}>
                 <input
                   className={styles['file-name']}
@@ -100,7 +134,7 @@ const RecruitRegister = () => {
               </div>
               <Input
                 name='area'
-                width='40rem'
+                width='100%'
                 placeholder='동 · 읍 · 면을 입력해주세요.'
                 marginBottom='1rem'
                 value={area}
@@ -110,20 +144,20 @@ const RecruitRegister = () => {
               <Dropdown
                 type='category'
                 height='6rem'
-                width='40rem'
+                width='100%'
                 onChange={onCategoryHandler}
                 required={true}
               />
               <Dropdown
                 type='age'
                 height='6rem'
-                width='40rem'
+                width='100%'
                 onChange={onAgeHandler}
                 required={true}
               />
               <Input
                 name='title'
-                width='40rem'
+                width='100%'
                 marginBottom='1rem'
                 placeholder='모임 이름을 입력해주세요.'
                 value={title}
@@ -132,6 +166,7 @@ const RecruitRegister = () => {
               />
               <Input
                 name='content'
+                width='100%'
                 placeholder='모임 목표를 설명해주세요.'
                 marginBottom='1rem'
                 minLength={0}

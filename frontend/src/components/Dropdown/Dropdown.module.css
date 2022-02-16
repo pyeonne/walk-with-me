@@ -3,8 +3,9 @@
   height: 5rem;
   font-size: 1.4rem;
   padding-left: 6rem;
-  border-color: #ccc;
-  color: #666;
+  border-color: var(--input-select-border-color);
+  color: var(--input-color);
+  background-color: var(--input-background-color);
   border-radius: 4px;
   -moz-appearance: none; /* Firefox */
   -webkit-appearance: none; /* Safari and Chrome */
@@ -30,5 +31,29 @@
 
 .select.gender {
   background-image: url('./images/age.svg'), url('./images/arrow_down.svg');
+  background-position: left 2rem center, right 2rem center;
+}
+
+.select.status.dark {
+  background-image: url('./images/statusDark.svg'),
+    url('./images/arrow_downDark.svg');
+  background-position: left 2rem center, right 2rem center;
+}
+
+.select.category.dark {
+  background-image: url('./images/categoryDark.svg'),
+    url('./images/arrow_downDark.svg');
+  background-position: left 2rem center, right 2rem center;
+}
+
+.select.age.dark {
+  background-image: url('./images/ageDark.svg'),
+    url('./images/arrow_downDark.svg');
+  background-position: left 2rem center, right 2rem center;
+}
+
+.select.gender.dark {
+  background-image: url('./images/ageDark.svg'),
+    url('./images/arrow_downDark.svg');
   background-position: left 2rem center, right 2rem center;
 }

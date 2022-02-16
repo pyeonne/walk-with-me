@@ -1,41 +1,55 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Context } from '../context';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import axios from 'axios';
+import { apiClient } from '../api/api';
 import Card from '../components/Card/Card';
 import Dropdown from '../components/Dropdown/Dropdown';
 import styles from './Home.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import Pagination from '../components/Pagination/Pagination';
-import { ADD_POSTS } from '../context/actionTypes';
 
 const Home = () => {
-  const [state, dispatch] = useContext(Context);
-  const [status, setStatus] = useState('ing');
+  const [postsObj, setPostsObj] = useState({
+    posts: [],
+    count: 0,
+  });
+  const [status, setStatus] = useState('true');
   const [category, setCategory] = useState('');
   const [age, setAge] = useState('');
+  const [currPage, setCurrPage] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const getPosts = async (filter) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/api/posts${filter}`
-      );
-      dispatch({ type: ADD_POSTS, payload: response.data });
-    } catch (err) {
-      alert('게시물 불러오기에 실패했습니다.');
-    }
+    const response = await apiClient.get(`/api/posts${filter}`);
+    const { posts, count } = response.data;
+    setPostsObj({
+      posts,
+      count,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
-    const filter =
-      `${
-        status === 'ing' ? `?isRecruiting=${true}` : `?isRecruiting=${false}`
-      }` +
-      `${category !== '' ? `&category=${category}` : ''}` +
-      `${age !== '' ? `&age=${age}` : ''}`;
+    let abortController = new AbortController();
+    const filter = `?isRecruiting=${status}&category=${category}&age=${age}&page=${
+      currPage + 1
+    }`;
+
     getPosts(filter);
-  }, [status, category, age]);
+
+    return () => {
+      abortController.abort();
+    };
+  }, [status, category, age, currPage]);
+
+  const onClickPage = (page) => {
+    setCurrPage(page);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Header />
@@ -55,10 +69,10 @@ const Home = () => {
           />
         </div>
         <div className={styles['card-wrapper']}>
-          <Link to='/RecruitRegister'>
+          <Link to='/recruit-register'>
             <Card cardType='create' />
           </Link>
-          {state.posts.map((post) => (
+          {postsObj.posts.map((post) => (
             <React.Fragment key={uuidv4()}>
               <Link to={post._id}>
                 <Card post={post} cardType='recruit' />
@@ -67,7 +81,11 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <Pagination currPage={1} pageCount={5} />
+      <Pagination
+        currPage={currPage}
+        pageCount={Math.floor(postsObj.count / 7) + 1}
+        onClickPage={onClickPage}
+      />
     </>
   );
 };

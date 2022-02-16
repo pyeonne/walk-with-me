@@ -1,48 +1,51 @@
 .card {
   width: 30rem;
   height: 46rem;
-  background: #ffffff;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  background: var(--card-background-color);
+  box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
   border-radius: 5px;
   display: inline-flex;
   cursor: pointer;
   user-select: none;
   margin: 1rem;
+  border: 0.1rem var(--detail-card-border-color) solid;
 }
 .create-card {
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.recruit-card:active,
+
 .create-card:active {
   transform: scale(0.98);
 }
+
 .create-card button {
-  filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14))
-    drop-shadow(0px 1px 18px rgba(0, 0, 0, 0.12))
-    drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2));
+  box-shadow: rgb(0 0 0 / 24%) 0px 4px 16px 0px;
 }
+
 .create-card-span {
   color: #333333;
   font-size: 1.6rem;
   margin-top: 3rem;
+  color: var(--create-card-color);
 }
+
+/* detail-card */
 .detail-card {
+  border: 0.1rem var(--detail-card-border-color) solid;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
   cursor: default;
-}
-.detail-card .tags {
-  margin-top: 3.105rem;
-  margin-left: 2.25rem;
-  margin-bottom: 3.91rem;
 }
 .tags {
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
-  width: 26rem;
+  margin-bottom: 1.4rem;
 }
+
 .tags button {
   flex-basis: content;
   padding: 1rem;
@@ -52,82 +55,92 @@
 
 .detail-text {
   display: flex;
+  align-items: center;
   font-size: 1.4rem;
+  color: #333;
 }
 
 .detail-text span {
   cursor: default;
-  margin: 0.5rem;
   align-items: center;
+  color: var(--recruit-text-color);
 }
+
 .detail-text img {
-  width: 2.5rem;
-  height: 2.5rem;
-  align-items: center;
-  justify-content: center;
-  margin-left: 2rem;
-  margin-bottom: 10.1rem;
+  margin-right: 0.6rem;
 }
+
 .detail-buttons-middle {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .detail-buttons-middle button {
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
+
 .detail-buttons-middle button:active {
   transform: scale(0.95);
   font-size: 1.5rem;
 }
 
 .detail-buttons-bottom {
-  width: 26rem;
   display: flex;
   justify-content: space-between;
-  margin: 1rem auto;
   align-items: center;
 }
 
-.detail-buttons-bottom button {
-  margin-top: 1.8rem;
-}
-.detail-buttons-bottom button:last-child {
-  justify-content: space-evenly;
-}
 .likes-people img {
   width: 3rem;
   height: 3rem;
   position: relative;
 }
+
+.heart {
+  margin-right: 1rem;
+}
+
 .likes-people img:nth-of-type(2) {
   right: 1rem;
 }
 .likes-people img:nth-of-type(3) {
   right: 2rem;
 }
+
+/* recruit-card */
 .recruit-card {
   align-items: flex-start;
   overflow: hidden;
   flex-direction: column;
+  transition: all 0.3s;
 }
+
+.recruit-card:hover {
+  transform: translateY(-6px);
+}
+
 .recruit-card .tags {
-  height: 3rem;
+  margin-bottom: 1rem;
 }
+
 .recruit-img {
   width: 30rem;
   min-height: 29rem;
   object-fit: cover;
 }
+
 .recruit-text {
   display: flex;
   flex-direction: column;
 }
+
 .recruit-title {
   font-weight: bold;
   font-size: 1.8rem;
-  color: #333;
+  color: var(--recruit-text-color);
 }
+
 .recruit-info {
   display: flex;
   flex-direction: column;
@@ -138,36 +151,50 @@
 }
 .recruit-subtitle {
   font-size: 1.4rem;
-  color: #666666;
+  color: var(--input-color);
   word-break: keep-all;
   line-height: 2rem;
 }
+
 .recruit-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .recruit-bottom img {
-  width: 2.5rem;
-  height: 2.5rem;
   margin-right: 0.5rem;
   border-radius: 50%;
 }
+
 .recruit-text .tags button {
   cursor: pointer;
 }
-.likes button:active {
-  background-color: #dddddd;
+
+.likes button {
+  transition: background-color 0.3s;
 }
+
+.likes button:hover {
+  background-color: var(--likes-button-hover-color);
+}
+
 .author {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
+
+.author span {
+  font-size: 1.4rem;
+  color: #666;
+}
+
 .author button {
   justify-content: flex-start;
   padding: 0;
 }
 .author img {
-  width: 4rem;
-  height: 4rem;
+  width: 3.6rem;
+  height: 3.6rem;
 }

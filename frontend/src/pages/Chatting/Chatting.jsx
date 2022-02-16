@@ -1,19 +1,52 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Context } from '../../context';
 import Header from '../../components/Header/Header';
 import Tab from '../../components/Tab/Tab';
 import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
+import { NOW_POST } from '../../context/actionTypes';
+import { apiClient } from '../../api/api';
+import { v4 as uuidv4 } from 'uuid';
 
-const Chatting = (props) => {
-  const [currTab, setCurrTab] = useState('소개');
-  const handleClickTab = (tab) => {
-    setCurrTab(tab);
+const currTab = '채팅방';
+
+const Chatting = () => {
+  const [state, dispatch] = useContext(Context);
+  const { user, post } = state;
+  const { id: postId } = useParams();
+  const [loading, setLoading] = useState(true);
+
+  const getPost = async () => {
+    const response = await apiClient.get('/api/posts/' + postId);
+
+    dispatch({
+      type: NOW_POST,
+      payload: response.data,
+    });
+    setLoading(false);
   };
+
+  useEffect(() => {
+    getPost();
+
+    return () => {
+      dispatch({
+        type: NOW_POST,
+        payload: null,
+      });
+    };
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Header />
       <div className={styles.container}>
-        <Tab currTab={currTab} onClick={handleClickTab} />
+        <Tab currTab={currTab} postId={postId} post={post} user={user} />
         <div className={styles.chatting}>
           <div className={styles.room}>
             <div className={styles.chat}>
@@ -59,22 +92,26 @@ const Chatting = (props) => {
             />
           </div>
           <div className={styles.list}>
-            <div className={styles.user}>
+            {/* 모임장 */}
+            <div className={styles.user} key={uuidv4()}>
               <div className={styles.profile}>
                 <Avatar />
               </div>
               <div className={styles.author}>
-                <h3>[모임장]닉네임</h3>
+                <h3>[모임장] {post.author.nickname}</h3>
               </div>
             </div>
-            <div className={styles.user}>
-              <div className={styles.profile}>
-                <Avatar />
+            {/* 멤버 */}
+            {post.members.map((member) => (
+              <div className={styles.user} key={uuidv4()}>
+                <div className={styles.profile}>
+                  <Avatar />
+                </div>
+                <div className={styles.author}>
+                  <h3>{member.nickname}</h3>
+                </div>
               </div>
-              <div className={styles.author}>
-                <h3>[모임장]닉네임</h3>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

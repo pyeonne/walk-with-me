@@ -27,6 +27,7 @@ exports.checkUserId = (req, res, next) => {
   const { userId } = req.params;
 
   if (ObjectId.isValid(userId)) {
+    res.locals.userId = userId;
     return next();
   }
 

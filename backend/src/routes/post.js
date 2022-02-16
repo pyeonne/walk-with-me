@@ -12,6 +12,9 @@ const router = Router();
 const postRouter = Router();
 const manageRouter = Router();
 
+// 포스트 사진 등록
+router.post('/images', upload.single('img'), postCtrl.registerImage);
+
 router.use('/:id', checkPostId, checkPostExist, postRouter);
 router.use(
   '/:id/management/:userId',
@@ -30,11 +33,6 @@ router.post('/', checkLogin, postCtrl.create);
 postRouter.put('/', checkLogin, checkOwnPost, postCtrl.update);
 postRouter.delete('/', postCtrl.delete);
 
-// 포스트 사진 등록, 조회
-router.post('/images', upload.single('img'), (req, res) => {
-  console.log(req.file);
-});
-
 // 모집 상태 변경
 postRouter.put('/status', checkLogin, checkOwnPost, postCtrl.changeStatus);
 
@@ -46,8 +44,8 @@ postRouter.delete('/likes', checkLogin, postCtrl.unlike);
 postRouter.post('/apply', checkLogin, postCtrl.apply);
 postRouter.post('/cancel', checkLogin, postCtrl.cancel);
 
-// 회원 관리 페이지
-postRouter.get('/management', checkLogin, checkOwnPost, postCtrl.management);
+// 모임 탈퇴
+postRouter.delete('/leave', checkLogin, postCtrl.leave);
 
 // 가입 신청 수락, 거절
 manageRouter.post('/allow', postCtrl.allow);

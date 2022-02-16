@@ -1,46 +1,66 @@
-import React, { useState } from 'react';
-import Avatar from '../../components/Avatar/Avatar';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../../context';
 import Header from '../../components/Header/Header';
 import Arrow from './icons/Arrow';
-import Explore from './icons/explore';
 import Face from './icons/Face';
 import styles from './profile.module.css';
-import Pagination from '../../components/Pagination/Pagination';
-import Calendar from './icons/Calendar';
+import { apiClient } from '../../api/api';
+import { CHANGE_USER_INFO } from '../../context/actionTypes';
+import MyProfile from './MyProfile';
+import List from './List';
+import { Link, useParams } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 
-const Profile = (props) => {
-  const [like, setLike] = useState(false);
-  const [my, setMy] = useState(false);
-  const [apply, setApply] = useState(false);
-  const activeLike = (event) => {
+const Profile = () => {
+  const { id: userId } = useParams();
+  const [state, dispatch] = useContext(Context);
+  const [like, setLike] = useState(true);
+  const [my, setMy] = useState(true);
+  const [apply, setApply] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  const activeLike = () => {
     setLike(!like);
   };
-  const activeMy = (event) => {
+
+  const activeMy = () => {
     setMy(!my);
   };
-  const activeApply = (event) => {
+
+  const activeApply = () => {
     setApply(!apply);
   };
+
+  const getUserInfo = async () => {
+    const response = await apiClient.get(`/api/auth/${userId}/profile`);
+    const { likePosts, joinedPosts, applyPosts } = response.data;
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: {
+        ...state.user,
+        likePosts,
+        joinedPosts,
+        applyPosts,
+      },
+    });
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <Header />
+      {/* 회원 프로필 정보 */}
       <div className={styles.container}>
-        <h2 className={styles.title}>나의 정보</h2>
-        <div className={styles.profile}>
-          <div className={styles.avatar}>
-            <Avatar width='8rem' height='8rem' />
-          </div>
-          <div className={styles.info}>
-            <div className={styles.name}>
-              <h3>닉네임</h3>
-              <p className={styles.date}>1994</p>
-            </div>
-            <div className={styles.areaWrapper}>
-              <Explore />
-              <h3 className={styles.area}>무슨시 모르겠동</h3>
-            </div>
-          </div>
-        </div>
+        <MyProfile user={state.user} />
+        {/* 내 관심 모임 */}
         <section className={styles.histories}>
           <div className={styles.wrapper} onClick={activeLike}>
             <div className={styles.like}>
@@ -53,68 +73,10 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${like && styles.open}`}>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
+              <List type='likePosts' user={state.user} />
             </div>
           </div>
+          {/* 내 모임 */}
           <div className={styles.wrapper} onClick={activeMy}>
             <div className={styles.my}>
               <div className={styles.subtitle}>
@@ -126,68 +88,10 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${my && styles.open}`}>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
+              <List type='joinedPosts' user={state.user} />
             </div>
           </div>
+          {/* 가입 신청한 모임 */}
           <div className={styles.wrapper} onClick={activeApply}>
             <div className={styles.apply}>
               <div className={styles.subtitle}>
@@ -199,68 +103,12 @@ const Profile = (props) => {
               </div>
             </div>
             <div className={`${styles.lists} ${apply && styles.open}`}>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.article}>
-                <div className={styles.img}>
-                  <img
-                    src='https://images.unsplash.com/photo-1530788868903-53349eec267e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1958&q=80'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.summary}>
-                  <h3>런닝맨</h3>
-                  <div className={styles.tags}>
-                    <p className={styles.tag}>#자전거</p>
-                    <p className={styles.tag}>#합정동</p>
-                    <p className={styles.tag}>#30대</p>
-                  </div>
-                  <div className={styles.count}>
-                    <Calendar />
-                    <p>30명</p>
-                  </div>
-                </div>
-              </div>
+              <List type='applyPosts' user={state.user} />
             </div>
           </div>
+          <Button width='100%'>
+            <Link to={`/${state.user._id}/profile-edit`}>수정하기</Link>
+          </Button>
         </section>
       </div>
     </div>

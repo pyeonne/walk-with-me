@@ -5,91 +5,64 @@ import Tab from '../../components/Tab/Tab';
 import Header from '../../components/Header/Header';
 import styles from './Recruit.module.css';
 import udmenu from './images/udmenu.svg';
+import udmenuDark from './images/udmenuDark.svg';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../context';
 import { NOW_POST } from '../../context/actionTypes';
-import axios from 'axios';
+import { apiClient } from '../../api/api';
+
+const currTab = '소개';
 
 const Recruit = () => {
   const [state, dispatch] = useContext(Context);
-  const postId = useParams().postId;
+  const { id: postId } = useParams();
 
   const navigate = useNavigate();
-  let [currTab, setCurrTab] = useState('소개');
-  let [modalOnOff, setModalOnoff] = useState(false);
-
-  const post = state.post;
-  const loading = post === null;
+  const [modalOnOff, setModalOnoff] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { user, post } = state;
 
   const udmenuClick = () => {
     setModalOnoff(!modalOnOff);
   };
+
   const recruitModify = () => {
-    navigate('/');
+    navigate(`/recruit-edit/${postId}`);
   };
 
   const recruitDelete = async () => {
     if (confirm('정말 삭제하시겠습니까?')) {
-      try {
-        await axios.delete('http://localhost:4000/api/posts/' + postId);
-        alert('삭제 되었습니다');
-        navigate('/');
-      } catch (err) {
-        console.log(err);
-      }
+      await apiClient.delete('/api/posts/' + postId);
+      alert('삭제 되었습니다');
+      navigate('/');
     }
     return;
   };
 
   const getPost = async () => {
-    try {
-      const response = await axios.get(
-        'http://localhost:4000/api/posts/' + postId
-      );
-      console.log(response.data);
+    const response = await apiClient.get('/api/posts/' + postId);
 
-      dispatch({
-        type: NOW_POST,
-        payload: response.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getType = () => {
-    if (state.user !== null) {
-      if (post.author._id === state.user._id) return 'leader';
-      if (post.members.indexOf(state.user._id) !== -1) return 'member';
-    }
-    return 'visitor';
-  };
-
-  const handleClickTab = (tab) => {
-    setCurrTab(tab);
-    switch (tab) {
-      case '소개':
-        navigate('/');
-        break;
-      case '채팅방':
-        navigate('/signin');
-        break;
-      case '회원 관리':
-        navigate('/password-find');
-        break;
-    }
+    dispatch({
+      type: NOW_POST,
+      payload: response.data,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
     getPost();
+
+    return () => {
+      dispatch({
+        type: NOW_POST,
+        payload: null,
+      });
+    };
   }, []);
-  // console.log(
-  //   `포스트 작성자 아디 ${post.author._id}  유저 아디${state.user._id}`
-  // );
 
   if (loading) {
-    return <div>로딩 중</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -99,11 +72,7 @@ const Recruit = () => {
         src={state.user !== null ? state.user.profileImagePath : null}
       />
       <div className={styles['content-container']}>
-        <Tab
-          currTab={currTab}
-          onClick={getType() === 'visitor' ? null : handleClickTab}
-          type={getType()}
-        />
+        <Tab currTab={currTab} postId={post._id} post={post} user={user} />
         <div className={styles['img-card-container']}>
           <img
             className={styles['recruit-image']}
@@ -125,20 +94,19 @@ const Recruit = () => {
                   className={styles['recruit-menu-button']}
                   onClick={udmenuClick}
                 >
-                  <img src={udmenu} />
+                  <img src={state.darkMode ? udmenuDark : udmenu} />
                 </button>
               )}
         </div>
         <div>
           <div className={styles['author-date-container']}>
             <Avartar
-              className={styles['recruit-profile']}
-              height='2.4rem'
-              width='2.4rem'
+              src={post.author.profileImagePath}
+              height='3rem'
+              width='3rem'
             />
             <div className={styles['recruit-author']}>
-              by
-              {post.author.nickname}
+              by {post.author.nickname}
             </div>
             <div className={styles['recruit-date']}>
               {post.createdAt.substr(0, 10).split('-').join('.')}

@@ -71,13 +71,14 @@ exports.signOut = (req, res) => {
 };
 
 // 회원 정보 등록
-// POST /api/users/:id/profile
+// POST /api/auth/:id/profile
 exports.update = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { nickname, gender, area, birthYear } = req.body;
+  const { profileImagePath, nickname, gender, area, birthYear } = req.body;
   const user = await User.findByIdAndUpdate(
     id,
     {
+      profileImagePath,
       nickname,
       gender,
       area,
@@ -91,15 +92,9 @@ exports.update = asyncHandler(async (req, res) => {
 
 // 회원 정보 등록 이미지
 exports.updateImg = asyncHandler(async (req, res) => {
-  const { id } = req.params;
   const { path } = req.file;
   const profileImagePath = `${process.cwd()}/${path}`;
-
-  await User.findByIdAndUpdate(id, {
-    profileImagePath,
-  });
-
-  res.status(200).json({ success: '프로필 이미지 등록' });
+  res.status(200).json({ profileImagePath });
 });
 
 exports.getImage = asyncHandler(async (req, res) => {
@@ -118,7 +113,10 @@ exports.getImage = asyncHandler(async (req, res) => {
 // GET /api/users/:id/profile
 exports.read = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const readUser = await User.findOne({ _id: id });
+  const readUser = await User.findOne({ _id: id })
+    .populate('likePosts')
+    .populate('joinedPosts')
+    .populate('applyPosts');
 
   if (!readUser) {
     const error = new Error('가입되지 않은 계정입니다.');
@@ -126,8 +124,24 @@ exports.read = asyncHandler(async (req, res) => {
     throw error;
   }
 
-  const { nickname, gender, area, birthYear, profileUrl } = readUser;
-  res.status(200).json({ nickname, gender, area, birthYear, profileUrl });
+  res.status(200).json(readUser);
+});
+
+// 회원 정보 수정
+exports.modify = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { nickname, gender, area, birthYear } = req.body;
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      nickname,
+      gender,
+      area,
+      birthYear,
+    },
+    { new: true }
+  );
+  res.status(200).json(user);
 });
 
 // 비밀번호 찾기
