@@ -180,7 +180,7 @@ const CardDetail = ({ style, post }) => {
               className={styles['detail-contact']}
               src={state.darkMode ? contactDark : contact}
             />
-            <span>{members.length}명</span>
+            <span>{members.length + 1}명</span>
           </div>
         </div>
         <div className={styles.bottom}>
