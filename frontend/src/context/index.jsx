@@ -1,10 +1,16 @@
 import { createContext, useEffect, useReducer } from 'react';
-import { ADD_POSTS, CHANGE_USER_INFO, NOW_POST } from './actionTypes';
+import {
+  ADD_POSTS,
+  CHANGE_USER_INFO,
+  NOW_POST,
+  GET_DARK_MODE,
+} from './actionTypes';
 
 const initialState = {
   user: null,
   posts: [],
   post: null,
+  darkMode: window.localStorage.getItem('bgMode') === 'dark' ? true : false,
 };
 
 const Context = createContext({});
@@ -25,6 +31,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         post: action.payload,
+      };
+    case GET_DARK_MODE:
+      return {
+        ...state,
+        darkMode: action.payload,
       };
     default:
       return state;

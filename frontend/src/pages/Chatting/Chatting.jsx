@@ -1,19 +1,51 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Context } from '../../context';
 import Header from '../../components/Header/Header';
 import Tab from '../../components/Tab/Tab';
 import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
+import { NOW_POST } from '../../context/actionTypes';
+import { apiClient } from '../../api/api';
 
-const Chatting = (props) => {
-  const [currTab, setCurrTab] = useState('채팅방');
-  const handleClickTab = (tab) => {
-    setCurrTab(tab);
+const currTab = '채팅방';
+
+const Chatting = () => {
+  const [state, dispatch] = useContext(Context);
+  const { user, post } = state;
+  const { id: postId } = useParams();
+  const [loading, setLoading] = useState(true);
+
+  const getPost = async () => {
+    const response = await apiClient.get('/api/posts/' + postId);
+
+    dispatch({
+      type: NOW_POST,
+      payload: response.data,
+    });
+    setLoading(false);
   };
+
+  useEffect(() => {
+    getPost();
+
+    return () => {
+      dispatch({
+        type: NOW_POST,
+        payload: null,
+      });
+    };
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Header />
       <div className={styles.container}>
-        <Tab currTab={currTab} onClick={handleClickTab} />
+        <Tab currTab={currTab} postId={postId} post={post} user={user} />
         <div className={styles.chatting}>
           <div className={styles.room}>
             <div className={styles.chat}>

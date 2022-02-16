@@ -31,6 +31,7 @@
 }
 .footer p {
   font-size: 1.6rem;
+  color: var(--input-color);
 }
 .intxt {
   color: var(--first-color);
@@ -53,8 +54,8 @@
 }
 .or span {
   z-index: 9999;
-  background-color: #ffffff;
+  background-color: var(--body-background-color);
   padding: 0 6rem;
-  color: #666666;
+  color: var(--input-color);
   font-size: 1.6rem;
 }
