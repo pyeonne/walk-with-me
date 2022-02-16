@@ -8,6 +8,7 @@
   cursor: pointer;
   user-select: none;
   margin: 1rem;
+  border: 0.1rem var(--detail-card-border-color) solid;
 }
 .create-card {
   flex-direction: column;
@@ -172,16 +173,12 @@
   cursor: pointer;
 }
 
-.likes button:active {
-  background-color: #dddddd;
-}
-
 .likes button {
-  transition: all 0.3s;
+  transition: background-color 0.3s;
 }
 
 .likes button:hover {
-  background-color: #efefef;
+  background-color: var(--likes-button-hover-color);
 }
 
 .author {

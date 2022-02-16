@@ -127,7 +127,7 @@ const SignIn = () => {
             image='kakao'
             bg='var(--card-background-color)'
             color='var(--input-color)'
-            border='1px solid #cccccc'
+            border='1px solid var(--detail-card-border-color)'
             onClick={kakaoLogin}
           />
           <Button
@@ -135,7 +135,7 @@ const SignIn = () => {
             image='google'
             bg='var(--card-background-color)'
             color='var(--input-color)'
-            border='1px solid #cccccc'
+            border='1px solid var(--detail-card-border-color)'
             onClick={googleLogin}
           />
         </div>

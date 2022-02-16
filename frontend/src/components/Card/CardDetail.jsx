@@ -188,11 +188,11 @@ const CardDetail = ({ style, post }) => {
             <Button
               width='24rem'
               height='5rem'
-              border='1px solid #7EDA8B'
-              color='#7EDA8B'
+              border='1px solid var(--detail-card-button-border-color)'
+              color='var(--detail-card-recruit-button-color)'
               text={isRecruiting === true ? '모집중' : '모집완료'}
               radius='140px'
-              bg='#ffffff'
+              bg='var(--detail-card-button-background-color)'
               disabled={true}
             />
             <Button
@@ -224,7 +224,7 @@ const CardDetail = ({ style, post }) => {
               <Button
                 width='10rem'
                 height='4.6rem'
-                border='1px solid #dddddd'
+                border='1px solid var(--detail-card-border-color)'
                 radius='140px'
                 flexBasis='center'
                 color='var(--recruit-text-color)'

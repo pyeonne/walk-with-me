@@ -82,7 +82,7 @@ const CardRecruit = ({ post }) => {
             <Button
               width='8rem'
               height='4rem'
-              border='1px solid #dddddd'
+              border='1px solid var(--detail-card-border-color)'
               color='var(--recruit-text-color)'
               radius='140px'
               flexBasis='center'

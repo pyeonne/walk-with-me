@@ -21,7 +21,7 @@ const InputWrapper = styled.div`
   textarea {
     font-size: 1.6rem;
     color: var(--input-color);
-    border: 1px solid #ddd;
+    border: 1px solid var(--input-select-border-color);
     border-radius: 0.6rem;
 
     &:focus {
