@@ -1,13 +1,19 @@
+Header {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: center;
-  width: 60%;
+
+  width: 108.1rem;
   height: 100vh;
 
   margin: 0 auto;
-  margin-top: -6rem;
+
   gap: 2rem;
 }
 
@@ -45,17 +51,22 @@ td {
   font-size: 1.2rem;
   padding: 1rem;
   vertical-align: middle;
+  width: 10%;
 }
 
-td:not(:last-child) {
+/* td:not(:last-child) {
   white-space: nowrap;
-}
+} */
 
 td:nth-child(6) {
-  width: 40%;
+  width: 30%;
 }
 
 th:nth-child(6),
 td:nth-child(6) {
   text-align: left;
 }
+
+/* Button {
+  margin: 0 auto;
+} */

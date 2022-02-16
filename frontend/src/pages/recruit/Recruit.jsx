@@ -11,20 +11,21 @@ import { Context } from '../../context';
 import { NOW_POST } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
 
+const currTab = '소개';
+
 const Recruit = () => {
   const [state, dispatch] = useContext(Context);
-  const postId = useParams().postId;
+  const { id: postId } = useParams();
 
   const navigate = useNavigate();
-  let [currTab, setCurrTab] = useState('소개');
-  let [modalOnOff, setModalOnoff] = useState(false);
-
-  const post = state.post;
-  const loading = post === null;
+  const [modalOnOff, setModalOnoff] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { user, post } = state;
 
   const udmenuClick = () => {
     setModalOnoff(!modalOnOff);
   };
+
   const recruitModify = () => {
     navigate(`/recruit-edit/${postId}`);
   };
@@ -43,47 +44,28 @@ const Recruit = () => {
   };
 
   const getPost = async () => {
-    try {
-      const response = await apiClient.get('/api/posts/' + postId);
+    const response = await apiClient.get('/api/posts/' + postId);
 
-      dispatch({
-        type: NOW_POST,
-        payload: response.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getType = () => {
-    if (state.user !== null) {
-      if (post.author._id === state.user._id) return 'leader';
-      if (post.members.indexOf(state.user._id) !== -1) return 'member';
-    }
-    return 'visitor';
-  };
-
-  const handleClickTab = (tab) => {
-    setCurrTab(tab);
-    switch (tab) {
-      case '소개':
-        navigate('/');
-        break;
-      case '채팅방':
-        navigate(`/${post._id}/chatting`);
-        break;
-      case '회원 관리':
-        navigate(`/${post._id}/management`);
-        break;
-    }
+    dispatch({
+      type: NOW_POST,
+      payload: response.data,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
     getPost();
+
+    return () => {
+      dispatch({
+        type: NOW_POST,
+        payload: null,
+      });
+    };
   }, []);
 
   if (loading) {
-    return <div>로딩 중</div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -93,11 +75,7 @@ const Recruit = () => {
         src={state.user !== null ? state.user.profileImagePath : null}
       />
       <div className={styles['content-container']}>
-        <Tab
-          currTab={currTab}
-          onClick={getType() === 'visitor' ? () => {} : handleClickTab}
-          type={getType()}
-        />
+        <Tab currTab={currTab} postId={post._id} post={post} user={user} />
         <div className={styles['img-card-container']}>
           <img
             className={styles['recruit-image']}
@@ -127,12 +105,11 @@ const Recruit = () => {
           <div className={styles['author-date-container']}>
             <Avartar
               src={post.author.profileImagePath}
-              height='2.4rem'
-              width='2.4rem'
+              height='3rem'
+              width='3rem'
             />
             <div className={styles['recruit-author']}>
-              by
-              {post.author.nickname}
+              by {post.author.nickname}
             </div>
             <div className={styles['recruit-date']}>
               {post.createdAt.substr(0, 10).split('-').join('.')}

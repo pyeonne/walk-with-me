@@ -18,10 +18,12 @@ const CardRecruit = ({ post }) => {
     const profileImgURL = URL.createObjectURL(blobImg);
     setProfileImgURL(profileImgURL);
   };
+
   const likeHandler = async (e) => {
     e.preventDefault();
     setLike((prev) => !prev);
   };
+
   useEffect(() => {
     if (author?._id) {
       getProfileImage();

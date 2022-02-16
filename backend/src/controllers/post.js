@@ -6,7 +6,10 @@ GET /api/posts/:id
  */
 exports.read = asyncHandler(async (req, res) => {
   const { _id } = res.locals.post;
-  const post = await Post.findOne({ _id }).populate('author');
+  const post = await Post.findOne({ _id })
+    .populate('author')
+    .populate('preMembers')
+    .populate('members');
   res.status(200).json(post);
 });
 
@@ -249,7 +252,7 @@ POST /api/posts/:id/management/:userId/allow
 */
 exports.allow = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
-  const { _id: userId } = res.locals.user;
+  const { userId } = res.locals;
 
   const user = await User.findById(userId);
   await user.deleteApplyPost(postId);
@@ -260,6 +263,7 @@ exports.allow = asyncHandler(async (req, res) => {
     },
   });
 
+  console.log(user);
   const post = await Post.findByIdAndUpdate(
     postId,
     {
@@ -275,6 +279,8 @@ exports.allow = asyncHandler(async (req, res) => {
     .populate('members')
     .populate('preMembers');
 
+  console.log(post);
+
   res.status(200).json({
     members: post.members,
     preMembers: post.preMembers,
@@ -286,7 +292,7 @@ POST /api/posts/:id/management/:userId/deny
 */
 exports.deny = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
-  const { _id: userId } = res.locals.user;
+  const { userId } = res.locals;
 
   const user = await User.findById(userId);
   await user.deleteApplyPost(postId);
@@ -311,7 +317,7 @@ DELETE /api/posts/:id/management/:userId/kick
 */
 exports.kick = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
-  const { _id: userId } = res.locals.user;
+  const { userId } = res.locals;
 
   await User.findByIdAndUpdate(userId, {
     $pull: {

@@ -28,21 +28,22 @@
   font-size: 1.6rem;
   margin-top: 3rem;
 }
+
+/* detail-card */
 .detail-card {
   flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
   cursor: default;
 }
-.detail-card .tags {
-  margin-top: 3.105rem;
-  margin-left: 2.25rem;
-  margin-bottom: 3.91rem;
-}
+
 .tags {
   display: flex;
   align-content: flex-start;
   flex-wrap: wrap;
-  width: 26rem;
+  margin-bottom: 1.4rem;
 }
+
 .tags button {
   flex-basis: content;
   padding: 1rem;
@@ -52,47 +53,34 @@
 
 .detail-text {
   display: flex;
+  align-items: center;
   font-size: 1.4rem;
+  color: #333;
 }
 
-.detail-text span {
-  cursor: default;
-  margin: 0.5rem;
-  align-items: center;
-}
 .detail-text img {
-  width: 2.5rem;
-  height: 2.5rem;
-  align-items: center;
-  justify-content: center;
-  margin-left: 2rem;
-  margin-bottom: 10.1rem;
+  margin-right: 0.6rem;
 }
+
 .detail-buttons-middle {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .detail-buttons-middle button {
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
+
 .detail-buttons-middle button:active {
   transform: scale(0.95);
   font-size: 1.5rem;
 }
 
 .detail-buttons-bottom {
-  width: 26rem;
   display: flex;
   justify-content: space-between;
-  margin: 1rem auto;
   align-items: center;
-}
-
-.detail-buttons-bottom button {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.8rem;
 }
 
 .likes-people img {
@@ -102,14 +90,7 @@
 }
 
 .heart {
-  margin-left: 0.9rem;
-  margin-right: 0.912rem;
-}
-
-.likeMembersNum {
-  width: 3rem;
-  height: 2rem;
-  text-align: left;
+  margin-right: 1rem;
 }
 
 .likes-people img:nth-of-type(2) {
@@ -124,7 +105,7 @@
   flex-direction: column;
 }
 .recruit-card .tags {
-  height: 3rem;
+  margin-bottom: 1rem;
 }
 .recruit-img {
   width: 30rem;
