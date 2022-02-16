@@ -1,6 +1,6 @@
 import React from 'react';
 import Avatar from '../../components/Avatar/Avatar';
-import Explore from './icons/explore';
+import Explore from './icons/Explore';
 import styles from './profile.module.css';
 
 const MyProfile = (props) => {
