@@ -19,12 +19,13 @@
   --recruit-author-color: #5a5a5a;
   --recruit-author-date: #757575;
   --recruit-text-color: #000000;
-  --body-background-color: #ffffff;
-  --header-background-color: #ffffff;
+  --recruit-button-background: '#fff';
+  --body-background-color: #f8f9fa;
+  --header-background-color: #f8f9fa;
   --header-sigin-in-color: #1e0e62;
   --header-sigin-up-color: #1e0e62;
   --card-background-color: #ffffff;
-  --detail-card-border-color: #cccccc;
+  --detail-card-border-color: #eee;
   --detail-card-recruit-button: #ffffff;
   --detail-card-tag-background-color: #f3f5f8;
   --detail-card-tag-text-color: #666666;
@@ -43,6 +44,7 @@ body.darkTheme {
   --recruit-author-color: #ffffff;
   --recruit-author-date: #dddddd;
   --recruit-text-color: #ffffff;
+  --recruit-button-background: '#1e1f21';
   --body-background-color: #1e1f21;
   --error-color: red;
   --success-color: #3498db;

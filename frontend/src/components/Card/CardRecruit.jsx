@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './Card.module.css';
 import Button from '../Button/Button';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 import { v4 as uuidv4 } from 'uuid';
+import { Context } from '../../context';
+import { apiClient } from '../../api/api';
 
 const CardRecruit = ({ post }) => {
+  const { author, tags, title, content, likeMembers, image } = post;
+  const [state, dispatch] = useContext(Context);
   const [profileImgURL, setProfileImgURL] = useState(null);
   const [like, setLike] = useState(post.like);
-  const [likes, setLikes] = useState(post.likeMembers.length);
-  let { author, tags, title, content, likeMembers, image } = post;
+  const [likes, setLikes] = useState(likeMembers.length);
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${author?._id}/profile-image`;
 
   const getProfileImage = async () => {
@@ -21,6 +24,14 @@ const CardRecruit = ({ post }) => {
 
   const likeHandler = async (e) => {
     e.preventDefault();
+    if (like) {
+      const response = await apiClient.delete(`/api/posts/${post._id}/likes`);
+      setLikes(response.data.length);
+    } else {
+      const response = await apiClient.post(`/api/posts/${post._id}/likes`);
+      setLikes(response.data.length);
+    }
+
     setLike((prev) => !prev);
   };
 
@@ -28,6 +39,9 @@ const CardRecruit = ({ post }) => {
     if (author?._id) {
       getProfileImage();
     }
+
+    setLike(likeMembers.indexOf(state.user?._id) !== -1);
+
     return () => setProfileImgURL(profileImgURL);
   }, []);
 
@@ -45,7 +59,7 @@ const CardRecruit = ({ post }) => {
                     radius='25px'
                     ftsize='1.2rem'
                     text={tag}
-                    bg='var(--body-background-color)'
+                    bg='var(--recruit-button-background)'
                     color='#7EDA8B'
                     border='#7EDA8B solid 1px'
                     style={{
@@ -61,16 +75,8 @@ const CardRecruit = ({ post }) => {
         </div>
         <div className={styles['recruit-bottom']}>
           <div className={styles['author']}>
-            <Button
-              width='15rem'
-              height='3rem'
-              bg='var(--body-background-color)'
-              color='var(--recruit-card-author-color)'
-              ftsize='1.5rem'
-              text={`by ${author.nickname}`}
-            >
-              {<img src={profileImgURL} />}
-            </Button>
+            <img src={profileImgURL} />
+            <span>{`by ${author.nickname}`}</span>
           </div>
           <div className={styles['likes']}>
             <Button
@@ -80,7 +86,7 @@ const CardRecruit = ({ post }) => {
               color='var(--recruit-text-color)'
               radius='140px'
               flexBasis='center'
-              bg='var(--body-background-color)'
+              bg='var(--recruit-button-background)'
               text={likes}
               ftsize='1.6rem'
               onClick={(e) => likeHandler(e)}
