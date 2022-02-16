@@ -61,7 +61,7 @@
 
 @keyframes spin {
   0% {
-    trnasform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
