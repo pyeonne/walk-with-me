@@ -24,6 +24,8 @@ router.use(
   manageRouter
 );
 
+postRouter.post('/chat', postCtrl.chat);
+
 // 특정 포스트
 postRouter.get('/', postCtrl.read);
 

@@ -51,7 +51,7 @@ const Chatting = () => {
 
   useEffect(() => {
     getPost();
-
+    setMessageList(post.chat);
     return () => {
       dispatch({
         type: NOW_POST,
@@ -59,6 +59,18 @@ const Chatting = () => {
       });
     };
   }, []);
+
+  const sendMessage = async () => {
+    const response = await apiClient.post(`/api/posts/${post._id}/chat`, {
+      _id: user._id,
+      nickname: user.nickname,
+      text: currMessage,
+      profileImgURL: user.profileImgURL,
+    });
+
+    setCurrMessage('');
+    setMessageList(response.data);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -72,32 +84,30 @@ const Chatting = () => {
         <div className={styles.chatting}>
           <div className={styles.room}>
             <ScrollToBottom className='message-container'>
-              {messageList.map((messageContent) => {
-                return (
-                  <div
-                    className={styles.chat}
-                    id={username === messageContent.author ? 'you' : 'other'}
-                  >
-                    <div className={styles.profile}>
-                      <Avatar />
-                    </div>
-                    <div className={styles.info}>
-                      <div className={styles.author}>
-                        <h3>{messageContent.author}</h3>
-                        <p className={styles.date}>{messageContent.time}</p>
-                      </div>
-                      <h3 className={styles.content}>
-                        {messageConafterprint.message}
-                      </h3>
-                    </div>
+              {messageList.map((messageContent) => (
+                <div
+                  key={messageContent.time}
+                  className={styles.chat}
+                  id={user._id === messageContent._id ? 'you' : 'other'}
+                >
+                  <div className={styles.profile}>
+                    <Avatar />
                   </div>
-                );
-              })}
+                  <div className={styles.info}>
+                    <div className={styles.author}>
+                      <h3>{messageContent.nickname}</h3>
+                      <p className={styles.date}>{messageContent.time}</p>
+                    </div>
+                    <h3 className={styles.content}>{messageContent.text}</h3>
+                  </div>
+                </div>
+              ))}
             </ScrollToBottom>
             <input
               type='text'
               className={styles.input}
               placeholder='메시지를 입력하세요.'
+              value={currMessage}
               onChange={(event) => {
                 setCurrMessage(event.target.value);
               }}
