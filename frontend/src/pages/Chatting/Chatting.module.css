@@ -27,6 +27,7 @@ Header {
   padding: 0 1rem;
   border-radius: 0.4rem;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  background-color: var(--header-background-color);
 }
 
 .chat {
@@ -72,9 +73,13 @@ Header {
   border: none;
   font-weight: bold;
   outline-style: none;
-  background: var(--box-color);
+  background: var(--chat-input-background-color);
   padding: 0 1rem;
   margin-bottom: 1rem;
+}
+
+.input::placeholder {
+  color: var(--chat-input-placeholder-color);
 }
 
 .list {
@@ -84,6 +89,7 @@ Header {
   border-radius: 0.4rem;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   padding: 1rem;
+  background-color: var(--header-background-color);
 }
 
 .user {

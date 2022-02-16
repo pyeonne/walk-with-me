@@ -39,7 +39,7 @@ article select {
   border-radius: 0.4rem;
   width: 80%;
   color: #999999;
-  background-color: #ffffff;
+  background-color: var(--input-background-color);
 }
 
 .filebox label {

@@ -26,12 +26,18 @@
   --card-background-color: #ffffff;
   --detail-card-border-color: #cccccc;
   --detail-card-recruit-button: #ffffff;
+  --detail-card-recruit-button-color: #7eda8b;
   --detail-card-tag-background-color: #f3f5f8;
   --detail-card-tag-text-color: #666666;
   --input-color: #666;
   --input-background-color: #ffffff;
   --create-card-color: #333333;
   --recruit-card-author-color: #5a5a5a;
+  --recruit-udmenu-border-color: #cccccc;
+  --chat-input-background-color: #f4f4f4;
+  --chat-input-placeholder-color: #999999;
+  --management-th-background-color: #c4c4c4;
+  --management-td-background-color: #ffffff;
 }
 
 /* Variables Dark Theme */
@@ -52,12 +58,18 @@ body.darkTheme {
   --card-background-color: #1e1f21;
   --detail-card-border-color: #343a40;
   --detail-card-recruit-button: #b2f2bb;
+  --detail-card-recruit-button-color: #666666;
   --detail-card-tag-background-color: #343a40;
   --detail-card-tag-text-color: #cccccc;
   --input-color: #ffffff;
   --input-background-color: #2c2d30;
   --create-card-color: #ffffff;
   --recruit-card-author-color: #ffffff;
+  --recruit-udmenu-border-color: #ffffff;
+  --chat-input-background-color: #41444a;
+  --chat-input-placeholder-color: #73757c;
+  --management-th-background-color: #c4c4c4;
+  --management-td-background-color: #2f3135;
 }
 
 html {
@@ -80,5 +92,9 @@ input:-webkit-autofill {
 }
 
 input::placeholder {
+  color: var(--input-color);
+}
+
+textarea::placeholder {
   color: var(--input-color);
 }

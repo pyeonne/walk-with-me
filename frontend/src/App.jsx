@@ -20,6 +20,7 @@ networkService.setupInterceptors();
 
 function App() {
   const [state, dispatch] = useContext(Context);
+
   useEffect(() => {
     if (window.localStorage.getItem('bgMode') === 'dark') {
       document.getElementsByTagName('body')[0].classList.add('darkTheme');
@@ -28,7 +29,6 @@ function App() {
         payload: true,
       });
     }
-    console.log(window.localStorage);
   }, []);
 
   return (

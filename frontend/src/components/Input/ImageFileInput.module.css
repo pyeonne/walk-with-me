@@ -10,6 +10,7 @@
 
 .input {
   display: none;
+  /* background-color: var(--input-background-color); */
 }
 
 .wrapper {
@@ -31,6 +32,7 @@
   right: -1rem;
   bottom: 2rem;
   display: inline-block;
+
   background: var(--first-color-light);
   padding: 1rem;
   border-radius: 50%;

@@ -128,7 +128,7 @@ const Manager = () => {
                       radius='2rem'
                       ftsize='1.3rem'
                       bg='var(--box-color)'
-                      color='var(--text-color-light)'
+                      color='#666666'
                       onClick={() => rejectMember(preMember._id)}
                     />
                   </td>
@@ -139,7 +139,7 @@ const Manager = () => {
                       height='4rem'
                       radius='2rem'
                       ftsize='1.3rem'
-                      color='var(--text-color-light)'
+                      color='#666666'
                       onClick={() => allowMember(preMember._id)}
                     />
                   </td>
@@ -182,7 +182,8 @@ const Manager = () => {
                       height='4rem'
                       radius='2rem'
                       ftsize='1.3rem'
-                      color='var(--text-color-light)'
+                      bg='var(--box-color)'
+                      color='#666666'
                       onClick={() => deleteMember(member._id)}
                     />
                   </td>
