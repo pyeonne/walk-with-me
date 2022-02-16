@@ -49,6 +49,9 @@ const Header = () => {
   const clickHandler = async () => {
     navigate('/');
     localStorage.clear();
+    if (state.darkMode === true) {
+      window.localStorage.setItem('bgMode', 'dark');
+    }
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
   };
