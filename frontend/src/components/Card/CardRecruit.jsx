@@ -89,7 +89,16 @@ const CardRecruit = ({ post }) => {
               bg='var(--recruit-button-background)'
               text={likes}
               ftsize='1.6rem'
-              onClick={(e) => likeHandler(e)}
+              onClick={
+                state.user === null
+                  ? (e) => {
+                      e.preventDefault();
+                      alert('회원만 사용할 수 있는 기능입니다.');
+                    }
+                  : (e) => {
+                      likeHandler(e);
+                    }
+              }
             >
               {like === true ? <img src={heartRed} /> : <img src={heartGray} />}
             </Button>
