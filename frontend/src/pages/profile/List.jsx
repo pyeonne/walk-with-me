@@ -31,7 +31,7 @@ const List = (props) => {
               </div>
               <div className={styles.count}>
                 <Calendar />
-                <p>{post.members.length}명</p>
+                <p>{post.members.length + 1}명</p>
               </div>
             </div>
           </Link>
