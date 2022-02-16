@@ -28,6 +28,7 @@ function App() {
         payload: true,
       });
     }
+    console.log(window.localStorage);
   }, []);
 
   return (
