@@ -7,12 +7,9 @@ import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
 import { NOW_POST } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
-<<<<<<< HEAD
 import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
-=======
 import { v4 as uuidv4 } from 'uuid';
->>>>>>> dd2517f21bc67e95d75e7ee75d92674394ded81a
 
 const currTab = '채팅방';
 
