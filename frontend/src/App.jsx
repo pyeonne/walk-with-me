@@ -44,7 +44,7 @@ function App() {
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
-      <Route path='/:postId' element={<Recruit />} />
+      <Route path='/:id' element={<Recruit />} />
       <Route path='/test' element={<Test />} />
       <Route path='/:id' element={<Recruit />} />
     </Routes>
