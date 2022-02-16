@@ -12,9 +12,9 @@ import { v4 as uuidv4 } from 'uuid';
 import RequestModal from '../Modal/RequestModal';
 
 const CardDetail = ({ style, post }) => {
-  let [state, dispatch] = useContext(Context);
-  let { members, tags, likeMembers, someLikeMembers, isRecruiting } = post;
-  let [buttonText, setButtonText] = useState('참가하기');
+  const [state, dispatch] = useContext(Context);
+  const { members, tags, likeMembers, someLikeMembers, isRecruiting } = post;
+  const [buttonText, setButtonText] = useState('참가하기');
 
   const [like, setLike] = useState(false);
   const user = state.user;
@@ -30,7 +30,7 @@ const CardDetail = ({ style, post }) => {
 
   useEffect(() => {
     decideButtonText();
-    setLike(state.post.likeMembers.indexOf(user?._id) !== -1);
+    setLike(likeMembers.indexOf(user?._id) !== -1);
   }, []);
 
   const modalHandler = () => {
@@ -40,7 +40,7 @@ const CardDetail = ({ style, post }) => {
   const contentHandler = (event) => setBio(event.currentTarget.value);
 
   const getPost = async () => {
-    const response = await apiClient.get(`/api/posts/${state.post._id}`);
+    const response = await apiClient.get(`/api/posts/${post._id}`);
     dispatch({
       type: NOW_POST,
       payload: response.data,
@@ -76,7 +76,7 @@ const CardDetail = ({ style, post }) => {
     isLeave = confirm('탈퇴하시겠습니까?');
 
     if (isLeave) {
-      await apiClient.delete(`/api/posts/${state.post._id}/leave`);
+      await apiClient.delete(`/api/posts/${post._id}/leave`);
       getPost();
       alert('모임에서 탈퇴되었습니다.');
       setButtonText('참가하기');
@@ -85,13 +85,13 @@ const CardDetail = ({ style, post }) => {
 
   const likeEvent = async () => {
     likeHandler();
-    await apiClient.post('/api/posts/' + state.post._id + '/likes');
+    await apiClient.post(`/api/posts/${post._id}/likes`);
     getPost();
   };
 
   const unLikeEvent = async () => {
     likeHandler();
-    await apiClient.delete('/api/posts/' + state.post._id + '/likes');
+    await apiClient.delete(`/api/posts/${post._id}/likes`);
     getPost();
   };
 
@@ -180,7 +180,7 @@ const CardDetail = ({ style, post }) => {
               className={styles['detail-contact']}
               src={state.darkMode ? contactDark : contact}
             />
-            <span>{members.length}명</span>
+            <span>{members.length + 1}명</span>
           </div>
         </div>
         <div className={styles.bottom}>
@@ -188,11 +188,11 @@ const CardDetail = ({ style, post }) => {
             <Button
               width='24rem'
               height='5rem'
-              border='1px solid #7EDA8B'
-              color='#7EDA8B'
+              border='1px solid var(--detail-card-button-border-color)'
+              color='var(--detail-card-recruit-button-color)'
               text={isRecruiting === true ? '모집중' : '모집완료'}
               radius='140px'
-              bg='#ffffff'
+              bg='var(--detail-card-button-background-color)'
               disabled={true}
             />
             <Button
@@ -224,11 +224,11 @@ const CardDetail = ({ style, post }) => {
               <Button
                 width='10rem'
                 height='4.6rem'
-                border='1px solid #dddddd'
+                border='1px solid var(--detail-card-border-color)'
                 radius='140px'
                 flexBasis='center'
                 color='var(--recruit-text-color)'
-                bg='var(--body-background-color)'
+                bg='var(--recruit-button-background)'
                 ftsize='1.6rem'
                 onClick={
                   user === null

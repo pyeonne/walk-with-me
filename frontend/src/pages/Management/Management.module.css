@@ -39,12 +39,15 @@ table {
   margin-top: 1.5rem;
 }
 
+table thead {
+  background-color: var(--management-th-background-color);
+}
+
 th {
   height: 0.5rem;
   padding: 1rem;
   font-size: 1.2rem;
-  color: var(--text-color);
-  background-color: var(--box-color);
+  color: #000000;
 }
 
 td {
@@ -52,11 +55,9 @@ td {
   padding: 1rem;
   vertical-align: middle;
   width: 10%;
+  color: var(--recruit-text-color);
+  background-color: var(--management-td-background-color);
 }
-
-/* td:not(:last-child) {
-  white-space: nowrap;
-} */
 
 td:nth-child(6) {
   width: 30%;
@@ -67,6 +68,10 @@ td:nth-child(6) {
   text-align: left;
 }
 
-/* Button {
-  margin: 0 auto;
-} */
+.container h2 {
+  color: var(--recruit-text-color);
+}
+
+.deny button {
+  margin-left: auto;
+}

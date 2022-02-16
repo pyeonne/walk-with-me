@@ -8,7 +8,8 @@ import { apiClient } from '../../api/api';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import MyProfile from './MyProfile';
 import List from './List';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import Button from '../../components/Button/Button';
 
 const Profile = () => {
   const { id: userId } = useParams();
@@ -105,6 +106,9 @@ const Profile = () => {
               <List type='applyPosts' user={state.user} />
             </div>
           </div>
+          <Button width='100%'>
+            <Link to={`/${state.user._id}/profile-edit`}>수정하기</Link>
+          </Button>
         </section>
       </div>
     </div>

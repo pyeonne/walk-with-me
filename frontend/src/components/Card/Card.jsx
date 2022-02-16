@@ -6,10 +6,6 @@ import React from 'react';
 const Card = ({ style, post, cardType }) => {
   if (cardType === 'create') return <CardCreate style={style} />;
 
-  if (!post) {
-    return <CardCreate style={style} load={true} />;
-  }
-
   const { age, area, author, likeMembers } = post;
   const tags = [`#${area}`, `#${age}대`];
 
@@ -18,7 +14,7 @@ const Card = ({ style, post, cardType }) => {
       ...post,
       tags,
       author,
-      likes: likeMembers.length,
+      likeMembers,
       like: false,
     };
     return <CardRecruit style={style} post={newPost} />;

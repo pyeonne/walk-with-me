@@ -7,8 +7,12 @@ import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
 import { NOW_POST } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
+<<<<<<< HEAD
 import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
+=======
+import { v4 as uuidv4 } from 'uuid';
+>>>>>>> dd2517f21bc67e95d75e7ee75d92674394ded81a
 
 const currTab = '채팅방';
 
@@ -107,22 +111,26 @@ const Chatting = () => {
             />
           </div>
           <div className={styles.list}>
-            <div className={styles.user}>
+            {/* 모임장 */}
+            <div className={styles.user} key={uuidv4()}>
               <div className={styles.profile}>
                 <Avatar />
               </div>
               <div className={styles.author}>
-                <h3>[모임장]닉네임</h3>
+                <h3>[모임장] {post.author.nickname}</h3>
               </div>
             </div>
-            <div className={styles.user}>
-              <div className={styles.profile}>
-                <Avatar />
+            {/* 멤버 */}
+            {post.members.map((member) => (
+              <div className={styles.user} key={uuidv4()}>
+                <div className={styles.profile}>
+                  <Avatar />
+                </div>
+                <div className={styles.author}>
+                  <h3>{member.nickname}</h3>
+                </div>
               </div>
-              <div className={styles.author}>
-                <h3>[모임장]닉네임</h3>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import Tab from '../../components/Tab/Tab';
 import Header from '../../components/Header/Header';
 import styles from './Recruit.module.css';
 import udmenu from './images/udmenu.svg';
+import udmenuDark from './images/udmenuDark.svg';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../context';
@@ -93,7 +94,7 @@ const Recruit = () => {
                   className={styles['recruit-menu-button']}
                   onClick={udmenuClick}
                 >
-                  <img src={udmenu} />
+                  <img src={state.darkMode ? udmenuDark : udmenu} />
                 </button>
               )}
         </div>

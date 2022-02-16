@@ -14,7 +14,10 @@ const Header = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(Context);
   const [theme, setTheme] = useState(
-    window.localStorage.getItem('bgMode') === 'light' ? true : false
+    window.localStorage.getItem('bgMode') === null ||
+      window.localStorage.getItem('bgMode') === 'light'
+      ? true
+      : false
   );
   const user = state.user;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
@@ -46,6 +49,9 @@ const Header = () => {
   const clickHandler = async () => {
     navigate('/');
     localStorage.clear();
+    if (state.darkMode === true) {
+      window.localStorage.setItem('bgMode', 'dark');
+    }
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
   };

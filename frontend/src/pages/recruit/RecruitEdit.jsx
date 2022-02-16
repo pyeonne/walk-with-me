@@ -142,7 +142,7 @@ const RecruitEdit = () => {
               </div>
               <Input
                 name='area'
-                width='40rem'
+                width='100%'
                 placeholder='동 · 읍 · 면을 입력해주세요.'
                 marginBottom='1rem'
                 value={area}
@@ -152,7 +152,7 @@ const RecruitEdit = () => {
               <Dropdown
                 type='category'
                 height='6rem'
-                width='40rem'
+                width='100%'
                 onChange={onCategoryHandler}
                 value={category}
                 required={true}
@@ -160,14 +160,14 @@ const RecruitEdit = () => {
               <Dropdown
                 type='age'
                 height='6rem'
-                width='40rem'
+                width='100%'
                 onChange={onAgeHandler}
                 value={age}
                 required={true}
               />
               <Input
                 name='title'
-                width='40rem'
+                width='100%'
                 marginBottom='1rem'
                 placeholder='모임 이름을 입력해주세요.'
                 value={title}
@@ -176,6 +176,7 @@ const RecruitEdit = () => {
               />
               <Input
                 name='content'
+                width='100%'
                 placeholder='모임 목표를 설명해주세요.'
                 marginBottom='1rem'
                 minLength={0}

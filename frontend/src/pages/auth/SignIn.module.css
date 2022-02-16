@@ -50,7 +50,7 @@
   left: 0;
   right: 0;
   content: '';
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid var(--input-select-border-color);
 }
 .or span {
   z-index: 9999;
