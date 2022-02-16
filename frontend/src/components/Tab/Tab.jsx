@@ -25,7 +25,9 @@ const Tab = ({ currTab, post, user, postId }) => {
 
   const getType = () => {
     if (post.author._id === user?._id) return 'leader';
-    if (post.members.indexOf(user?._id) !== -1) return 'member';
+
+    const memberIds = post.members.map((member) => member._id);
+    if (memberIds.indexOf(user?._id) !== -1) return 'member';
     return 'visitor';
   };
 
