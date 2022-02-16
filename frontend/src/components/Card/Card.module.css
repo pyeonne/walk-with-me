@@ -62,7 +62,6 @@
 
 .detail-text span {
   cursor: default;
-  margin: 0.5rem;
   align-items: center;
   color: var(--recruit-text-color);
 }
