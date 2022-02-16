@@ -1,35 +1,40 @@
 .container {
   display: flex;
-
   margin-bottom: 1.4rem;
 }
 
-.tab {
+.container span {
+  padding: 6px 14px;
   font-size: 1.6rem;
   line-height: 2rem;
-  color: var(--text-color);
-  padding: 8px 10px;
   cursor: pointer;
   border-bottom: 1px solid var(--line-color);
+}
+
+.container span[active='false'].tab:hover {
+  border-bottom: 4px solid var(--first-color-light);
+}
+
+.tab {
+  color: var(--text-color);
   border-radius: 0;
 }
 
 .notMemeberTab {
-  font-size: 1.6rem;
-  line-height: 2rem;
   color: #cccccc;
-  padding: 8px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--line-color);
 }
 
-.tab + .tab {
-  padding-left: 1.6rem;
+.notMemeberTab:last-child {
+  cursor: not-allowed;
+  user-select: none;
 }
 
-[active='true'] {
+.container span[active='true'] {
   color: var(--text-color);
-  font-weight: bold;
-  background: rgba(230, 230, 230, 0.0001);
-  box-shadow: inset 0px -4px 0px var(--first-color);
+  border-bottom: 4px solid var(--first-color);
+}
+
+.container span[active='false'] {
+  color: #666;
+  font-weight: 300;
 }
