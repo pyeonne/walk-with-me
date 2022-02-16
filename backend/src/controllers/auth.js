@@ -117,7 +117,7 @@ exports.read = asyncHandler(async (req, res) => {
     .populate('likePosts')
     .populate('joinedPosts')
     .populate('applyPosts');
-  console.log(readUser);
+
   if (!readUser) {
     const error = new Error('가입되지 않은 계정입니다.');
     res.status(401);

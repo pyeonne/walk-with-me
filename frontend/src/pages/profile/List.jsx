@@ -7,10 +7,6 @@ const List = (props) => {
   const { type, user } = props;
   const posts = user[type];
 
-  if (typeof posts[0] === 'string') {
-    return <h1>Loading...</h1>;
-  }
-
   return (
     <>
       {posts.map((post) => {

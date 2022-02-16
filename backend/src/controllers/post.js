@@ -263,7 +263,6 @@ exports.allow = asyncHandler(async (req, res) => {
     },
   });
 
-  console.log(user);
   const post = await Post.findByIdAndUpdate(
     postId,
     {
@@ -278,8 +277,6 @@ exports.allow = asyncHandler(async (req, res) => {
   )
     .populate('members')
     .populate('preMembers');
-
-  console.log(post);
 
   res.status(200).json({
     members: post.members,

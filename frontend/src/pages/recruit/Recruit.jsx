@@ -32,13 +32,9 @@ const Recruit = () => {
 
   const recruitDelete = async () => {
     if (confirm('정말 삭제하시겠습니까?')) {
-      try {
-        await apiClient.delete('/api/posts/' + postId);
-        alert('삭제 되었습니다');
-        navigate('/');
-      } catch (err) {
-        console.log(err);
-      }
+      await apiClient.delete('/api/posts/' + postId);
+      alert('삭제 되었습니다');
+      navigate('/');
     }
     return;
   };

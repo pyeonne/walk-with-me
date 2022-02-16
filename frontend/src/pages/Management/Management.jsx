@@ -47,7 +47,6 @@ const Manager = () => {
       `/api/posts/${postId}/management/${id}/allow`
     );
 
-    console.log(response.data);
     const { members, preMembers } = response.data;
     dispatch({
       type: NOW_POST,
@@ -87,8 +86,6 @@ const Manager = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  console.log(post);
 
   return (
     <>
