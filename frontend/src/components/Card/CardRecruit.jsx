@@ -45,7 +45,7 @@ const CardRecruit = ({ post }) => {
                     radius='25px'
                     ftsize='1.2rem'
                     text={tag}
-                    bg='#ffffff'
+                    bg='var(--body-background-color)'
                     color='#7EDA8B'
                     border='#7EDA8B solid 1px'
                     style={{
@@ -64,8 +64,8 @@ const CardRecruit = ({ post }) => {
             <Button
               width='15rem'
               height='3rem'
-              bg='#ffffff'
-              color='#666666'
+              bg='var(--body-background-color)'
+              color='var(--recruit-card-author-color)'
               ftsize='1.5rem'
               text={`by ${author.nickname}`}
             >
@@ -77,10 +77,10 @@ const CardRecruit = ({ post }) => {
               width='8rem'
               height='4rem'
               border='1px solid #dddddd'
-              color='#666666'
+              color='var(--recruit-text-color)'
               radius='140px'
               flexBasis='center'
-              bg='#ffffff'
+              bg='var(--body-background-color)'
               text={likes}
               ftsize='1.6rem'
               onClick={(e) => likeHandler(e)}
