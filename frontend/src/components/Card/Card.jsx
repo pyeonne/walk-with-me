@@ -9,8 +9,8 @@ const Card = ({ style, post, cardType }) => {
 
   const [state, dispatch] = useContext(Context);
   const { user, darkMode } = state;
-  const { age, area, author, likeMembers } = post;
-  const tags = [`#${area}`, `#${age}대`];
+  const { age, area, author, likeMembers, category } = post;
+  const tags = [`#${area}`, `#${age}대`, `#${category}`];
 
   if (cardType === 'recruit') {
     const newPost = {
