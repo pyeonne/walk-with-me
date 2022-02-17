@@ -102,6 +102,10 @@ const RecruitRegister = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (!area) {
+      alert('지역 필수');
+      return;
+    }
     apiCall();
   };
   return (

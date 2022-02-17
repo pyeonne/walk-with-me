@@ -19,6 +19,7 @@ const Header = () => {
       ? true
       : false
   );
+  const { loginUser } = window.localStorage;
 
   const user = state.user;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
@@ -35,7 +36,7 @@ const Header = () => {
 
   const getUserInfo = async () => {
     const response = await apiClient.get(
-      '/api/auth/' + window.localStorage.loginUser.substring(8, 32) + '/profile'
+      '/api/auth/' + loginUser.substring(8, 32) + '/profile'
     );
     dispatch({
       type: CHANGE_USER_INFO,
@@ -44,9 +45,9 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (state.user === null) {
+    if (loginUser && state.user === null) {
       getUserInfo().then(getProfileImage);
-    } else if (state.user.profileImgURL === undefined) {
+    } else if (loginUser && state.user.profileImgURL === undefined) {
       getProfileImage();
     }
 
@@ -90,7 +91,6 @@ const Header = () => {
       type: GET_DARK_MODE,
       payload: true,
     });
-    console.log(theme);
   };
 
   // user.profileImgURL
