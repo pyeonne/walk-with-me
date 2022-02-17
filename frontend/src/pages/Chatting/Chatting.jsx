@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../context';
 import Header from '../../components/Header/Header';
@@ -7,6 +7,9 @@ import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
 import { NOW_POST } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
+import io from 'socket.io-client';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import { v4 as uuidv4 } from 'uuid';
 
 const currTab = '채팅방';
 
@@ -15,6 +18,26 @@ const Chatting = () => {
   const { user, post } = state;
   const { id: postId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [currMessage, setCurrMessage] = useState('');
+  const [messageList, setMessageList] = useState([]);
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io('http://localhost:4000', {
+      withCredentials: true,
+      extraHeaders: {
+        'post-id': postId,
+        'user-id': user._id,
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit('addUser', user._id);
+    socket.current.on('getUsers', (users) => {
+      console.log(users);
+    });
+  }, [user]);
 
   const getPost = async () => {
     const response = await apiClient.get('/api/posts/' + postId);
@@ -28,7 +51,7 @@ const Chatting = () => {
 
   useEffect(() => {
     getPost();
-
+    setMessageList(post.chat);
     return () => {
       dispatch({
         type: NOW_POST,
@@ -36,6 +59,18 @@ const Chatting = () => {
       });
     };
   }, []);
+
+  const sendMessage = async () => {
+    const response = await apiClient.post(`/api/posts/${post._id}/chat`, {
+      _id: user._id,
+      nickname: user.nickname,
+      text: currMessage,
+      profileImgURL: user.profileImgURL,
+    });
+
+    setCurrMessage('');
+    setMessageList(response.data);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -48,65 +83,61 @@ const Chatting = () => {
         <Tab currTab={currTab} postId={postId} post={post} user={user} />
         <div className={styles.chatting}>
           <div className={styles.room}>
-            <div className={styles.chat}>
-              <div className={styles.profile}>
-                <Avatar />
-              </div>
-              <div className={styles.info}>
-                <div className={styles.author}>
-                  <h3>닉네임</h3>
-                  <p className={styles.date}>2022.01.27</p>
+            <ScrollToBottom className='message-container'>
+              {messageList.map((messageContent) => (
+                <div
+                  key={messageContent.time}
+                  className={styles.chat}
+                  id={user._id === messageContent._id ? 'you' : 'other'}
+                >
+                  <div className={styles.profile}>
+                    <Avatar />
+                  </div>
+                  <div className={styles.info}>
+                    <div className={styles.author}>
+                      <h3>{messageContent.nickname}</h3>
+                      <p className={styles.date}>{messageContent.time}</p>
+                    </div>
+                    <h3 className={styles.content}>{messageContent.text}</h3>
+                  </div>
                 </div>
-                <h3 className={styles.content}>감사합니다.</h3>
-              </div>
-            </div>
-            <div className={styles.chat}>
-              <div className={styles.profile}>
-                <Avatar />
-              </div>
-              <div className={styles.info}>
-                <div className={styles.author}>
-                  <h3>닉네임</h3>
-                  <p className={styles.date}>2022.01.27</p>
-                </div>
-                <h3 className={styles.content}>감사합니다.</h3>
-              </div>
-            </div>
-            <div className={styles.chat}>
-              <div className={styles.profile}>
-                <Avatar />
-              </div>
-              <div className={styles.info}>
-                <div className={styles.author}>
-                  <h3>닉네임</h3>
-                  <p className={styles.date}>2022.01.27</p>
-                </div>
-                <h3 className={styles.content}>감사합니다.</h3>
-              </div>
-            </div>
+              ))}
+            </ScrollToBottom>
             <input
               type='text'
               className={styles.input}
               placeholder='메시지를 입력하세요.'
+              value={currMessage}
+              onChange={(event) => {
+                setCurrMessage(event.target.value);
+              }}
+              // 엔터 눌렀을때 클릭처럼 인풋 보내짐
+              onKeyPress={(event) => {
+                event.key === 'Enter' && sendMessage();
+              }}
             />
           </div>
           <div className={styles.list}>
-            <div className={styles.user}>
+            {/* 모임장 */}
+            <div className={styles.user} key={uuidv4()}>
               <div className={styles.profile}>
                 <Avatar />
               </div>
               <div className={styles.author}>
-                <h3>[모임장]닉네임</h3>
+                <h3>[모임장] {post.author.nickname}</h3>
               </div>
             </div>
-            <div className={styles.user}>
-              <div className={styles.profile}>
-                <Avatar />
+            {/* 멤버 */}
+            {post.members.map((member) => (
+              <div className={styles.user} key={uuidv4()}>
+                <div className={styles.profile}>
+                  <Avatar />
+                </div>
+                <div className={styles.author}>
+                  <h3>{member.nickname}</h3>
+                </div>
               </div>
-              <div className={styles.author}>
-                <h3>[모임장]닉네임</h3>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

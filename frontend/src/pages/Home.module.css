@@ -3,14 +3,16 @@
   margin: 0 auto;
 }
 
-.filter {
+.container .filter {
   display: flex;
   justify-content: right;
   margin-bottom: 3rem;
 }
 
-.filter select {
+.container .filter select {
+  padding-left: 5rem;
   margin-right: 1rem;
+  background-position: left 1.4rem center, right 1.4rem center;
 }
 
 .card-wrapper {

@@ -55,6 +55,18 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    chat: [
+      {
+        _id: mongoose.Types.ObjectId,
+        nickname: String,
+        time: {
+          type: Date,
+          default: () => Date.now(),
+        },
+        text: String,
+        profileImgURL: String,
+      },
+    ],
   },
   {
     timestamps: true,

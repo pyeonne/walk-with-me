@@ -1,7 +1,7 @@
 .map-container {
   width: 78rem;
   height: 44.4rem;
-  border-top: 0.1rem #efefef solid;
+  border-top: 0.1rem var(--detail-card-border-color) solid;
 }
 
 .map-text {

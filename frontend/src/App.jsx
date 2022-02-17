@@ -21,6 +21,7 @@ networkService.setupInterceptors();
 
 function App() {
   const [state, dispatch] = useContext(Context);
+
   useEffect(() => {
     if (window.localStorage.getItem('bgMode') === 'dark') {
       document.getElementsByTagName('body')[0].classList.add('darkTheme');
@@ -45,11 +46,17 @@ function App() {
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Route path='/:postId' element={<Recruit />} />
       <Route path='/test' element={<Test />} />
 =======
       <Route path='/:id' element={<Recruit />} />
 >>>>>>> develop
+=======
+      <Route path='/:id' element={<Recruit />} />
+      <Route path='/test' element={<Test />} />
+      <Route path='/:id' element={<Recruit />} />
+>>>>>>> 24f51bf45b19947e1eaf74401ca85a985a264a93
     </Routes>
   );
 }

@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
+import { Context } from '../../context';
 import classes from './Dropdown.module.css';
 
 const Dropdown = forwardRef((props, ref) => {
@@ -32,11 +33,17 @@ const Dropdown = forwardRef((props, ref) => {
 
   const options = optionsObj[props.type];
 
+  const [state, dispatch] = useContext(Context);
+
   return (
     <select
       name='filter'
       style={{ width: props.width, height: props.height }}
-      className={`${classes.select} ${classes[props.type]}`}
+      className={
+        state.darkMode
+          ? `${classes.select} ${classes[props.type]} ${classes.dark}`
+          : `${classes.select} ${classes[props.type]}`
+      }
       ref={ref}
       onChange={props.onChange}
       required={props.required}

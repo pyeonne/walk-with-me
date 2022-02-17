@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './profile.module.css';
 import Calendar from './icons/Calendar';
 import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
 
 const List = (props) => {
   const { type, user } = props;
@@ -11,7 +12,7 @@ const List = (props) => {
     <>
       {posts.map((post) => {
         return (
-          <div key={uuidv4()} className={styles.article}>
+          <Link to={`/${post._id}`} key={uuidv4()} className={styles.article}>
             <div className={styles.img}>
               <img src={post.image} alt='' />
             </div>
@@ -30,10 +31,10 @@ const List = (props) => {
               </div>
               <div className={styles.count}>
                 <Calendar />
-                <p>{post.members.length}명</p>
+                <p>{post.members.length + 1}명</p>
               </div>
             </div>
-          </div>
+          </Link>
         );
       })}
     </>

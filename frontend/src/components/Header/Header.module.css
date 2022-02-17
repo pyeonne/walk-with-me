@@ -30,7 +30,7 @@
 
 .sign-in {
   color: var(--header-sigin-in-color);
-  background-color: var(--header-background-color);
+  background-color: transparent;
   border: none;
   font-size: 1.6rem;
   cursor: pointer;

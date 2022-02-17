@@ -14,35 +14,48 @@
   --line-color: #e1e2e4;
   --error-color: red;
   --success-color: #3498db;
-  --box-color: #f4f4f4;
+  --box-color: #eee;
   --recruit-title-color: #333;
   --recruit-author-color: #5a5a5a;
   --recruit-author-date: #757575;
   --recruit-text-color: #000000;
-  --body-background-color: #ffffff;
-  --header-background-color: #ffffff;
+  --recruit-button-background: '#fff';
+  --body-background-color: #f8f9fa;
+  --header-background-color: #f8f9fa;
   --header-sigin-in-color: #1e0e62;
   --header-sigin-up-color: #1e0e62;
   --card-background-color: #ffffff;
-  --detail-card-border-color: #cccccc;
+  --detail-card-border-color: #eee;
   --detail-card-recruit-button: #ffffff;
+  --detail-card-recruit-button-color: #7eda8b;
   --detail-card-tag-background-color: #f3f5f8;
   --detail-card-tag-text-color: #666666;
+  --detail-card-button-border-color: #7eda8b;
   --input-color: #666;
   --input-background-color: #ffffff;
   --create-card-color: #333333;
   --recruit-card-author-color: #5a5a5a;
+  --recruit-udmenu-border-color: #cccccc;
+  --chat-input-background-color: #f4f4f4;
+  --chat-input-placeholder-color: #999999;
+  --management-th-background-color: #eee;
+  --management-td-background-color: #ffffff;
+  --input-select-border-color: #ddd;
+  --likes-button-hover-color: #efefef;
 }
 
 /* Variables Dark Theme */
 body.darkTheme {
   --first-color: #b2f2bb;
+  --first-color-light: #fff;
   --text-color: #f9fafc;
   --text-color-light: #f9fafc;
+  --line-color: #555;
   --recruit-title-color: #ffffff;
   --recruit-author-color: #ffffff;
   --recruit-author-date: #dddddd;
   --recruit-text-color: #ffffff;
+  --recruit-button-background: '#1e1f21';
   --body-background-color: #1e1f21;
   --error-color: red;
   --success-color: #3498db;
@@ -51,13 +64,23 @@ body.darkTheme {
   --header-sigin-up-color: #2c2d30;
   --card-background-color: #1e1f21;
   --detail-card-border-color: #343a40;
-  --detail-card-recruit-button: #b2f2bb;
+  --detail-card-recruit-button: #2c2d30;
+  --detail-card-recruit-button-color: #fff;
   --detail-card-tag-background-color: #343a40;
   --detail-card-tag-text-color: #cccccc;
+  --detail-card-button-border-color: #333;
+  --detail-card-button-background-color: #2c2d30;
   --input-color: #ffffff;
   --input-background-color: #2c2d30;
   --create-card-color: #ffffff;
   --recruit-card-author-color: #ffffff;
+  --recruit-udmenu-border-color: #ffffff;
+  --chat-input-background-color: #41444a;
+  --chat-input-placeholder-color: #73757c;
+  --management-th-background-color: #d3f9d8;
+  --management-td-background-color: #2f3135;
+  --input-select-border-color: #333;
+  --likes-button-hover-color: #333;
 }
 
 html {
@@ -80,5 +103,9 @@ input:-webkit-autofill {
 }
 
 input::placeholder {
+  color: var(--input-color);
+}
+
+textarea::placeholder {
   color: var(--input-color);
 }
