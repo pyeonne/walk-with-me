@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 120px);
+  margin-bottom: 4rem;
 }
 
 .container article {
@@ -26,18 +26,14 @@
 .btn-group {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4rem;
 }
 article select {
   margin-bottom: 1rem;
 }
-.areaBox {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
+
 /* 인풋 파일 */
-.filebox {
+.filebox,
+.areaBox {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
