@@ -74,10 +74,7 @@ const Recruit = () => {
       <div className={styles['content-container']}>
         <Tab currTab={currTab} postId={post._id} post={post} user={user} />
         <div className={styles['img-card-container']}>
-          <img
-            className={styles['recruit-image']}
-            src='https://cdn.pixabay.com/photo/2020/04/22/10/14/running-5077128_960_720.jpg'
-          />
+          <img className={styles['recruit-image']} src={post.postImgURL} />
           <Card
             cardType='detail'
             style={{ width: '28rem', height: '46rem' }}

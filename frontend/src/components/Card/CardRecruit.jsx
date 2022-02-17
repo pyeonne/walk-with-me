@@ -39,7 +39,7 @@ const CardRecruit = ({ post, user }) => {
 
   return (
     <div className={`${styles['card']} ${styles['recruit-card']}`}>
-      <img src={image} className={styles['recruit-img']} />
+      <img src={post.postImgURL} className={styles['recruit-img']} />
       <div className={styles['recruit-info']}>
         <div className={styles['recruit-text']}>
           <div className={styles['tags']}>
