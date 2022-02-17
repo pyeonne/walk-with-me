@@ -14,15 +14,14 @@ const Header = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(Context);
   const [theme, setTheme] = useState(
-    window.localStorage.getItem('bgMode') === null ||
-      window.localStorage.getItem('bgMode') === 'light'
+    localStorage.getItem('bgMode') === null ||
+      localStorage.getItem('bgMode') === 'light'
       ? true
       : false
   );
-  const { loginUser } = window.localStorage;
+  const loginUser = localStorage.getItem('loginUser');
 
   const user = state.user;
-  console.log(user);
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
 
   const getProfileImage = async () => {
@@ -52,7 +51,7 @@ const Header = () => {
       getProfileImage();
     }
 
-    if (window.localStorage.getItem('bgMode') === 'dark') {
+    if (localStorage.getItem('bgMode') === 'dark') {
       document.getElementsByTagName('body')[0].classList.add('darkTheme');
       dispatch({
         type: GET_DARK_MODE,
@@ -65,18 +64,18 @@ const Header = () => {
     navigate('/');
     localStorage.clear();
     if (state.darkMode === true) {
-      window.localStorage.setItem('bgMode', 'dark');
+      localStorage.setItem('bgMode', 'dark');
     }
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
   };
 
-  const darkModeOnOfF = () => {
+  const darkModeOnOff = () => {
     if (
       document.getElementsByTagName('body')[0].classList.contains('darkTheme')
     ) {
       document.getElementsByTagName('body')[0].classList.remove('darkTheme');
-      window.localStorage.setItem('bgMode', 'light');
+      localStorage.setItem('bgMode', 'light');
       setTheme(!theme);
       dispatch({
         type: GET_DARK_MODE,
@@ -86,7 +85,7 @@ const Header = () => {
     }
 
     document.getElementsByTagName('body')[0].classList.add('darkTheme');
-    window.localStorage.setItem('bgMode', 'dark');
+    localStorage.setItem('bgMode', 'dark');
     setTheme(!theme);
     dispatch({
       type: GET_DARK_MODE,
@@ -121,7 +120,7 @@ const Header = () => {
           <img
             className={styles['dark-mode']}
             src={theme ? darkMode : lightMode}
-            onClick={darkModeOnOfF}
+            onClick={darkModeOnOff}
           />
         </div>
       </div>

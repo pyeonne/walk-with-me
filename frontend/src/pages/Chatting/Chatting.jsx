@@ -23,9 +23,8 @@ const Chatting = () => {
   const socket = useRef();
 
   useEffect(() => {
-    if (user === null)
-      user = JSON.parse(window.localStorage.getItem('loginUser'));
-    if (post === null) post = JSON.parse(window.localStorage.getItem('post'));
+    if (user === null) user = JSON.parse(localStorage.getItem('loginUser'));
+    if (post === null) post = JSON.parse(localStorage.getItem('post'));
 
     socket.current = io('http://localhost:4000', {
       withCredentials: true,
@@ -53,8 +52,8 @@ const Chatting = () => {
 
   useEffect(() => {
     getPost();
-    if (post === null) post = JSON.parse(window.localStorage.getItem('post'));
-    else window.localStorage.setItem('post', JSON.stringify(post));
+    if (post === null) post = JSON.parse(localStorage.getItem('post'));
+    else localStorage.setItem('post', JSON.stringify(post));
 
     setMessageList(post.chat);
     return () => {
@@ -75,7 +74,7 @@ const Chatting = () => {
       });
 
       post = { ...post, chat: response.data };
-      window.localStorage.setItem('post', JSON.stringify(post));
+      localStorage.setItem('post', JSON.stringify(post));
       setCurrMessage('');
       setMessageList(response.data);
     }

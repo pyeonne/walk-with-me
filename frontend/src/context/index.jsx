@@ -10,7 +10,7 @@ const initialState = {
   user: null,
   posts: [],
   post: null,
-  darkMode: window.localStorage.getItem('bgMode') === 'dark' ? true : false,
+  darkMode: localStorage.getItem('bgMode') === 'dark' ? true : false,
 };
 
 const Context = createContext({});

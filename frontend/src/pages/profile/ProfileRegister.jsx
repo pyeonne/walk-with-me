@@ -21,7 +21,6 @@ const ProfileRegister = memo(() => {
   const [imgPath, setImgPath] = useState(null);
   const [state, dispatch] = useContext(Context);
 
-  const { _id: userId } = state.user;
   const reader = new FileReader();
 
   const onFileChange = async (e) => {
@@ -55,7 +54,10 @@ const ProfileRegister = memo(() => {
       area,
     };
 
-    const response = await apiClient.post(`/api/auth/${userId}/profile`, data);
+    const response = await apiClient.post(
+      `/api/auth/${state.user._id}/profile`,
+      data
+    );
 
     dispatch({ type: CHANGE_USER_INFO, payload: response.data });
     navigate('/');
