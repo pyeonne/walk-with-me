@@ -73,11 +73,12 @@ const PasswordFind = () => {
               text='임시비밀번호 발급'
               disabled={!chkEmail}
             />
-
-            <Link className={styles.goToSign} to='/signin'>
+          </form>
+          <div className={styles.footer}>
+            <Link className={styles['footer__link']} to='/signin'>
               로그인 페이지로 가기
             </Link>
-          </form>
+          </div>
         </article>
       </div>
     </div>
