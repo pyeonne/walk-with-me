@@ -61,15 +61,17 @@ const Chatting = () => {
   }, []);
 
   const sendMessage = async () => {
-    const response = await apiClient.post(`/api/posts/${post._id}/chat`, {
-      _id: user._id,
-      nickname: user.nickname,
-      text: currMessage,
-      profileImgURL: user.profileImgURL,
-    });
+    if (currMessage) {
+      const response = await apiClient.post(`/api/posts/${post._id}/chat`, {
+        _id: user._id,
+        nickname: user.nickname,
+        text: currMessage,
+        profileImgURL: user.profileImgURL,
+      });
 
-    setCurrMessage('');
-    setMessageList(response.data);
+      setCurrMessage('');
+      setMessageList(response.data);
+    }
   };
 
   if (loading) {
@@ -83,39 +85,43 @@ const Chatting = () => {
         <Tab currTab={currTab} postId={postId} post={post} user={user} />
         <div className={styles.chatting}>
           <div className={styles.room}>
-            <ScrollToBottom className='message-container'>
-              {messageList.map((messageContent) => (
-                <div
-                  key={messageContent.time}
-                  className={styles.chat}
-                  id={user._id === messageContent._id ? 'you' : 'other'}
-                >
-                  <div className={styles.profile}>
-                    <Avatar />
-                  </div>
-                  <div className={styles.info}>
-                    <div className={styles.author}>
-                      <h3>{messageContent.nickname}</h3>
-                      <p className={styles.date}>{messageContent.time}</p>
+            <div className={styles.chatBody}>
+              <ScrollToBottom className={styles.messageContainer}>
+                {messageList.map((messageContent) => (
+                  <div
+                    key={messageContent.time}
+                    className={styles.chat}
+                    id={user._id === messageContent._id ? 'you' : 'other'}
+                  >
+                    <div className={styles.profile}>
+                      <Avatar />
                     </div>
-                    <h3 className={styles.content}>{messageContent.text}</h3>
+                    <div className={styles.info}>
+                      <div className={styles.author}>
+                        <h3>{messageContent.nickname}</h3>
+                        <p className={styles.date}>{messageContent.time}</p>
+                      </div>
+                      <h3 className={styles.content}>{messageContent.text}</h3>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </ScrollToBottom>
-            <input
-              type='text'
-              className={styles.input}
-              placeholder='메시지를 입력하세요.'
-              value={currMessage}
-              onChange={(event) => {
-                setCurrMessage(event.target.value);
-              }}
-              // 엔터 눌렀을때 클릭처럼 인풋 보내짐
-              onKeyPress={(event) => {
-                event.key === 'Enter' && sendMessage();
-              }}
-            />
+                ))}
+              </ScrollToBottom>
+            </div>
+            <div className={styles.chatFooter}>
+              <input
+                type='text'
+                className={styles.input}
+                placeholder='메시지를 입력하세요.'
+                value={currMessage}
+                onChange={(event) => {
+                  setCurrMessage(event.target.value);
+                }}
+                // 엔터 눌렀을때 클릭처럼 인풋 보내짐
+                onKeyPress={(event) => {
+                  event.key === 'Enter' && sendMessage();
+                }}
+              />
+            </div>
           </div>
           <div className={styles.list}>
             {/* 모임장 */}
