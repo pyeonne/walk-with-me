@@ -62,6 +62,7 @@ const Button = memo((props) => {
         </StyledButton>
       ) : (
         <StyledButton
+          className={props.className}
           type={props.type}
           width={props.width}
           height={props.height}

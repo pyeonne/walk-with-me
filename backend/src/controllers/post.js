@@ -17,7 +17,7 @@ exports.read = asyncHandler(async (req, res) => {
 exports.registerImage = asyncHandler(async (req, res) => {
   const { path } = req.file;
   const postImagePath = `${process.cwd()}/${path}`;
-  res.status(200).json({ postImagePath });
+  res.sendFile(postImagePath);
 });
 
 /* 포스트 목록
@@ -66,8 +66,14 @@ exports.list = asyncHandler(async (req, res) => {
 POST /api/posts
  */
 exports.create = asyncHandler(async (req, res) => {
-  await Post.create(req.body);
-  res.status(201).json({ success: '포스트 등록' });
+  const { _id: userId } = res.locals.user;
+  const post = await Post.create(req.body);
+  await User.findByIdAndUpdate(userId, {
+    $push: {
+      joinedPosts: post._id,
+    },
+  });
+  res.status(201).json(post);
 });
 
 /* 포스트 수정
@@ -336,4 +342,21 @@ exports.kick = asyncHandler(async (req, res) => {
   res.status(200).json({
     members: post.members,
   });
+});
+
+exports.chat = asyncHandler(async (req, res) => {
+  const { _id: postId } = res.locals.post;
+  const data = req.body;
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $push: {
+        chat: data,
+      },
+    },
+    { new: true }
+  );
+
+  res.json(post.chat);
 });

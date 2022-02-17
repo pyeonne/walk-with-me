@@ -68,6 +68,7 @@ const PasswordFind = () => {
               </div>
             )}
             <Button
+              className={styles.button}
               type='submit'
               text='임시비밀번호 발급'
               disabled={!chkEmail}

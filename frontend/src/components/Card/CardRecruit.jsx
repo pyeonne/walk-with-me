@@ -1,53 +1,45 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Card.module.css';
 import Button from '../Button/Button';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
+import avt from '../Avatar/images/defaultAvatar.svg';
 import { v4 as uuidv4 } from 'uuid';
-import { Context } from '../../context';
 import { apiClient } from '../../api/api';
 
-const CardRecruit = ({ post }) => {
+const CardRecruit = ({ post, user }) => {
   const { author, tags, title, content, likeMembers, image } = post;
-  const [state, dispatch] = useContext(Context);
-  const [profileImgURL, setProfileImgURL] = useState(null);
+  const [mount, setMount] = useState(true);
   const [like, setLike] = useState(post.like);
   const [likes, setLikes] = useState(likeMembers.length);
-  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${author?._id}/profile-image`;
-
-  const getProfileImage = async () => {
-    const response = await fetch(IMG_REGISTER_URL);
-    const blobImg = await response.blob();
-    const profileImgURL = URL.createObjectURL(blobImg);
-    setProfileImgURL(profileImgURL);
-  };
 
   const likeHandler = async (e) => {
     e.preventDefault();
     if (like) {
-      const response = await apiClient.delete(`/api/posts/${post._id}/likes`);
-      setLikes(response.data.length);
+      setLikes((prev) => prev - 1);
     } else {
-      const response = await apiClient.post(`/api/posts/${post._id}/likes`);
-      setLikes(response.data.length);
+      setLikes((prev) => prev + 1);
     }
 
     setLike((prev) => !prev);
   };
 
   useEffect(() => {
-    if (author?._id) {
-      getProfileImage();
+    if (mount) {
+      setMount(false);
+      return;
     }
 
-    setLike(likeMembers.indexOf(state.user?._id) !== -1);
-
-    return () => setProfileImgURL(profileImgURL);
-  }, []);
+    if (like) {
+      apiClient.post(`/api/posts/${post._id}/likes`);
+    } else {
+      apiClient.delete(`/api/posts/${post._id}/likes`);
+    }
+  }, [like]);
 
   return (
     <div className={`${styles['card']} ${styles['recruit-card']}`}>
-      <img src={image} className={styles['recruit-img']} />
+      <img src={post.postImgURL} className={styles['recruit-img']} />
       <div className={styles['recruit-info']}>
         <div className={styles['recruit-text']}>
           <div className={styles['tags']}>
@@ -75,7 +67,7 @@ const CardRecruit = ({ post }) => {
         </div>
         <div className={styles['recruit-bottom']}>
           <div className={styles['author']}>
-            <img src={profileImgURL} />
+            <img src={author.profileImgURL || avt} />
             <span>{`by ${author.nickname}`}</span>
           </div>
           <div className={styles['likes']}>
@@ -90,7 +82,7 @@ const CardRecruit = ({ post }) => {
               text={likes}
               ftsize='1.6rem'
               onClick={
-                state.user === null
+                user === null
                   ? (e) => {
                       e.preventDefault();
                       alert('회원만 사용할 수 있는 기능입니다.');

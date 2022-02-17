@@ -10,33 +10,29 @@ const List = (props) => {
 
   return (
     <>
-      {posts.map((post) => {
-        return (
-          <Link to={`/${post._id}`} key={uuidv4()} className={styles.article}>
-            <div className={styles.img}>
-              <img src={post.image} alt='' />
+      {posts.map((post) => (
+        <Link to={`/${post._id}`} key={uuidv4()} className={styles.article}>
+          <div className={styles.img}>
+            <img src={post.image} alt='' />
+          </div>
+          <div className={styles.summary}>
+            <h3>{post.title}</h3>
+            <div className={styles.tags}>
+              {[`#${post.area}`, `#${post.age}대`, `#${post.category}`].map(
+                (tag) => (
+                  <p key={uuidv4()} className={styles.tag}>
+                    {tag}
+                  </p>
+                )
+              )}
             </div>
-            <div className={styles.summary}>
-              <h3>{post.title}</h3>
-              <div className={styles.tags}>
-                {[`#${post.area}`, `#${post.age}대`, `#${post.category}`].map(
-                  (tag) => {
-                    return (
-                      <p key={uuidv4()} className={styles.tag}>
-                        {tag}
-                      </p>
-                    );
-                  }
-                )}
-              </div>
-              <div className={styles.count}>
-                <Calendar />
-                <p>{post.members.length + 1}명</p>
-              </div>
+            <div className={styles.count}>
+              <Calendar />
+              <p>{post.members.length + 1}명</p>
             </div>
-          </Link>
-        );
-      })}
+          </div>
+        </Link>
+      ))}
     </>
   );
 };

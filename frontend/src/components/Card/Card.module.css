@@ -10,10 +10,41 @@
   margin: 1rem;
   border: 0.1rem var(--detail-card-border-color) solid;
 }
+
 .create-card {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.create-card button span {
+  transition: all 0.3s;
+}
+
+.create-card:hover button {
+  animation: create 0.6s;
+}
+
+.create-card:hover button span {
+  transform: rotate(180deg);
+}
+
+@keyframes create {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-15px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .create-card:active {
@@ -118,6 +149,7 @@
 
 .recruit-card:hover {
   transform: translateY(-6px);
+  box-shadow: rgb(0 0 0 / 8%) 0px 12px 20px 0px;
 }
 
 .recruit-card .tags {

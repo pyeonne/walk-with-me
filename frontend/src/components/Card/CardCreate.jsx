@@ -13,9 +13,10 @@ const CardCreate = ({ style, load }) => {
         height='10rem'
         radius='50%'
         bg='#7EDA8B'
-        text='+'
         ftsize='5rem'
-      />
+      >
+        <span>+</span>
+      </Button>
       <span className={styles['create-card-span']}>새로운 모임 만들기</span>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import { apiClient } from '../api/api';
@@ -7,8 +7,10 @@ import Dropdown from '../components/Dropdown/Dropdown';
 import styles from './Home.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import Pagination from '../components/Pagination/Pagination';
+import { Context } from '../context';
 
 const Home = () => {
+  const [state, dispatch] = useContext(Context);
   const [postsObj, setPostsObj] = useState({
     posts: [],
     count: 0,
@@ -47,7 +49,17 @@ const Home = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.load}>
+        <div>G</div>
+        <div>N</div>
+        <div>I</div>
+        <div>D</div>
+        <div>A</div>
+        <div>O</div>
+        <div>L</div>
+      </div>
+    );
   }
 
   return (
@@ -69,7 +81,7 @@ const Home = () => {
           />
         </div>
         <div className={styles['card-wrapper']}>
-          <Link to='/recruit-register'>
+          <Link to={state.user ? '/recruit-register' : '/signin'}>
             <Card cardType='create' />
           </Link>
           {postsObj.posts.map((post) => (
@@ -83,7 +95,7 @@ const Home = () => {
       </div>
       <Pagination
         currPage={currPage}
-        pageCount={Math.floor(postsObj.count / 7) + 1}
+        pageCount={Math.floor(postsObj.count / 8) + 1}
         onClickPage={onClickPage}
       />
     </>

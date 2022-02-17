@@ -79,6 +79,8 @@ const SignUp = () => {
         type: CHANGE_USER_INFO,
         payload: response.data,
       });
+
+      localStorage.setItem('loginUser', JSON.stringify(response.data));
       navigate('/profile-register');
     } catch (err) {
       alert('중복된 이메일입니다.');

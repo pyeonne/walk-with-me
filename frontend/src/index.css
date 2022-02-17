@@ -22,8 +22,8 @@
   --recruit-button-background: '#fff';
   --body-background-color: #f8f9fa;
   --header-background-color: #f8f9fa;
-  --header-sigin-in-color: #1e0e62;
-  --header-sigin-up-color: #1e0e62;
+  --header-sigin-in-color: #333;
+  --header-sigin-up-color: #fff;
   --card-background-color: #ffffff;
   --detail-card-border-color: #eee;
   --detail-card-recruit-button: #ffffff;
@@ -36,7 +36,7 @@
   --create-card-color: #333333;
   --recruit-card-author-color: #5a5a5a;
   --recruit-udmenu-border-color: #cccccc;
-  --chat-input-background-color: #f4f4f4;
+  --chat-input-background-color: #efefef;
   --chat-input-placeholder-color: #999999;
   --management-th-background-color: #eee;
   --management-td-background-color: #ffffff;

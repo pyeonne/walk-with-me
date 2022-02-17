@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 120px);
+  margin-bottom: 4rem;
 }
 
 .container article {
@@ -30,37 +30,36 @@
 article select {
   margin-bottom: 1rem;
 }
+
 /* 인풋 파일 */
-.filebox {
+.filebox,
+.areaBox {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.file-name {
-  display: inline-block;
+.file-name,
+.area-name {
+  display: flex;
   height: 3rem;
   padding: 0 1rem;
   border: 1px solid var(--input-select-border-color);
   border-radius: 0.4rem;
   width: 80%;
-  color: #999999;
   background-color: var(--input-background-color);
 }
 
 .filebox label {
-  display: inline-block;
-  padding: 1rem 2rem;
+  display: flex;
   color: #ffffff;
   background-color: #7eda8b;
   cursor: pointer;
   height: 3rem;
   border-radius: 0.4rem;
-  transition: background-color 0.4s;
-}
-
-.filebox label:hover {
-  background-color: #7eda8b;
-  transition: background-color 0.4s;
+  font-size: 1.4rem;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
 }
 
 .filebox input[type='file'] {

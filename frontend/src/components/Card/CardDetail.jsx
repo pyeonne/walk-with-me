@@ -5,23 +5,44 @@ import contactDark from './images/contact_calender_dark.svg';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 import { apiClient } from '../../api/api';
-import { Context } from '../../context';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NOW_POST } from '../../context/actionTypes';
 import { v4 as uuidv4 } from 'uuid';
 import RequestModal from '../Modal/RequestModal';
 
-const CardDetail = ({ style, post }) => {
-  const [state, dispatch] = useContext(Context);
+const CardDetail = ({ style, post, user, darkMode }) => {
   const { members, tags, likeMembers, someLikeMembers, isRecruiting } = post;
   const [buttonText, setButtonText] = useState('참가하기');
-
-  const [like, setLike] = useState(false);
-  const user = state.user;
+  const [mount, setMount] = useState(true);
+  const [like, setLike] = useState(post.like);
+  const [likes, setLikes] = useState(likeMembers.length);
 
   // 모달
   const [isOpen, setIsOpen] = useState(false);
   const [bio, setBio] = useState('');
+
+  const likeHandler = async () => {
+    if (like) {
+      setLikes((prev) => prev - 1);
+    } else {
+      setLikes((prev) => prev + 1);
+    }
+
+    setLike((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (mount) {
+      setMount(false);
+      return;
+    }
+
+    if (like) {
+      apiClient.post(`/api/posts/${post._id}/likes`);
+    } else {
+      apiClient.delete(`/api/posts/${post._id}/likes`);
+    }
+  }, [like]);
 
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden';
@@ -30,7 +51,6 @@ const CardDetail = ({ style, post }) => {
 
   useEffect(() => {
     decideButtonText();
-    setLike(likeMembers.indexOf(user?._id) !== -1);
   }, []);
 
   const modalHandler = () => {
@@ -83,26 +103,6 @@ const CardDetail = ({ style, post }) => {
     }
   };
 
-  const likeEvent = async () => {
-    likeHandler();
-    await apiClient.post(`/api/posts/${post._id}/likes`);
-    getPost();
-  };
-
-  const unLikeEvent = async () => {
-    likeHandler();
-    await apiClient.delete(`/api/posts/${post._id}/likes`);
-    getPost();
-  };
-
-  const isLike = (like) => {
-    if (like) {
-      unLikeEvent();
-      return;
-    }
-    likeEvent();
-  };
-
   const buttonHandler = (buttonText) => {
     if (buttonText === '참가 취소하기') {
       joinRequestCancel();
@@ -116,9 +116,6 @@ const CardDetail = ({ style, post }) => {
       modalHandler();
       return;
     }
-  };
-  const likeHandler = () => {
-    setLike((prev) => !prev);
   };
 
   const decideButtonText = () => {
@@ -178,7 +175,7 @@ const CardDetail = ({ style, post }) => {
           <div className={styles['detail-text']}>
             <img
               className={styles['detail-contact']}
-              src={state.darkMode ? contactDark : contact}
+              src={darkMode ? contactDark : contact}
             />
             <span>{members.length + 1}명</span>
           </div>
@@ -232,12 +229,8 @@ const CardDetail = ({ style, post }) => {
                 ftsize='1.6rem'
                 onClick={
                   user === null
-                    ? () => {
-                        alert('회원만 사용할 수 있는 기능입니다.');
-                      }
-                    : () => {
-                        isLike(like);
-                      }
+                    ? () => alert('회원만 사용할 수 있는 기능입니다.')
+                    : () => likeHandler()
                 }
               >
                 <img
@@ -245,7 +238,7 @@ const CardDetail = ({ style, post }) => {
                   src={like === true ? heartRed : heartGray}
                 />
                 <span className={styles.likeMembersNum}>
-                  {likeNumFormat(likeMembers.length)}
+                  {likeNumFormat(likes)}
                 </span>
               </Button>
             </div>

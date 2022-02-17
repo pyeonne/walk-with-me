@@ -1,13 +1,16 @@
 import CardCreate from './CardCreate';
 import CardRecruit from './CardRecruit';
 import CardDetail from './CardDetail';
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../../context';
 
 const Card = ({ style, post, cardType }) => {
   if (cardType === 'create') return <CardCreate style={style} />;
 
-  const { age, area, author, likeMembers } = post;
-  const tags = [`#${area}`, `#${age}대`];
+  const [state, dispatch] = useContext(Context);
+  const { user, darkMode } = state;
+  const { age, area, author, likeMembers, category } = post;
+  const tags = [`#${area}`, `#${age}대`, `#${category}`];
 
   if (cardType === 'recruit') {
     const newPost = {
@@ -15,9 +18,9 @@ const Card = ({ style, post, cardType }) => {
       tags,
       author,
       likeMembers,
-      like: false,
+      like: likeMembers.indexOf(state.user?._id) !== -1,
     };
-    return <CardRecruit style={style} post={newPost} />;
+    return <CardRecruit style={style} user={user} post={newPost} />;
   }
 
   if (cardType === 'detail') {
@@ -28,9 +31,16 @@ const Card = ({ style, post, cardType }) => {
       author,
       someLikeMembers,
       likeMembers,
-      like: false,
+      like: likeMembers.indexOf(state.user?._id) !== -1,
     };
-    return <CardDetail style={style} post={newPost} />;
+    return (
+      <CardDetail
+        style={style}
+        user={user}
+        post={newPost}
+        darkMode={darkMode}
+      />
+    );
   }
 };
 export default Card;
