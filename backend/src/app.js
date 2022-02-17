@@ -5,6 +5,10 @@ const passportSettingRouter = require('./passport');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const socket = require('./socket/socket');
+// 소캣연습
+// const http = require('http');
+
 const { checkTokenAndSetUser } = require('./middlewares/auth');
 
 // router
@@ -34,9 +38,11 @@ app.use(
 app.use(checkTokenAndSetUser);
 app.use('/api', apiRouter);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log('Server is running on port ' + PORT);
 });
+
+socket(server);
 
 app.use((err, req, res, next) => {
   res.json({ failure: err.message });

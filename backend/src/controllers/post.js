@@ -336,3 +336,20 @@ exports.kick = asyncHandler(async (req, res) => {
     members: post.members,
   });
 });
+
+exports.chat = asyncHandler(async (req, res) => {
+  const { _id: postId } = res.locals.post;
+  const data = req.body;
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $push: {
+        chat: data,
+      },
+    },
+    { new: true }
+  );
+
+  res.json(post.chat);
+});

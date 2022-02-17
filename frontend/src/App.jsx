@@ -15,6 +15,7 @@ import ProfileEdit from './pages/profile/ProfileEdit';
 import RecruitEdit from './pages/recruit/RecruitEdit';
 import { networkService } from './api/api';
 import Profile from './pages/profile/Profile';
+import Test from './pages/Test';
 
 networkService.setupInterceptors();
 
@@ -44,6 +45,9 @@ function App() {
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
+
+      <Route path='/:id' element={<Recruit />} />
+      <Route path='/test' element={<Test />} />
       <Route path='/:id' element={<Recruit />} />
     </Routes>
   );
