@@ -1,4 +1,4 @@
-import { memo, useRef, useContext, useState } from 'react';
+import { memo, useRef, useContext, useState, useEffect } from 'react';
 import Button from '../../components/Button/Button';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Header from '../../components/Header/Header';
@@ -9,6 +9,7 @@ import { Context } from '../../context';
 import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { useNavigate } from 'react-router-dom';
 import { apiClient } from '../../api/api';
+import AddressModal from '../../components/Modal/AddressModal';
 
 const ProfileRegister = memo(() => {
   const navigate = useNavigate();
@@ -20,6 +21,26 @@ const ProfileRegister = memo(() => {
   const [imgURL, setImgURL] = useState(null);
   const [imgPath, setImgPath] = useState(null);
   const [state, dispatch] = useContext(Context);
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // 주소 검색
+  const modalHandler = () => {
+    setIsOpen((curr) => !curr);
+  };
+
+  useEffect(() => {
+    if (isOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
+
+    setLoading(false);
+  }, [isOpen]);
+
+  const handleComplete = (data) => {
+    // bname = 법정동/법정리 이름
+    // bname1 = 법정리의 읍/면 이름
+    if (data.bname1 === '') areaRef.current.value = data.bname;
+    else areaRef.current.value = data.bname1;
+  };
 
   const reader = new FileReader();
 
@@ -41,6 +62,9 @@ const ProfileRegister = memo(() => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+
+    if (!areaRef.current.value) return alert('거주지역을 검색해주세요!');
+
     const { value: nickname } = nameRef.current;
     const { value: gender } = genderRef.current;
     const { value: birthYear } = ageRef.current;
@@ -94,15 +118,33 @@ const ProfileRegister = memo(() => {
             type='number'
             required
           />
-          <Input
-            ref={areaRef}
-            name='area'
-            placeholder='동 · 읍 · 면을 입력해주세요.'
-            required
-          />
+          <div className={styles.areaBox}>
+            <input
+              name='area'
+              className={styles['area-name']}
+              placeholder='거주지역을 검색해주세요.'
+              ref={areaRef}
+              disabled
+            />
+            <Button
+              type='button'
+              width='9rem'
+              height='6rem'
+              ftsize='1.4rem'
+              text='검색하기'
+              onClick={modalHandler}
+            />
+          </div>
           <Button text='등록하기' />
         </form>
       </div>
+      {isOpen && (
+        <AddressModal
+          onClick={modalHandler}
+          onComplete={handleComplete}
+          onClose={modalHandler}
+        />
+      )}
     </>
   );
 });

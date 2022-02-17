@@ -47,6 +47,7 @@ article select {
   border-radius: 0.4rem;
   width: 80%;
   background-color: var(--input-background-color);
+  color: var(--input-color);
 }
 
 .filebox label {
