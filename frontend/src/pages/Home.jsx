@@ -19,16 +19,12 @@ const Home = () => {
   const [currPage, setCurrPage] = useState(0);
 
   const getPosts = async (filter) => {
-    try {
-      const response = await apiClient.get(`/api/posts${filter}`);
-      const { posts, count } = response.data;
-      setPostsObj({
-        posts,
-        count,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await apiClient.get(`/api/posts${filter}`);
+    const { posts, count } = response.data;
+    setPostsObj({
+      posts,
+      count,
+    });
   };
 
   useEffect(() => {

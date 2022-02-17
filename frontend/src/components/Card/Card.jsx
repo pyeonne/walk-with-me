@@ -10,10 +10,7 @@ const Card = ({ style, post, cardType }) => {
     return <CardCreate style={style} load={true} />;
   }
 
-  let { age, area, author, likeMembers } = post;
-  if (!author) author = { nickname: '이름없음', profileImage: '사진없음' };
-  if (!likeMembers && typeof Array.isArray(likeMembers)) likeMembers = [];
-
+  const { age, area, author, likeMembers } = post;
   const tags = [`#${area}`, `#${age}대`];
 
   if (cardType === 'recruit') {
@@ -26,15 +23,14 @@ const Card = ({ style, post, cardType }) => {
     };
     return <CardRecruit style={style} post={newPost} />;
   }
+
   if (cardType === 'detail') {
-    const pic = likeMembers.map((likes, idx) => {
-      if (idx < 3) return likes.profileImage;
-    });
+    const someLikeMembers = likeMembers.slice(0, 3);
     const newPost = {
       ...post,
       tags,
-      pic,
       author,
+      someLikeMembers,
       likeMembers,
       like: false,
     };

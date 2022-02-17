@@ -125,16 +125,16 @@ const SignIn = () => {
           <Button
             text='카카오로 로그인'
             image='kakao'
-            bg='#ffffff'
-            color='#666666'
+            bg='var(--card-background-color)'
+            color='var(--input-color)'
             border='1px solid #cccccc'
             onClick={kakaoLogin}
           />
           <Button
             text='구글로 로그인'
             image='google'
-            bg='#ffffff'
-            color='#666666'
+            bg='var(--card-background-color)'
+            color='var(--input-color)'
             border='1px solid #cccccc'
             onClick={googleLogin}
           />

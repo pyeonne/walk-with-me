@@ -16,6 +16,7 @@ const Profile = () => {
   const [like, setLike] = useState(true);
   const [my, setMy] = useState(true);
   const [apply, setApply] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const activeLike = () => {
     setLike(!like);
@@ -30,26 +31,27 @@ const Profile = () => {
   };
 
   const getUserInfo = async () => {
-    try {
-      const response = await apiClient.get(`/api/auth/${userId}/profile`);
-      const { likePosts, joinedPosts, applyPosts } = response.data;
-      dispatch({
-        type: CHANGE_USER_INFO,
-        payload: {
-          ...state.user,
-          likePosts,
-          joinedPosts,
-          applyPosts,
-        },
-      });
-    } catch (err) {
-      alert(err);
-    }
+    const response = await apiClient.get(`/api/auth/${userId}/profile`);
+    const { likePosts, joinedPosts, applyPosts } = response.data;
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: {
+        ...state.user,
+        likePosts,
+        joinedPosts,
+        applyPosts,
+      },
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
     getUserInfo();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

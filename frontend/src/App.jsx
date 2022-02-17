@@ -1,3 +1,6 @@
+import React, { useEffect, useContext } from 'react';
+import { Context } from './context';
+import { GET_DARK_MODE } from './context/actionTypes';
 import { Route, Routes } from 'react-router-dom';
 import SignUp from './pages/auth/SignUp';
 import Home from './pages/Home';
@@ -17,6 +20,17 @@ import Test from './pages/Test';
 networkService.setupInterceptors();
 
 function App() {
+  const [state, dispatch] = useContext(Context);
+  useEffect(() => {
+    if (window.localStorage.getItem('bgMode') === 'dark') {
+      document.getElementsByTagName('body')[0].classList.add('darkTheme');
+      dispatch({
+        type: GET_DARK_MODE,
+        payload: true,
+      });
+    }
+  }, []);
+
   return (
     <Routes>
       <Route path='/' element={<Home />} />
@@ -24,14 +38,18 @@ function App() {
       <Route path='/signin' element={<SignIn />} />
       <Route path='/password-find' element={<PasswordFind />} />
       <Route path='/profile-register' element={<ProfileRegister />} />
-      <Route path='/:id/profile-edit' element={<ProfileEdit />} />
       <Route path='/recruit-register' element={<RecruitRegister />} />
       <Route path='/recruit-edit/:postId' element={<RecruitEdit />} />
+      <Route path='/:id/profile-edit' element={<ProfileEdit />} />
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
+<<<<<<< HEAD
       <Route path='/:postId' element={<Recruit />} />
       <Route path='/test' element={<Test />} />
+=======
+      <Route path='/:id' element={<Recruit />} />
+>>>>>>> develop
     </Routes>
   );
 }

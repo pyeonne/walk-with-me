@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--header-background-color);
   padding: 0 6rem;
 }
 
@@ -29,8 +29,8 @@
 }
 
 .sign-in {
-  color: #1e0e62;
-  background-color: white;
+  color: var(--header-sigin-in-color);
+  background-color: var(--header-background-color);
   border: none;
   font-size: 1.6rem;
   cursor: pointer;
@@ -46,7 +46,7 @@
 .logout {
   width: 10rem;
   height: 4rem;
-  color: #1e0e62;
+  color: var(--header-sigin-up-color);
   background-color: #b2f2bb;
   border: none;
   border-radius: 5rem;

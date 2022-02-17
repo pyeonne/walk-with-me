@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo } from 'react';
 import styled, { css } from 'styled-components';
 import kakao from './images/kakao.svg';
 import google from './images/google.svg';
