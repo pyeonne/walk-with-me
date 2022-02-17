@@ -15,10 +15,10 @@ const Dropdown = forwardRef((props, ref) => {
     ],
     category: [
       { value: '', text: '카테고리' },
-      { value: 'running', text: '달리기' },
-      { value: 'walking', text: '걷기' },
-      { value: 'bicycle', text: '자전거' },
-      { value: 'mountain', text: '등산' },
+      { value: '달리기', text: '달리기' },
+      { value: '걷기', text: '걷기' },
+      { value: '자전거', text: '자전거' },
+      { value: '등산', text: '등산' },
     ],
     age: [
       { value: '', text: '나이' },

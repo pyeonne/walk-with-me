@@ -14,21 +14,18 @@ import Button from '../../components/Button/Button';
 const Profile = () => {
   const { id: userId } = useParams();
   const [state, dispatch] = useContext(Context);
-  const [like, setLike] = useState(true);
-  const [my, setMy] = useState(true);
-  const [apply, setApply] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [toggle, setToggle] = useState({
+    likes: true,
+    joined: true,
+    apply: true,
+  });
 
-  const activeLike = () => {
-    setLike(!like);
-  };
-
-  const activeMy = () => {
-    setMy(!my);
-  };
-
-  const activeApply = () => {
-    setApply(!apply);
+  const toggleHandler = (type) => {
+    setToggle((prev) => ({
+      ...prev,
+      [type]: !prev[type],
+    }));
   };
 
   const getUserInfo = async () => {
@@ -37,7 +34,7 @@ const Profile = () => {
     dispatch({
       type: CHANGE_USER_INFO,
       payload: {
-        ...state.user,
+        ...response.data,
         likePosts,
         joinedPosts,
         applyPosts,
@@ -62,47 +59,62 @@ const Profile = () => {
         <MyProfile user={state.user} />
         {/* 내 관심 모임 */}
         <section className={styles.histories}>
-          <div className={styles.wrapper} onClick={activeLike}>
+          <div
+            className={styles.wrapper}
+            onClick={() => toggleHandler('likes')}
+          >
             <div className={styles.like}>
               <div className={styles.subtitle}>
                 <Face />
                 <h1>내 관심 모임</h1>
               </div>
-              <div className={`${styles.arrow} ${like && styles.active}`}>
+              <div
+                className={`${styles.arrow} ${toggle.likes && styles.active}`}
+              >
                 <Arrow />
               </div>
             </div>
-            <div className={`${styles.lists} ${like && styles.open}`}>
+            <div className={`${styles.lists} ${toggle.likes && styles.open}`}>
               <List type='likePosts' user={state.user} />
             </div>
           </div>
           {/* 내 모임 */}
-          <div className={styles.wrapper} onClick={activeMy}>
+          <div
+            className={styles.wrapper}
+            onClick={() => toggleHandler('joined')}
+          >
             <div className={styles.my}>
               <div className={styles.subtitle}>
                 <Face />
                 <h1>내 모임</h1>
               </div>
-              <div className={`${styles.arrow} ${my && styles.active}`}>
+              <div
+                className={`${styles.arrow} ${toggle.joined && styles.active}`}
+              >
                 <Arrow />
               </div>
             </div>
-            <div className={`${styles.lists} ${my && styles.open}`}>
+            <div className={`${styles.lists} ${toggle.joined && styles.open}`}>
               <List type='joinedPosts' user={state.user} />
             </div>
           </div>
           {/* 가입 신청한 모임 */}
-          <div className={styles.wrapper} onClick={activeApply}>
+          <div
+            className={styles.wrapper}
+            onClick={() => toggleHandler('apply')}
+          >
             <div className={styles.apply}>
               <div className={styles.subtitle}>
                 <Face />
                 <h1>가입 신청한 모임</h1>
               </div>
-              <div className={`${styles.arrow} ${apply && styles.active}`}>
+              <div
+                className={`${styles.arrow} ${toggle.apply && styles.active}`}
+              >
                 <Arrow />
               </div>
             </div>
-            <div className={`${styles.lists} ${apply && styles.open}`}>
+            <div className={`${styles.lists} ${toggle.apply && styles.open}`}>
               <List type='applyPosts' user={state.user} />
             </div>
           </div>
