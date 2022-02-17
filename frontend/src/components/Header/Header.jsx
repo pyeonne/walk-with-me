@@ -19,6 +19,7 @@ const Header = () => {
       ? true
       : false
   );
+
   const user = state.user;
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
 
@@ -32,8 +33,20 @@ const Header = () => {
     });
   };
 
+  const getUserInfo = async () => {
+    const response = await apiClient.get(
+      '/api/auth/' + window.localStorage.loginUser.substring(8, 32) + '/profile'
+    );
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: response.data,
+    });
+  };
+
   useEffect(() => {
-    if (user?._id) {
+    if (state.user === null) {
+      getUserInfo().then(getProfileImage);
+    } else if (state.user.profileImgURL === undefined) {
       getProfileImage();
     }
 
@@ -80,6 +93,7 @@ const Header = () => {
     console.log(theme);
   };
 
+  // user.profileImgURL
   return (
     <header className={styles['nav-bar']}>
       <div className={styles.wrapper}>
