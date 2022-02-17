@@ -26,8 +26,14 @@
 .btn-group {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 4rem;
 }
 article select {
+  margin-bottom: 1rem;
+}
+.areaBox {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 /* 인풋 파일 */
@@ -36,14 +42,14 @@ article select {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.file-name {
+.file-name,
+.area-name {
   display: inline-block;
   height: 3rem;
   padding: 0 1rem;
   border: 1px solid var(--input-select-border-color);
   border-radius: 0.4rem;
   width: 80%;
-  color: #999999;
   background-color: var(--input-background-color);
 }
 
