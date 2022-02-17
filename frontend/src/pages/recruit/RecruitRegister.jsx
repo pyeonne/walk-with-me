@@ -153,9 +153,9 @@ const RecruitRegister = () => {
                 />
                 <Button
                   type='button'
-                  width='6.6rem'
+                  width='9rem'
                   height='3rem'
-                  ftsize='1rem'
+                  ftsize='1.4rem'
                   text='검색하기'
                   onClick={modalHandler}
                 />

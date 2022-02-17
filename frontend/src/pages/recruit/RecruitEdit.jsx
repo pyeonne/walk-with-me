@@ -3,11 +3,11 @@ import Input from '../../components/Input/Input';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import Button from '../../components/Button/Button';
 import styles from './RecruitRegister.module.css';
+import AddressModal from '../../components/Modal/AddressModal';
 import { Context } from '../../context';
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiClient } from '../../api/api';
-import { NOW_POST } from '../../context/actionTypes';
 
 const RecruitEdit = () => {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ const RecruitEdit = () => {
   const [imageURL, setImageURL] = useState('');
   const [imageName, setImageName] = useState('');
   const [state, dispatch] = useContext(Context);
+  const [isOpen, setIsOpen] = useState(false);
   const postId = useParams().postId;
 
   useEffect(async () => {
@@ -36,6 +37,23 @@ const RecruitEdit = () => {
 
   const author = state.user?._id;
   const reader = new FileReader();
+
+  // 주소 검색
+  const modalHandler = () => {
+    setIsOpen((curr) => !curr);
+  };
+
+  useEffect(() => {
+    if (isOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'unset';
+  }, [isOpen]);
+
+  const handleComplete = (data) => {
+    // bname = 법정동/법정리 이름
+    // bname1 = 법정리의 읍/면 이름
+    if (data.bname1 === '') setArea(data.bname);
+    else setArea(data.bname1);
+  };
 
   const onImageHandler = async (event) => {
     // 이미지 미리보기
@@ -56,10 +74,6 @@ const RecruitEdit = () => {
     const { postImagePath } = response.data;
 
     setImageURL(postImagePath);
-  };
-
-  const onAreaHandler = (event) => {
-    setArea(event.currentTarget.value);
   };
 
   const onCategoryHandler = (event) => {
@@ -102,6 +116,10 @@ const RecruitEdit = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (!area) {
+      alert('지역 필수');
+      return;
+    }
     apiCall();
   };
   return (
@@ -140,15 +158,22 @@ const RecruitEdit = () => {
                   onChange={onImageHandler}
                 />
               </div>
-              <Input
-                name='area'
-                width='100%'
-                placeholder='동 · 읍 · 면을 입력해주세요.'
-                marginBottom='1rem'
-                value={area}
-                onChange={onAreaHandler}
-                required={true}
-              />
+              <div className={styles.areaBox}>
+                <input
+                  className={styles['area-name']}
+                  placeholder='활동지역'
+                  value={area}
+                  disabled
+                />
+                <Button
+                  type='button'
+                  width='9rem'
+                  height='3rem'
+                  ftsize='1.4rem'
+                  text='검색하기'
+                  onClick={modalHandler}
+                />
+              </div>
               <Dropdown
                 type='category'
                 height='6rem'
@@ -199,6 +224,13 @@ const RecruitEdit = () => {
           </form>
         </article>
       </div>
+      {isOpen && (
+        <AddressModal
+          onClick={modalHandler}
+          onComplete={handleComplete}
+          onClose={modalHandler}
+        />
+      )}
     </>
   );
 };

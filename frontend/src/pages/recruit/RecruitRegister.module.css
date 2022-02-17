@@ -44,7 +44,7 @@ article select {
 }
 .file-name,
 .area-name {
-  display: inline-block;
+  display: flex;
   height: 3rem;
   padding: 0 1rem;
   border: 1px solid var(--input-select-border-color);
@@ -54,19 +54,16 @@ article select {
 }
 
 .filebox label {
-  display: inline-block;
-  padding: 1rem 2rem;
+  display: flex;
   color: #ffffff;
   background-color: #7eda8b;
   cursor: pointer;
   height: 3rem;
   border-radius: 0.4rem;
-  transition: background-color 0.4s;
-}
-
-.filebox label:hover {
-  background-color: #7eda8b;
-  transition: background-color 0.4s;
+  font-size: 1.4rem;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
 }
 
 .filebox input[type='file'] {
