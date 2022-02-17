@@ -83,7 +83,7 @@ const Home = () => {
       </div>
       <Pagination
         currPage={currPage}
-        pageCount={Math.floor(postsObj.count / 7) + 1}
+        pageCount={Math.floor(postsObj.count / 7)}
         onClickPage={onClickPage}
       />
     </>
