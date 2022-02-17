@@ -18,7 +18,7 @@ const ProfileRegister = memo(() => {
   const ageRef = useRef();
   const areaRef = useRef();
   const [imgURL, setImgURL] = useState(null);
-  const [imgPath, setImgPath] = useState(null);
+  const [profileImgURL, setProfileImgURL] = useState(null);
   const [state, dispatch] = useContext(Context);
 
   const reader = new FileReader();
@@ -33,10 +33,17 @@ const ProfileRegister = memo(() => {
     const formData = new FormData();
     formData.append('img', e.target.files[0]);
 
-    const response = await apiClient.post('/api/auth/profile-image', formData);
-    const { profileImagePath } = response.data;
+    const response = await fetch(
+      'http://localhost:4000/api/auth/profile-image',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+    const blobImg = await response.blob();
+    const url = URL.createObjectURL(blobImg);
 
-    setImgPath(profileImagePath);
+    setProfileImgURL(url);
   };
 
   const onSubmit = async (event) => {
@@ -47,7 +54,7 @@ const ProfileRegister = memo(() => {
     const { value: area } = areaRef.current;
 
     const data = {
-      profileImagePath: imgPath,
+      profileImgURL,
       nickname,
       gender,
       birthYear,
@@ -59,7 +66,11 @@ const ProfileRegister = memo(() => {
       data
     );
 
-    dispatch({ type: CHANGE_USER_INFO, payload: response.data });
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: response.data,
+    });
+    localStorage.setItem('loginUser', JSON.stringify(response.data));
     navigate('/');
   };
 

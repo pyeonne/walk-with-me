@@ -1,8 +1,7 @@
 import React, { memo, useRef } from 'react';
 import Camera from './icons/Camera';
 import styles from './ImageFileInput.module.css';
-
-const DEFAULT_IMAGE = '/images/default_profile.jpg';
+import DEFAULT_IMAGE from '../Avatar/images/defaultAvatar.svg';
 
 const ImageFileInput = memo(({ name, imgURL, onFileChange }) => {
   const inputRef = useRef();

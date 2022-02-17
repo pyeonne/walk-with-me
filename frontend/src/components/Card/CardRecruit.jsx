@@ -3,23 +3,15 @@ import styles from './Card.module.css';
 import Button from '../Button/Button';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
+import avt from '../Avatar/images/defaultAvatar.svg';
 import { v4 as uuidv4 } from 'uuid';
 import { apiClient } from '../../api/api';
 
 const CardRecruit = ({ post, user }) => {
   const { author, tags, title, content, likeMembers, image } = post;
-  const [profileImgURL, setProfileImgURL] = useState(null);
   const [mount, setMount] = useState(true);
   const [like, setLike] = useState(post.like);
   const [likes, setLikes] = useState(likeMembers.length);
-  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${author?._id}/profile-image`;
-
-  const getProfileImage = async () => {
-    const response = await fetch(IMG_REGISTER_URL);
-    const blobImg = await response.blob();
-    const profileImgURL = URL.createObjectURL(blobImg);
-    setProfileImgURL(profileImgURL);
-  };
 
   const likeHandler = async (e) => {
     e.preventDefault();
@@ -44,14 +36,6 @@ const CardRecruit = ({ post, user }) => {
       apiClient.delete(`/api/posts/${post._id}/likes`);
     }
   }, [like]);
-
-  useEffect(() => {
-    if (author?._id) {
-      getProfileImage();
-    }
-
-    return () => setProfileImgURL(profileImgURL);
-  }, []);
 
   return (
     <div className={`${styles['card']} ${styles['recruit-card']}`}>
@@ -83,7 +67,7 @@ const CardRecruit = ({ post, user }) => {
         </div>
         <div className={styles['recruit-bottom']}>
           <div className={styles['author']}>
-            <img src={profileImgURL} />
+            <img src={author.profileImgURL || avt} />
             <span>{`by ${author.nickname}`}</span>
           </div>
           <div className={styles['likes']}>

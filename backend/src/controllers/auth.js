@@ -74,11 +74,11 @@ exports.signOut = (req, res) => {
 // POST /api/auth/:id/profile
 exports.update = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { profileImagePath, nickname, gender, area, birthYear } = req.body;
+  const { profileImgURL, nickname, gender, area, birthYear } = req.body;
   const user = await User.findByIdAndUpdate(
     id,
     {
-      profileImagePath,
+      profileImgURL,
       nickname,
       gender,
       area,
@@ -94,19 +94,7 @@ exports.update = asyncHandler(async (req, res) => {
 exports.updateImg = asyncHandler(async (req, res) => {
   const { path } = req.file;
   const profileImagePath = `${process.cwd()}/${path}`;
-  res.status(200).json({ profileImagePath });
-});
-
-exports.getImage = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const defaultImagePath = `${process.cwd()}/default-image/Avatar.png`;
-  const user = await User.findById(id);
-
-  if (!user.profileImagePath) {
-    return res.sendFile(defaultImagePath);
-  }
-
-  res.sendFile(user.profileImagePath);
+  res.sendFile(profileImagePath);
 });
 
 // 회원 정보 조회
