@@ -22,6 +22,7 @@ const Header = () => {
   const { loginUser } = window.localStorage;
 
   const user = state.user;
+  console.log(user);
   const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
 
   const getProfileImage = async () => {
@@ -93,7 +94,6 @@ const Header = () => {
     });
   };
 
-  // user.profileImgURL
   return (
     <header className={styles['nav-bar']}>
       <div className={styles.wrapper}>

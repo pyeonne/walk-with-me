@@ -66,7 +66,13 @@ exports.list = asyncHandler(async (req, res) => {
 POST /api/posts
  */
 exports.create = asyncHandler(async (req, res) => {
-  await Post.create(req.body);
+  const { _id: userId } = res.locals.user;
+  const post = await Post.create(req.body);
+  await User.findByIdAndUpdate(userId, {
+    $push: {
+      joinedPosts: post._id,
+    },
+  });
   res.status(201).json({ success: '포스트 등록' });
 });
 

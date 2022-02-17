@@ -11,7 +11,7 @@ import { apiClient } from '../../api/api';
 const SignIn = () => {
   const [state, dispatch] = useContext(Context);
   const navigate = useNavigate();
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     email: '',
     password: '',
   });
@@ -22,16 +22,6 @@ const SignIn = () => {
       ...curr,
       [name]: value,
     }));
-  };
-
-  const onEmailHandler = (event) => {
-    const currentEmail = event.currentTarget.value;
-    setEmail(currentEmail);
-  };
-
-  const onPasswordHandler = (event) => {
-    const currentPassword = event.currentTarget.value;
-    setPassword(currentPassword);
   };
 
   // 소셜로그인 부분 킵

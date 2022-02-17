@@ -20,6 +20,7 @@ const ProfileEdit = memo(() => {
   const [imgURL, setImgURL] = useState(null);
   const [imgPath, setImgPath] = useState(null);
   const [state, dispatch] = useContext(Context);
+  const reader = new FileReader();
   const {
     _id: userId,
     nickname,
