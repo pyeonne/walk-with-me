@@ -74,10 +74,11 @@ const Chatting = () => {
         profileImgURL: user.profileImgURL,
       });
 
-    post = { ...post, chat: response.data };
-    window.localStorage.setItem('post', JSON.stringify(post));
-    setCurrMessage('');
-    setMessageList(response.data);
+      post = { ...post, chat: response.data };
+      window.localStorage.setItem('post', JSON.stringify(post));
+      setCurrMessage('');
+      setMessageList(response.data);
+    }
   };
 
   if (loading) {
@@ -90,7 +91,7 @@ const Chatting = () => {
         <Tab currTab={currTab} postId={postId} post={post} user={user} />
         <div className={styles.chatting}>
           <div className={styles.room}>
-            <ScrollToBottom className='message-container'>
+            <ScrollToBottom className={styles.messageContainer}>
               {messageList.map((messageContent) => (
                 <div
                   key={messageContent.time}
@@ -113,10 +114,12 @@ const Chatting = () => {
                         })}
                       </p>
                     </div>
+                    <h3 className={styles.content}>{messageContent.text}</h3>
                   </div>
-                ))}
-              </ScrollToBottom>
-            </div>
+                </div>
+              ))}
+            </ScrollToBottom>
+            ;
             <div className={styles.chatFooter}>
               <input
                 type='text'

@@ -33,6 +33,7 @@ Header {
 .chat {
   display: flex;
   padding-bottom: 1rem;
+  padding-right: 1rem;
 }
 
 .profile {
@@ -120,4 +121,8 @@ Header {
   height: 70px;
   margin: 1rem 0;
   display: flex;
+}
+
+.messageContainer [id='you'] {
+  justify-content: flex-end;
 }
