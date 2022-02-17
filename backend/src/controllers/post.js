@@ -41,7 +41,7 @@ exports.list = asyncHandler(async (req, res) => {
       ],
     })
       .limit(7)
-      .skip((parseInt(page, 10) - 1) * 8)
+      .skip((parseInt(page, 10) - 1) * 7)
       .sort({ createdAt: -1 })
       .populate('author');
 

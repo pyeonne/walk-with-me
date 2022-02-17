@@ -17,6 +17,7 @@ const Home = () => {
   const [category, setCategory] = useState('');
   const [age, setAge] = useState('');
   const [currPage, setCurrPage] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const getPosts = async (filter) => {
     const response = await apiClient.get(`/api/posts${filter}`);
@@ -25,6 +26,7 @@ const Home = () => {
       posts,
       count,
     });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,6 +45,10 @@ const Home = () => {
   const onClickPage = (page) => {
     setCurrPage(page);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
