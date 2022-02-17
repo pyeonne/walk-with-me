@@ -37,7 +37,6 @@ const RecruitRegister = () => {
   const handleComplete = (data) => {
     // bname = 법정동/법정리 이름
     // bname1 = 법정리의 읍/면 이름
-    console.log(data.bname1);
     if (data.bname1 === '') setArea(data.bname);
     else setArea(data.bname1);
   };
