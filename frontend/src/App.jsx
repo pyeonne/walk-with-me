@@ -12,6 +12,7 @@ import ProfileEdit from './pages/profile/ProfileEdit';
 import RecruitEdit from './pages/recruit/RecruitEdit';
 import { networkService } from './api/api';
 import Profile from './pages/profile/Profile';
+import PasswordEdit from './pages/profile/PasswordEdit';
 
 networkService.setupInterceptors();
 
@@ -26,6 +27,7 @@ function App() {
       <Route path='/recruit-register' element={<RecruitRegister />} />
       <Route path='/recruit-edit/:postId' element={<RecruitEdit />} />
       <Route path='/:id/profile-edit' element={<ProfileEdit />} />
+      <Route path='/:id/password-edit' element={<PasswordEdit />} />
       <Route path='/:id/chatting' element={<Chatting />} />
       <Route path='/:id/profile' element={<Profile />} />
       <Route path='/:id/management' element={<Management />} />
