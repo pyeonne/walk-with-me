@@ -23,6 +23,7 @@ const RecruitRegister = () => {
   const [isOpen, setIsOpen] = useState(false);
   const author = state.user?._id;
   const reader = new FileReader();
+  const [loading, setLoading] = useState(true);
 
   // 주소 검색
   const modalHandler = () => {
@@ -32,6 +33,8 @@ const RecruitRegister = () => {
   useEffect(() => {
     if (isOpen) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'unset';
+
+    setLoading(false);
   }, [isOpen]);
 
   const handleComplete = (data) => {
@@ -108,6 +111,11 @@ const RecruitRegister = () => {
     }
     apiCall();
   };
+
+  if (loading) {
+    return <div>로딩 중</div>;
+  }
+
   return (
     <>
       <Header />
