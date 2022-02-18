@@ -6,14 +6,10 @@ const {
   checkPostExist,
 } = require('../middlewares/post');
 const { checkLogin, checkUserId } = require('../middlewares/auth');
-const upload = require('../utils/multer');
 
 const router = Router();
 const postRouter = Router();
 const manageRouter = Router();
-
-// 포스트 사진 등록
-router.post('/images', upload.single('img'), postCtrl.registerImage);
 
 router.use('/:id', checkPostId, checkPostExist, postRouter);
 router.use(

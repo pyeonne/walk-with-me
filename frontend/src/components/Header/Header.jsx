@@ -95,7 +95,6 @@ const Header = () => {
               <Link to='/signin'>로그인</Link>
             </button>
           )}
-
           {user ? (
             <button className={styles['logout']} onClick={logoutHandler}>
               로그아웃

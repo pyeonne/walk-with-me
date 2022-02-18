@@ -17,7 +17,7 @@ const RecruitEdit = () => {
   const [title, setTitle] = useState('');
   const [content, SetContent] = useState('');
   const [image, setImage] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [postImgURL, setPostImgURL] = useState('');
   const [imageName, setImageName] = useState('');
   const [state, dispatch] = useContext(Context);
   const [isOpen, setIsOpen] = useState(false);
@@ -73,10 +73,8 @@ const RecruitEdit = () => {
     const formData = new FormData();
     formData.append('img', event.target.files[0]);
 
-    const response = await apiClient.post('/api/posts/images', formData);
-    const { postImagePath } = response.data;
-
-    setImageURL(postImagePath);
+    const response = await apiClient.post('/api/image', formData);
+    setPostImgURL(response.data);
   };
 
   const onCategoryHandler = (event) => {
@@ -101,8 +99,8 @@ const RecruitEdit = () => {
 
   const apiCall = async () => {
     try {
-      const response = await apiClient.put(`/api/posts/${postId}`, {
-        postImagePath: imageURL,
+      await apiClient.put(`/api/posts/${postId}`, {
+        postImgURL,
         author,
         area,
         category,

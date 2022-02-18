@@ -70,7 +70,6 @@
   padding: 2rem;
   cursor: default;
 }
-
 .tags {
   display: flex;
   align-content: flex-start;
@@ -182,7 +181,6 @@
   padding: 1.6rem;
   height: 100%;
 }
-
 .recruit-subtitle {
   font-size: 1.4rem;
   color: var(--input-color);

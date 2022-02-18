@@ -90,13 +90,6 @@ exports.update = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-// 회원 정보 등록 이미지
-exports.updateImg = asyncHandler(async (req, res) => {
-  const { path } = req.file;
-  const profileImagePath = `${process.cwd()}/${path}`;
-  res.sendFile(profileImagePath);
-});
-
 // 회원 정보 조회
 // GET /api/users/:id/profile
 exports.read = asyncHandler(async (req, res) => {
@@ -192,7 +185,7 @@ exports.setCookie = (req, res) => {
     httpOnly: true,
     maxAge: process.env.EXPIRE_TIME,
   });
-  res.redirect('http://localhost:3000');
+  res.redirect('http://elice-kdt-sw-1st-team6.elicecoding.com');
 };
 
 exports.oAuthLogout = async (req, res) => {
@@ -212,5 +205,5 @@ exports.oAuthLogout = async (req, res) => {
     res.json(error);
   }
 
-  res.redirect('http://localhost:3000');
+  res.redirect('http://elice-kdt-sw-1st-team6.elicecoding.com');
 };

@@ -59,14 +59,8 @@ const RecruitRegister = () => {
     const formData = new FormData();
     formData.append('img', event.target.files[0]);
 
-    const response = await fetch('http://localhost:4000/api/posts/images', {
-      method: 'POST',
-      body: formData,
-    });
-    const blobImg = await response.blob();
-    const url = URL.createObjectURL(blobImg);
-
-    setPostImgURL(url);
+    const response = await apiClient.post('/api/image', formData);
+    setPostImgURL(response.data);
   };
 
   const onCategoryHandler = (event) => {
