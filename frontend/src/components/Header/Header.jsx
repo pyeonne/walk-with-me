@@ -47,9 +47,9 @@ const Header = () => {
     if (state.darkMode === true) {
       localStorage.setItem('bgMode', 'dark');
     }
+    navigate('/');
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
-    navigate('/');
   };
 
   const darkModeOnOff = () => {
