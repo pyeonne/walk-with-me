@@ -1,7 +1,6 @@
 const authCtrl = require('../controllers/auth');
 const router = require('express').Router();
 const { checkLogin } = require('../middlewares/auth');
-const upload = require('../utils/multer');
 
 // 소셜 로그인
 router.get('/google', authCtrl.google);
@@ -19,7 +18,6 @@ router.get('/signout', authCtrl.signOut);
 
 // 회원 정보 등록
 router.post('/:id/profile', authCtrl.update);
-router.post('/profile-image', upload.single('img'), authCtrl.updateImg);
 
 //회원 정보 수정
 router.put('/:id/profile', authCtrl.modify);

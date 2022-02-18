@@ -26,7 +26,7 @@ const Chatting = () => {
     if (user === null) user = JSON.parse(localStorage.getItem('loginUser'));
     if (post === null) post = JSON.parse(localStorage.getItem('post'));
 
-    socket.current = io('http://localhost:4000', {
+    socket.current = io('http://elice-kdt-sw-1st-team6.elicecoding.com:5000', {
       withCredentials: true,
       extraHeaders: {
         'post-id': postId,

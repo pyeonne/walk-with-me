@@ -26,16 +26,16 @@ const SignIn = () => {
 
   // 소셜로그인 부분 킵
   const googleLogin = async () => {
-    // try {
-    //   await axios.get(`${URL}/api/auth/google`, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Access-Control-Allow-Origin': 'http://localhost:3000',
-    //     },
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await apiClient.get('/api/auth/google', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
     // window.open('http://localhost:4000/api/auth/google');
   };
   const kakaoLogin = async () => {

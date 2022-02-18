@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { apiClient } from '../../api/api';
 
 const CardRecruit = ({ post, user }) => {
-  const { author, tags, title, content, likeMembers, image } = post;
+  const { author, tags, title, content, likeMembers } = post;
   const [mount, setMount] = useState(true);
   const [like, setLike] = useState(post.like);
   const [likes, setLikes] = useState(likeMembers.length);

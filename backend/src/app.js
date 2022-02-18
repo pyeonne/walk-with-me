@@ -23,6 +23,7 @@ mongoose.connect(URI).then(() => console.log('MongoDB is connected'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static('uploads'));
 app.use(cookieParser());
 app.use(passport.initialize());
 passportSettingRouter();

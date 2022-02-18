@@ -13,13 +13,6 @@ exports.read = asyncHandler(async (req, res) => {
   res.status(200).json(post);
 });
 
-// 포스트 사진 등록
-exports.registerImage = asyncHandler(async (req, res) => {
-  const { path } = req.file;
-  const postImagePath = `${process.cwd()}/${path}`;
-  res.sendFile(postImagePath);
-});
-
 /* 포스트 목록
 GET /api/posts
 GET /api/posts?age=20&category=running

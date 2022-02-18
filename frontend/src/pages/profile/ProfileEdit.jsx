@@ -53,17 +53,8 @@ const ProfileEdit = memo(() => {
     const formData = new FormData();
     formData.append('img', e.target.files[0]);
 
-    const response = await fetch(
-      'http://localhost:4000/api/auth/profile-image',
-      {
-        method: 'POST',
-        body: formData,
-      }
-    );
-    const blobImg = await response.blob();
-    const url = URL.createObjectURL(blobImg);
-
-    setProfileImgURL(url);
+    const response = await apiClient.post('/api/image', formData);
+    setProfileImgURL(response.data);
   };
 
   const onSubmit = async (event) => {
