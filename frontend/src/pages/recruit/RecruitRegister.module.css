@@ -38,8 +38,7 @@ article select {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.file-name,
-.area-name {
+.file-name {
   display: flex;
   height: 3rem;
   padding: 0 1rem;
@@ -47,6 +46,7 @@ article select {
   border-radius: 0.4rem;
   width: 80%;
   background-color: var(--input-background-color);
+  color: var(--input-color);
 }
 
 .filebox label {

@@ -99,6 +99,7 @@ const Input = forwardRef((props, ref) => {
         ref={ref}
         required={props.required}
         value={props.value}
+        disabled={props.disabled}
       />
     </InputWrapper>
   );

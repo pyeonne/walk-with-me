@@ -148,16 +148,17 @@ const RecruitRegister = () => {
                 />
               </div>
               <div className={styles.areaBox}>
-                <input
-                  className={styles['area-name']}
-                  placeholder='활동지역'
+                <Input
+                  name='area'
+                  width='40rem'
+                  placeholder='활동지역을 검색해주세요.'
                   value={area}
                   disabled
                 />
                 <Button
                   type='button'
                   width='9rem'
-                  height='3rem'
+                  height='6rem'
                   ftsize='1.4rem'
                   text='검색하기'
                   onClick={modalHandler}

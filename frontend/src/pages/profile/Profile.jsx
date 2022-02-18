@@ -118,9 +118,14 @@ const Profile = () => {
               <List type='applyPosts' user={state.user} />
             </div>
           </div>
-          <Button width='100%'>
-            <Link to={`/${state.user._id}/profile-edit`}>수정하기</Link>
-          </Button>
+          <div className={styles.btnGroup}>
+            <Button width='45%'>
+              <Link to={`/${state.user._id}/profile-edit`}>수정하기</Link>
+            </Button>
+            <Button width='45%'>
+              <Link to={`/${state.user._id}/password-edit`}>비밀번호 변경</Link>
+            </Button>
+          </div>
         </section>
       </div>
     </div>
