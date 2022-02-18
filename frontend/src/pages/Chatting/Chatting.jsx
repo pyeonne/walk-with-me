@@ -90,34 +90,39 @@ const Chatting = () => {
         <Tab currTab={currTab} postId={postId} post={post} user={user} />
         <div className={styles.chatting}>
           <div className={styles.room}>
-            <ScrollToBottom className={styles.messageContainer}>
-              {messageList.map((messageContent) => (
-                <div
-                  key={messageContent.time}
-                  className={styles.chat}
-                  id={user._id === messageContent._id ? 'you' : 'other'}
-                >
-                  <div className={styles.profile}>
-                    <Avatar />
-                  </div>
-                  <div className={styles.info}>
-                    <div className={styles.author}>
-                      <h3>{messageContent.nickname}</h3>
-                      <p className={styles.date}>
-                        {new Date(messageContent.time).toLocaleString('ko-KR', {
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: 'numeric',
-                          hour: 'numeric',
-                          minute: 'numeric',
-                        })}
-                      </p>
+            <div className={styles.chatBody}>
+              <ScrollToBottom className={styles.messageContainer}>
+                {messageList.map((messageContent) => (
+                  <div
+                    key={messageContent.time}
+                    className={styles.chat}
+                    id={user._id === messageContent._id ? 'you' : 'other'}
+                  >
+                    <div className={styles.profile}>
+                      <Avatar />
                     </div>
-                    <h3 className={styles.content}>{messageContent.text}</h3>
+                    <div className={styles.info}>
+                      <div className={styles.author}>
+                        <h3>{messageContent.nickname}</h3>
+                        <p className={styles.date}>
+                          {new Date(messageContent.time).toLocaleString(
+                            'ko-KR',
+                            {
+                              year: 'numeric',
+                              month: 'numeric',
+                              day: 'numeric',
+                              hour: 'numeric',
+                              minute: 'numeric',
+                            }
+                          )}
+                        </p>
+                      </div>
+                      <h3 className={styles.content}>{messageContent.text}</h3>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </ScrollToBottom>
+                ))}
+              </ScrollToBottom>
+            </div>
             ;
             <div className={styles.chatFooter}>
               <input

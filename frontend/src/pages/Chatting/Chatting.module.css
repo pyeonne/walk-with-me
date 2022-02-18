@@ -101,14 +101,22 @@ Header {
 
 .chatBody {
   width: 100%;
-  height: calc(900px - 70px);
+  height: calc(900px - 55px);
   margin-top: 1rem;
+  position: relative;
 }
 
 .messageContainer {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.messageContainer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }
 
 .messageContainer::-webkit-scrollbar {
@@ -116,11 +124,23 @@ Header {
 }
 
 .chatFooter {
-  height: 60px;
+  height: 55px;
   margin: 1rem 0;
   display: flex;
 }
 
 .messageContainer [id='you'] {
+  justify-content: flex-start;
+}
+
+.messageContainer [id='you'] .chat {
+  justify-content: flex-start;
+}
+
+.messageContainer [id='other'] {
+  justify-content: flex-end;
+}
+
+.messageContainer [id='other'] .chat {
   justify-content: flex-end;
 }
