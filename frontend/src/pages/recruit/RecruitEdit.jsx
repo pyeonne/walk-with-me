@@ -22,17 +22,20 @@ const RecruitEdit = () => {
   const [state, dispatch] = useContext(Context);
   const [isOpen, setIsOpen] = useState(false);
   const postId = useParams().postId;
+  const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
     const response = await apiClient.get(`/api/posts/${postId}`);
     const { area, category, age, title, content, postImagePath } =
       response.data;
+
     setImage(postImagePath);
     setArea(area);
     SetCategory(category);
     setAge(age);
     setTitle(title);
     SetContent(content);
+    setLoading(false);
   }, []);
 
   const author = state.user?._id;
@@ -122,6 +125,11 @@ const RecruitEdit = () => {
     }
     apiCall();
   };
+
+  if (loading) {
+    return <div>로딩 중</div>;
+  }
+
   return (
     <>
       <Header />

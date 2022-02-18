@@ -19,8 +19,13 @@ const ProfileEdit = memo(() => {
   const ageRef = useRef();
   const areaRef = useRef();
   const [imgURL, setImgURL] = useState(null);
-  const [imgPath, setImgPath] = useState(null);
+  const [profileImgURL, setProfileImgURL] = useState(null);
   const [state, dispatch] = useContext(Context);
+  let { user } = state;
+  if (!user) {
+    user = JSON.parse(localStorage.getItem('loginUser'));
+  }
+
   const reader = new FileReader();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,15 +51,15 @@ const ProfileEdit = memo(() => {
     gender,
     birthYear,
     area,
-    profileImgURL,
-  } = state.user;
+    profileImgURL: preProfileImgURL,
+  } = user;
 
   useEffect(async () => {
     nameRef.current.value = nickname;
     genderRef.current.value = gender;
     ageRef.current.value = birthYear;
     areaRef.current.value = area;
-    setImgURL(profileImgURL);
+    setImgURL(preProfileImgURL);
   }, []);
 
   const onFileChange = async (e) => {
@@ -67,10 +72,17 @@ const ProfileEdit = memo(() => {
     const formData = new FormData();
     formData.append('img', e.target.files[0]);
 
-    const response = await apiClient.post('/api/auth/profile-image', formData);
-    const { profileImagePath } = response.data;
+    const response = await fetch(
+      'http://localhost:4000/api/auth/profile-image',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+    const blobImg = await response.blob();
+    const url = URL.createObjectURL(blobImg);
 
-    setImgPath(profileImagePath);
+    setProfileImgURL(url);
   };
 
   const onSubmit = async (event) => {
@@ -84,7 +96,7 @@ const ProfileEdit = memo(() => {
     const { value: area } = areaRef.current;
 
     const data = {
-      profileImagePath: imgPath,
+      profileImgURL,
       nickname,
       gender,
       birthYear,
@@ -94,6 +106,7 @@ const ProfileEdit = memo(() => {
     const response = await apiClient.post(`/api/auth/${userId}/profile`, data);
 
     dispatch({ type: CHANGE_USER_INFO, payload: response.data });
+    localStorage.setItem('loginUser', JSON.stringify(response.data));
     alert('수정이 완료되었습니다!');
     navigate(`/${userId}/profile`);
   };

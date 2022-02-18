@@ -17,7 +17,7 @@ exports.read = asyncHandler(async (req, res) => {
 exports.registerImage = asyncHandler(async (req, res) => {
   const { path } = req.file;
   const postImagePath = `${process.cwd()}/${path}`;
-  res.status(200).json({ postImagePath });
+  res.sendFile(postImagePath);
 });
 
 /* 포스트 목록
@@ -73,7 +73,7 @@ exports.create = asyncHandler(async (req, res) => {
       joinedPosts: post._id,
     },
   });
-  res.status(201).json({ success: '포스트 등록' });
+  res.status(201).json(post);
 });
 
 /* 포스트 수정

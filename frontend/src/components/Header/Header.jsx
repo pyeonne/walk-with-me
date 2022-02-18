@@ -10,6 +10,8 @@ import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { GET_DARK_MODE } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
 
+const bodyEl = document.getElementsByTagName('body')[0];
+
 const Header = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(Context);
@@ -19,62 +21,40 @@ const Header = () => {
       ? true
       : false
   );
-  const loginUser = localStorage.getItem('loginUser');
 
-  const user = state.user;
-  const IMG_REGISTER_URL = `http://localhost:4000/api/auth/${user?._id}/profile-image`;
+  const [proReg, setProReg] = useState(false);
 
-  const getProfileImage = async () => {
-    const response = await fetch(IMG_REGISTER_URL);
-    const blobImg = await response.blob();
-    const profileImgURL = URL.createObjectURL(blobImg);
-    dispatch({
-      type: CHANGE_USER_INFO,
-      payload: { ...state.user, profileImgURL },
-    });
-  };
-
-  const getUserInfo = async () => {
-    const response = await apiClient.get(
-      '/api/auth/' + loginUser.substring(8, 32) + '/profile'
-    );
-    dispatch({
-      type: CHANGE_USER_INFO,
-      payload: response.data,
-    });
-  };
+  let { user } = state;
+  if (!user) {
+    user = JSON.parse(localStorage.getItem('loginUser'));
+  }
 
   useEffect(() => {
-    if (loginUser && state.user === null) {
-      getUserInfo().then(getProfileImage);
-    } else if (loginUser && state.user.profileImgURL === undefined) {
-      getProfileImage();
-    }
-
     if (localStorage.getItem('bgMode') === 'dark') {
-      document.getElementsByTagName('body')[0].classList.add('darkTheme');
+      bodyEl.classList.add('darkTheme');
       dispatch({
         type: GET_DARK_MODE,
         payload: true,
       });
     }
+    setProReg(
+      document.location.href.split('/').indexOf('profile-register') !== -1
+    );
   }, []);
 
-  const clickHandler = async () => {
-    navigate('/');
+  const logoutHandler = async () => {
     localStorage.clear();
     if (state.darkMode === true) {
       localStorage.setItem('bgMode', 'dark');
     }
     dispatch({ type: CHANGE_USER_INFO, payload: null });
     await apiClient.get('/api/auth/signout');
+    navigate('/');
   };
 
   const darkModeOnOff = () => {
-    if (
-      document.getElementsByTagName('body')[0].classList.contains('darkTheme')
-    ) {
-      document.getElementsByTagName('body')[0].classList.remove('darkTheme');
+    if (bodyEl.classList.contains('darkTheme')) {
+      bodyEl.classList.remove('darkTheme');
       localStorage.setItem('bgMode', 'light');
       setTheme(!theme);
       dispatch({
@@ -84,7 +64,7 @@ const Header = () => {
       return;
     }
 
-    document.getElementsByTagName('body')[0].classList.add('darkTheme');
+    bodyEl.classList.add('darkTheme');
     localStorage.setItem('bgMode', 'dark');
     setTheme(!theme);
     dispatch({
@@ -96,10 +76,18 @@ const Header = () => {
   return (
     <header className={styles['nav-bar']}>
       <div className={styles.wrapper}>
-        <Logo className={styles.logo} type='row' />
+        <Logo className={styles.logo} type='row' disabled={proReg} />
         <div className={styles.right}>
           {user ? (
-            <Link to={`/${user._id}/profile`}>
+            <Link
+              to={`/${user._id}/profile`}
+              onClick={(e) => {
+                if (proReg) {
+                  e.preventDefault();
+                  alert('기본 정보를 입력해주세요');
+                }
+              }}
+            >
               <Avatar src={user.profileImgURL} width='4rem' height='4rem' />
             </Link>
           ) : (
@@ -109,7 +97,7 @@ const Header = () => {
           )}
 
           {user ? (
-            <button className={styles['logout']} onClick={clickHandler}>
+            <button className={styles['logout']} onClick={logoutHandler}>
               로그아웃
             </button>
           ) : (

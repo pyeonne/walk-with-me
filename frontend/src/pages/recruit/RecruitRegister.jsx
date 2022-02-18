@@ -17,7 +17,7 @@ const RecruitRegister = () => {
   const [title, setTitle] = useState('');
   const [content, SetContent] = useState('');
   const [image, setImage] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [postImgURL, setPostImgURL] = useState('');
   const [imageName, setImageName] = useState('');
   const [state, dispatch] = useContext(Context);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,10 +59,14 @@ const RecruitRegister = () => {
     const formData = new FormData();
     formData.append('img', event.target.files[0]);
 
-    const response = await apiClient.post('/api/posts/images', formData);
-    const { postImagePath } = response.data;
+    const response = await fetch('http://localhost:4000/api/posts/images', {
+      method: 'POST',
+      body: formData,
+    });
+    const blobImg = await response.blob();
+    const url = URL.createObjectURL(blobImg);
 
-    setImageURL(postImagePath);
+    setPostImgURL(url);
   };
 
   const onCategoryHandler = (event) => {
@@ -86,21 +90,18 @@ const RecruitRegister = () => {
   };
 
   const apiCall = async () => {
-    try {
-      await apiClient.post('/api/posts', {
-        postImagePath: imageURL,
-        author,
-        area,
-        category,
-        age,
-        title,
-        content,
-      });
-      alert('모집 등록이 완료되었습니다!');
-      navigate('/');
-    } catch (err) {
-      alert('모집 등록에 실패했습니다.');
-    }
+    const response = await apiClient.post('/api/posts', {
+      postImgURL,
+      author,
+      area,
+      category,
+      age,
+      title,
+      content,
+    });
+    const postId = response.data._id;
+    alert('모집 등록이 완료되었습니다!');
+    navigate(`/${postId}`);
   };
 
   const onSubmitHandler = (event) => {
