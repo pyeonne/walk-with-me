@@ -1,16 +1,16 @@
 .nav-bar {
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 100%;
   margin-bottom: 4rem;
+  background-color: var(--header-background-color);
 }
 
 .wrapper {
-  width: 100%;
+  width: 1280px;
+  margin: 0 auto;
   height: 9rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--header-background-color);
 }
 
 .right {
