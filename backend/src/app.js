@@ -6,9 +6,6 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const socket = require('./socket/socket');
-// 소캣연습
-// const http = require('http');
-
 const { checkTokenAndSetUser } = require('./middlewares/auth');
 
 // router

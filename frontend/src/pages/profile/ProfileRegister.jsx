@@ -55,8 +55,6 @@ const ProfileRegister = memo(() => {
     formData.append('img', e.target.files[0]);
 
     const response = await apiClient.post('/api/image', formData);
-    console.log(response)
-    console.log(response.data)
     setProfileImgURL(response.data);
   };
 
