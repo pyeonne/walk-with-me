@@ -54,7 +54,7 @@ Header {
 .author h3 {
   margin-right: 0.5rem;
   font-size: 15px;
-  color: #d63763;
+  color: #feb61a;
 }
 
 .date {
@@ -129,18 +129,18 @@ Header {
   display: flex;
 }
 
+.messageContainer [id='other'] {
+  justify-content: flex-start;
+}
+
+.messageContainer [id='other'] .chat {
+  justify-content: flex-start;
+}
+
 .messageContainer [id='you'] {
   justify-content: flex-start;
 }
 
 .messageContainer [id='you'] .chat {
   justify-content: flex-start;
-}
-
-.messageContainer [id='other'] {
-  justify-content: flex-end;
-}
-
-.messageContainer [id='other'] .chat {
-  justify-content: flex-end;
 }
