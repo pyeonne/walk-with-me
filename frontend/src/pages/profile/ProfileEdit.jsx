@@ -128,13 +128,7 @@ const ProfileEdit = memo(() => {
             required
           />
           <div className={styles.areaBox}>
-            <input
-              name='area'
-              className={styles['area-name']}
-              placeholder='거주지역을 검색해주세요.'
-              ref={areaRef}
-              disabled
-            />
+            <Input name='area' width='40rem' ref={areaRef} disabled />
             <Button
               type='button'
               width='9rem'

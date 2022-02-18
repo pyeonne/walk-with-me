@@ -123,9 +123,9 @@ const ProfileRegister = memo(() => {
             required
           />
           <div className={styles.areaBox}>
-            <input
+            <Input
               name='area'
-              className={styles['area-name']}
+              width='40rem'
               placeholder='거주지역을 검색해주세요.'
               ref={areaRef}
               disabled

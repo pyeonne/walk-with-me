@@ -38,8 +38,7 @@ article select {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-.file-name,
-.area-name {
+.file-name {
   display: flex;
   height: 3rem;
   padding: 0 1rem;

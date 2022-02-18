@@ -20,13 +20,3 @@
   display: flex;
   justify-content: space-between;
 }
-.area-name {
-  display: flex;
-  height: 6rem;
-  padding: 0 1rem;
-  border: 1px solid var(--input-select-border-color);
-  border-radius: 0.4rem;
-  width: 80%;
-  background-color: var(--input-background-color);
-  color: var(--input-color);
-}
