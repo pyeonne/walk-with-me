@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom';
 const Logo = (props) => {
   const navigate = useNavigate();
 
-  const onClickHandler = () => {
+  const onClickHandler = (boolean) => {
+    if (boolean) {
+      alert('기본 정보를 입력해주세요.');
+      return;
+    }
     navigate('/');
   };
 
@@ -14,7 +18,9 @@ const Logo = (props) => {
     <img
       style={{ cursor: 'pointer' }}
       src={props.type == 'col' ? logoSignPage : logoHeader}
-      onClick={onClickHandler}
+      onClick={() => {
+        onClickHandler(props.disabled);
+      }}
     />
   );
 };

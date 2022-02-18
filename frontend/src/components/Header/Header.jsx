@@ -22,6 +22,8 @@ const Header = () => {
       : false
   );
 
+  const [proReg, setProReg] = useState(false);
+
   let { user } = state;
   if (!user) {
     user = JSON.parse(localStorage.getItem('loginUser'));
@@ -35,6 +37,9 @@ const Header = () => {
         payload: true,
       });
     }
+    setProReg(
+      document.location.href.split('/').indexOf('profile-register') !== -1
+    );
   }, []);
 
   const logoutHandler = async () => {
@@ -71,10 +76,18 @@ const Header = () => {
   return (
     <header className={styles['nav-bar']}>
       <div className={styles.wrapper}>
-        <Logo className={styles.logo} type='row' />
+        <Logo className={styles.logo} type='row' disabled={proReg} />
         <div className={styles.right}>
           {user ? (
-            <Link to={`/${user._id}/profile`}>
+            <Link
+              to={`/${user._id}/profile`}
+              onClick={(e) => {
+                if (proReg) {
+                  e.preventDefault();
+                  alert('기본 정보를 입력해주세요');
+                }
+              }}
+            >
               <Avatar src={user.profileImgURL} width='4rem' height='4rem' />
             </Link>
           ) : (
