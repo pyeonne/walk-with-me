@@ -135,7 +135,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
       return;
     }
     if (buttonText === '참가하기') {
-      if (user.joinedPosts.length >= 8)
+      if (user.joinedPosts.length + user.applyPosts.length >= 8)
         return alert('더 이상 모임에 참가할 수 없습니다.');
       modalHandler();
       return;

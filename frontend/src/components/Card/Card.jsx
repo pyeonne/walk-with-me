@@ -5,11 +5,11 @@ import React, { useContext } from 'react';
 import { Context } from '../../context';
 
 const Card = ({ style, post, cardType }) => {
-  if (cardType === 'create') return <CardCreate style={style} />;
-
   const [state, dispatch] = useContext(Context);
   const { user, darkMode } = state;
+
   if (cardType === 'create') return <CardCreate style={style} user={user} />;
+  
   const { age, area, author, likeMembers, category } = post;
   const tags = [`#${area}`, `#${age}대`, `#${category}`];
 
