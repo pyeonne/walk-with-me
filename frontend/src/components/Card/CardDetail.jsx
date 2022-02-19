@@ -100,7 +100,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
     isLeave = confirm('탈퇴하시겠습니까?');
 
     if (isLeave) {
-      if(post.author._id == state.user._id && post.members.length === 0){
+      if(post.author._id == state.user?._id && post.members.length === 1){
         await apiClient.delete('/api/posts/' + post._id);
         alert('모임이 삭제되었습니다.');
         getPost();
@@ -108,7 +108,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
         return
       }
 
-      if(post.author._id == state.user._id){
+      if(post.author._id == state.user?._id){
         let leader = post.members[0]._id;
         await apiClient.put(`/api/posts/${post._id}/management/${leader}/entrust`)
         await apiClient.delete(`/api/posts/${post._id}/leave`);
@@ -135,7 +135,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
       return;
     }
     if (buttonText === '참가하기') {
-      if (user.joinedPosts.length + user.applyPosts.length >= 8)
+      if (user?.joinedPosts.length + user?.applyPosts.length >= 8)
         return alert('더 이상 모임에 참가할 수 없습니다.');
       modalHandler();
       return;
@@ -150,7 +150,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
       setButtonText('참가 취소하기');
       return;
     }
-    if (membersArr.indexOf(user?._id) !== -1 || post.author._id == state.user._id) {
+    if (membersArr.indexOf(user?._id) !== -1 || post.author._id == state.user?._id) {
       setButtonText('탈퇴하기');
       return;
     }
@@ -201,7 +201,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
               className={styles['detail-contact']}
               src={darkMode ? contactDark : contact}
             />
-            <span>{members.length + 1}명</span>
+            <span>{members.length}명</span>
           </div>
         </div>
         <div className={styles.bottom}>
@@ -214,7 +214,6 @@ const CardDetail = ({ style, post, user, darkMode }) => {
               text={isRecruiting === true ? '모집중' : '모집완료'}
               radius='140px'
               bg='var(--detail-card-button-background-color)'
-              disabled={true}
             />
             <Button
               width='24rem'

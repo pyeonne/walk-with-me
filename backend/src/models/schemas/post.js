@@ -16,7 +16,6 @@ const PostSchema = new mongoose.Schema({
     max: 100,
     required: true,
   },
-  image: Buffer,
   content: {
     type: String,
     min: 0,
@@ -31,7 +30,9 @@ const PostSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  postImgURL: String,
+  postImgURL: {
+    type: String,
+  },
   members: [
     {
       type: mongoose.Types.ObjectId,

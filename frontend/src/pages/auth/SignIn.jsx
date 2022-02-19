@@ -36,17 +36,17 @@ const SignIn = () => {
     // }
 
     window.location.href = 'https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google';
-    const token = cookies.get('token');
-    console.log(token)
+    const response = await apiClient.get('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google/callback');
+    console.log(response.data);
     // console.log(response);
-    // dispatch({
-    //   type: CHANGE_USER_INFO,
-    //   payload: response.data,
-    // });
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: response.data,
+    });
+    localStorage.setItem('loginUser', JSON.stringify(response.data));
+    if (!response.data.nickname) navigate('/profile-register');
+    else navigate('/');
 
-    // localStorage.setItem('loginUser', JSON.stringify(response.data));
-    // if (!response.data.nickname) navigate('/profile-register');
-    // else navigate('/');
   };
 
   const kakaoLogin = async () => {

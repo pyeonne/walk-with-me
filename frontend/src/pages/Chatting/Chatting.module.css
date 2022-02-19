@@ -57,6 +57,12 @@ Header {
   color: #feb61a;
 }
 
+.member h3 {
+  margin-right: 0.5rem;
+  font-size: 15px;
+  color: #d63763;
+}
+
 .date {
   color: var(--text-color-light);
 }

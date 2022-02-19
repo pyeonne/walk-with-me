@@ -85,7 +85,7 @@ const RecruitRegister = () => {
 
   const apiCall = async () => {
     const response = await apiClient.post('/api/posts', {
-      postImgURL,
+      postImgURL:postImgURL === '' ? 'https://cdn.pixabay.com/photo/2020/04/22/10/14/running-5077128_960_720.jpg' : postImgURL,
       author,
       area,
       category,

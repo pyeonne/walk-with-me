@@ -185,7 +185,9 @@ exports.setCookie = (req, res) => {
     httpOnly: true,
     maxAge: process.env.EXPIRE_TIME,
   });
-  res.redirect('http://elice-kdt-sw-1st-team6.elicecoding.com');
+  res.json( req.user )
+  // window.localStorage.setItem('token',req.user.token);
+  // res.redirect('http://elice-kdt-sw-1st-team6.elicecoding.com');
 };
 
 exports.oAuthLogout = async (req, res) => {

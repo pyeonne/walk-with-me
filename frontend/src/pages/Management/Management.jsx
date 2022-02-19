@@ -165,7 +165,8 @@ const Manager = () => {
               </tr>
             </thead>
             <tbody>
-              {post.members.map((member) => (
+              {post.members.map((member) => 
+                member._id !== post.author._id && (
                 <tr key={uuidv4()}>
                   <td>
                     <Avatar />

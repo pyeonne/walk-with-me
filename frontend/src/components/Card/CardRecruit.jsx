@@ -62,8 +62,8 @@ const CardRecruit = ({ post, user }) => {
               );
             })}
           </div>
-          <span className={styles['recruit-title']}>{title}</span>
-          <span className={styles['recruit-subtitle']}>{content}</span>
+          <span className={styles['recruit-title']}>{title.length >= 10 ? `${title.slice(0,10)}...` : title}</span>
+          <span className={styles['recruit-subtitle']}>{content.length >= 20 ? `${content.slice(0,20)}...` : content}</span>
         </div>
         <div className={styles['recruit-bottom']}>
           <div className={styles['author']}>

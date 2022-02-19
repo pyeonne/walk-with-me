@@ -8,6 +8,8 @@ import styles from './Home.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import Pagination from '../components/Pagination/Pagination';
 import { Context } from '../context';
+import {Cookies, useCookies} from 'react-cookie';
+const cookies = new Cookies();
 
 const Home = () => {
   const [state, dispatch] = useContext(Context);
@@ -20,7 +22,7 @@ const Home = () => {
   const [age, setAge] = useState('');
   const [currPage, setCurrPage] = useState(0);
   const [loading, setLoading] = useState(true);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   const getPosts = async (filter) => {
     const response = await apiClient.get(`/api/posts${filter}`);
     const { posts, count } = response.data;
@@ -30,6 +32,10 @@ const Home = () => {
     });
     setLoading(false);
   };
+
+  useEffect(() => {
+    console.log(cookies);
+  },[])
 
   useEffect(() => {
     let abortController = new AbortController();

@@ -111,7 +111,11 @@
   margin-bottom: 0.8rem;
 }
 
-.detail-buttons-middle button:active {
+.detail-buttons-middle button:first-child {
+  cursor: default;
+}
+
+.detail-buttons-middle button:last-child:active {
   transform: scale(0.95);
   font-size: 1.5rem;
 }
@@ -171,6 +175,7 @@
   font-weight: bold;
   font-size: 1.8rem;
   color: var(--recruit-text-color);
+  margin-bottom: 0.4rem;
 }
 
 .recruit-info {

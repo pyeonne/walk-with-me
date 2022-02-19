@@ -54,7 +54,6 @@ const Chatting = () => {
     getPost();
     if (post === null) post = JSON.parse(localStorage.getItem('post'));
     else localStorage.setItem('post', JSON.stringify(post));
-
     setMessageList(post.chat);
     return () => {
       dispatch({
@@ -151,16 +150,21 @@ const Chatting = () => {
               </div>
             </div>
             {/* 멤버 */}
-            {post.members.map((member) => (
+            
+            {post.members.map((member) => 
+              member._id !== post.author._id &&( 
               <div className={styles.user} key={uuidv4()}>
                 <div className={styles.profile}>
                   <Avatar />
                 </div>
-                <div className={styles.author}>
+                <div className={styles.member}>
                   <h3>{member.nickname}</h3>
                 </div>
               </div>
-            ))}
+                )
+              )}
+            )
+              
           </div>
         </div>
       </div>

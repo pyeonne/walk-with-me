@@ -66,6 +66,12 @@ exports.create = asyncHandler(async (req, res) => {
       joinedPosts: post._id,
     },
   });
+
+  await Post.findByIdAndUpdate(post._id, {
+    $push: {
+      members: userId,
+    },
+  });
   res.status(201).json(post);
 });
 
@@ -344,8 +350,6 @@ PUT /api/posts/:id/management/:userId/entrust
 exports.entrust = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { userId } = res.locals;
-  console.log('로컬 포스트',postId)
-  console.log('로컬 아이디',userId)
   
   await User.findByIdAndUpdate(userId, {
     $pull: {

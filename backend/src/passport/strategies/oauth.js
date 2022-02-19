@@ -26,7 +26,7 @@ exports.google = new GoogleStrategy(
     }
 
     const token = user.generateToken();
-    done(null, { token,user });
+    done(null, { token, user });
   }
 );
 
@@ -49,7 +49,7 @@ exports.kakao = new KakaoStrategy(
     }
 
     const token = user.generateToken();
-    done(null, { logoutToken: accessToken, token,user });
+    done(null, { logoutToken: accessToken, token, user });
   }
 );
 
