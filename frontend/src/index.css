@@ -36,6 +36,7 @@
   --create-card-color: #333333;
   --recruit-card-author-color: #5a5a5a;
   --recruit-udmenu-border-color: #cccccc;
+  --recruit-udmenu-background-color: #ffffff;
   --chat-input-background-color: #efefef;
   --chat-input-placeholder-color: #999999;
   --management-th-background-color: #eee;
@@ -75,6 +76,7 @@ body.darkTheme {
   --create-card-color: #ffffff;
   --recruit-card-author-color: #ffffff;
   --recruit-udmenu-border-color: #ffffff;
+  --recruit-udmenu-background-color: #2c2d30;
   --chat-input-background-color: #41444a;
   --chat-input-placeholder-color: #73757c;
   --management-th-background-color: #d3f9d8;

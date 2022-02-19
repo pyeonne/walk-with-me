@@ -50,7 +50,7 @@
 
 .page[active='true'] {
   color: #fff;
-  background: var(--first-color);
+  background: #7eda8b;
   border-radius: 0.25rem;
   font-weight: bold;
 }

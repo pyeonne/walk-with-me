@@ -2,8 +2,8 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite --config vite.prod.config.js",
+    "build": "vite --config vite.prod.config.js build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -11,6 +11,7 @@
     "dotenv": "^16.0.0",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-daum-postcode": "^3.0.1",
     "react-dom": "^17.0.2",
     "react-modal": "^3.14.4",

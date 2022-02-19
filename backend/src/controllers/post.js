@@ -337,6 +337,35 @@ exports.kick = asyncHandler(async (req, res) => {
   });
 });
 
+/* 모임장 위임
+PUT /api/posts/:id/management/:userId/entrust
+*/
+
+exports.entrust = asyncHandler(async (req, res) => {
+  const { _id: postId } = res.locals.post;
+  const { userId } = res.locals;
+  console.log('로컬 포스트',postId)
+  console.log('로컬 아이디',userId)
+  
+  await User.findByIdAndUpdate(userId, {
+    $pull: {
+      joinedPosts: postId,
+    },
+  });
+
+
+  const post = await Post.findByIdAndUpdate(postId, {
+      $set: {
+        author: userId
+      }
+    }
+  )
+
+  res.status(200).json({
+    post,
+  });
+})
+
 exports.chat = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const data = req.body;

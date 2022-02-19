@@ -49,6 +49,9 @@ postRouter.delete('/leave', checkLogin, postCtrl.leave);
 manageRouter.post('/allow', postCtrl.allow);
 manageRouter.post('/deny', postCtrl.deny);
 
+//모임장 위임
+manageRouter.put('/entrust', postCtrl.entrust);
+
 // 회원 퇴출
 manageRouter.delete('/kick', postCtrl.kick);
 

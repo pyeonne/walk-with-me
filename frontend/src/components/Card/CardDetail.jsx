@@ -5,10 +5,12 @@ import contactDark from './images/contact_calender_dark.svg';
 import heartRed from './images/heart_red.svg';
 import heartGray from './images/heart_gray.svg';
 import { apiClient } from '../../api/api';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Context } from '../../context';
 import { NOW_POST } from '../../context/actionTypes';
 import { v4 as uuidv4 } from 'uuid';
 import RequestModal from '../Modal/RequestModal';
+import { useNavigate } from 'react-router-dom';
 
 const CardDetail = ({ style, post, user, darkMode }) => {
   const { members, tags, likeMembers, someLikeMembers, isRecruiting } = post;
@@ -16,6 +18,8 @@ const CardDetail = ({ style, post, user, darkMode }) => {
   const [mount, setMount] = useState(true);
   const [like, setLike] = useState(post.like);
   const [likes, setLikes] = useState(likeMembers.length);
+  const [state, dispatch] = useContext(Context)
+  const navigate = useNavigate()
 
   // 모달
   const [isOpen, setIsOpen] = useState(false);
@@ -96,6 +100,24 @@ const CardDetail = ({ style, post, user, darkMode }) => {
     isLeave = confirm('탈퇴하시겠습니까?');
 
     if (isLeave) {
+      if(post.author._id == state.user._id && post.members.length === 0){
+        await apiClient.delete('/api/posts/' + post._id);
+        alert('모임이 삭제되었습니다.');
+        getPost();
+        navigate('/')
+        return
+      }
+
+      if(post.author._id == state.user._id){
+        let leader = post.members[0]._id;
+        await apiClient.put(`/api/posts/${post._id}/management/${leader}/entrust`)
+        await apiClient.delete(`/api/posts/${post._id}/leave`);
+        getPost();
+        alert('모임에서 탈퇴되었습니다.');
+        setButtonText('참가하기');
+        return
+      }
+
       await apiClient.delete(`/api/posts/${post._id}/leave`);
       getPost();
       alert('모임에서 탈퇴되었습니다.');
@@ -113,6 +135,8 @@ const CardDetail = ({ style, post, user, darkMode }) => {
       return;
     }
     if (buttonText === '참가하기') {
+      if (user.joinedPosts.length >= 8)
+        return alert('더 이상 모임에 참가할 수 없습니다.');
       modalHandler();
       return;
     }
@@ -126,7 +150,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
       setButtonText('참가 취소하기');
       return;
     }
-    if (membersArr.indexOf(user?._id) !== -1) {
+    if (membersArr.indexOf(user?._id) !== -1 || post.author._id == state.user._id) {
       setButtonText('탈퇴하기');
       return;
     }
@@ -196,16 +220,16 @@ const CardDetail = ({ style, post, user, darkMode }) => {
               width='24rem'
               height='5rem'
               color={
-                user === null || post.author._id === user._id ? '#ccc' : '#333'
+                user === null ? '#ccc' : '#333'
               }
               text={buttonText}
               radius='140px'
               bg={
-                user === null || post.author._id === user._id
+                user === null
                   ? '#efefef'
                   : '#B2F2BB'
               }
-              disabled={user === null || post.author._id === user._id}
+              disabled={user === null}
               onClick={() => {
                 buttonHandler(buttonText);
               }}

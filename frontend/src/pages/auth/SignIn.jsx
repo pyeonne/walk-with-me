@@ -7,6 +7,8 @@ import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
 import { apiClient } from '../../api/api';
+import {Cookies} from 'react-cookie';
+const cookies = new Cookies();
 
 const SignIn = () => {
   const [state, dispatch] = useContext(Context);
@@ -26,24 +28,38 @@ const SignIn = () => {
 
   // 소셜로그인 부분 킵
   const googleLogin = async () => {
-    try {
-      await apiClient.get('/api/auth/google', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    // window.open('http://localhost:4000/api/auth/google');
-  };
-  const kakaoLogin = async () => {
     // try {
-    //   await axios.get(`${URL}/api/auth/kakao`);
+    //   const response = await apiClient.get('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google');
+    //   console.log(response.data);
     // } catch (err) {
     //   console.log(err);
     // }
+
+    window.location.href = 'https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google';
+    const token = cookies.get('token');
+    console.log(token)
+    // console.log(response);
+    // dispatch({
+    //   type: CHANGE_USER_INFO,
+    //   payload: response.data,
+    // });
+
+    // localStorage.setItem('loginUser', JSON.stringify(response.data));
+    // if (!response.data.nickname) navigate('/profile-register');
+    // else navigate('/');
+  };
+
+  const kakaoLogin = async () => {
+    // window.open('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/kakao');
+    // dispatch({
+    //   type: CHANGE_USER_INFO,
+    //   payload: response.data,
+    // });
+
+    // localStorage.setItem('loginUser', JSON.stringify(response.data));
+    // if (!response.data.nickname) navigate('/profile-register');
+    // else navigate('/');
+
   };
 
   const apiCall = async () => {
