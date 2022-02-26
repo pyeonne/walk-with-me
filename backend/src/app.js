@@ -1,12 +1,12 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const passportSettingRouter = require('./passport');
-const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const cors = require('cors');
 const passport = require('passport');
+const passportConfig = require('./passport');
 const socket = require('./socket/socket');
-const { checkTokenAndSetUser } = require('./middlewares/auth');
 
 // router
 const apiRouter = require('./routes');
@@ -17,17 +17,27 @@ const URI = process.env.URI;
 
 mongoose.connect(URI).then(() => console.log('MongoDB is connected'));
 
+passportConfig();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
 
 app.use(express.static('uploads'));
-app.use(cookieParser());
 app.use(passport.initialize());
-passportSettingRouter();
+app.use(passport.session());
 
-app.use(cors());
-
-app.use(checkTokenAndSetUser);
 app.use('/api', apiRouter);
 
 const server = app.listen(PORT, () => {

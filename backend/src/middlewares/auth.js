@@ -3,16 +3,6 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('../utils/async-handler');
 const { ObjectId } = mongoose.Types;
 
-exports.checkTokenAndSetUser = asyncHandler(async (req, res, next) => {
-  const { token } = req.cookies;
-  if (!token) return next();
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  res.locals.user = { _id: decoded._id };
-
-  return next();
-});
-
 exports.checkLogin = (req, res, next) => {
   if (!res.locals.user) {
     res.status(401); // Unauthorized

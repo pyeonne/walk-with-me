@@ -11,6 +11,7 @@ import { NOW_POST } from '../../context/actionTypes';
 import { v4 as uuidv4 } from 'uuid';
 import RequestModal from '../Modal/RequestModal';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '../Avatar/Avatar';
 
 const CardDetail = ({ style, post, user, darkMode }) => {
   const { members, tags, likeMembers, someLikeMembers, isRecruiting } = post;
@@ -236,9 +237,9 @@ const CardDetail = ({ style, post, user, darkMode }) => {
           </div>
           <div className={styles['detail-buttons-bottom']}>
             <div className={styles['likes-people']}>
-              {someLikeMembers.map((member) => {
-                return <img key={uuidv4()} src={member.profileImgURL} />;
-              })}
+              {someLikeMembers.map((member) => 
+                <Avatar key={uuidv4()} src={member.profileImgURL} />
+              )}
             </div>
             <div className={styles['likes']}>
               <Button

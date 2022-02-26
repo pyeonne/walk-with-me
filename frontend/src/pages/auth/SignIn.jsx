@@ -1,17 +1,12 @@
+import React, { useState } from 'react';
 import Button from '../../components/Button/Button';
 import Logo from '../../components/Header/Logo';
 import Input from '../../components/Input/Input';
 import styles from './SignIn.module.css';
-import { Context } from '../../context';
-import { CHANGE_USER_INFO } from '../../context/actionTypes';
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useContext, useState } from 'react';
 import { apiClient } from '../../api/api';
-import {Cookies} from 'react-cookie';
-const cookies = new Cookies();
 
 const SignIn = () => {
-  const [state, dispatch] = useContext(Context);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
@@ -26,63 +21,29 @@ const SignIn = () => {
     }));
   };
 
-  // 소셜로그인 부분 킵
   const googleLogin = async () => {
-    // try {
-    //   const response = await apiClient.get('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google');
-    //   console.log(response.data);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-    window.location.href = 'https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google';
-    const response = await apiClient.get('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google/callback');
-    console.log(response.data);
-    // console.log(response);
-    dispatch({
-      type: CHANGE_USER_INFO,
-      payload: response.data,
-    });
-    localStorage.setItem('loginUser', JSON.stringify(response.data));
-    if (!response.data.nickname) navigate('/profile-register');
-    else navigate('/');
-
+    window.open('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google', '_self');
   };
 
   const kakaoLogin = async () => {
-    // window.open('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/kakao');
-    // dispatch({
-    //   type: CHANGE_USER_INFO,
-    //   payload: response.data,
-    // });
-
-    // localStorage.setItem('loginUser', JSON.stringify(response.data));
-    // if (!response.data.nickname) navigate('/profile-register');
-    // else navigate('/');
-
+    window.open('https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/kakao', '_self');
   };
 
-  const apiCall = async () => {
+  const localLogin = async () => {
     try {
-      const response = await apiClient.post('/api/auth/signIn', {
+      await apiClient.post('/api/auth/signIn', {
         email: form.email,
         password: form.password,
       });
-      dispatch({
-        type: CHANGE_USER_INFO,
-        payload: response.data,
-      });
 
-      localStorage.setItem('loginUser', JSON.stringify(response.data));
-      if (!response.data.nickname) navigate('/profile-register');
-      else navigate('/');
+      navigate('/');
     } catch (err) {
       alert('이메일 또는 비밀번호를 확인해주세요.');
     }
   };
   const onSubmitHandler = (event) => {
     event.preventDefault();
-    apiCall();
+    localLogin();
   };
 
   return (

@@ -19,6 +19,9 @@ const Dropdown = forwardRef((props, ref) => {
       { value: '걷기', text: '걷기' },
       { value: '자전거', text: '자전거' },
       { value: '등산', text: '등산' },
+      { value: '축구', text: '축구' },
+      { value: '배드민턴', text: '배드민턴' },
+      { value: '테니스', text: '테니스' }
     ],
     age: [
       { value: '', text: '나이' },

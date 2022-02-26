@@ -25,11 +25,11 @@ exports.signUp = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  const token = user.generateToken();
-  res.cookie('token', token, {
-    httpOnly: true,
-    maxAge: process.env.EXPIRE_TIME,
-  });
+  // const token = user.generateToken();
+  // res.cookie('token', token, {
+  //   httpOnly: true,
+  //   maxAge: process.env.EXPIRE_TIME,
+  // });
 
   res.status(200).json(user);
 });
@@ -44,17 +44,18 @@ exports.signIn = async (req, res, next) => {
         return;
       }
       // user 데이터를 통해 로그인 진행
-      req.login(user, { session: false }, (loginError) => {
+      return req.login(user, (loginError) => {
         if (loginError) {
           res.json(loginError);
           return;
         }
 
-        const token = user.generateToken();
-        res.cookie('token', token, {
-          httpOnly: true,
-          maxAge: process.env.EXPIRE_TIME,
-        });
+        // const token = user.generateToken();
+        // res.cookie('token', token, {
+        //   httpOnly: true,
+        //   maxAge: process.env.EXPIRE_TIME,
+        // });
+        
 
         res.status(200).json(user);
       });
@@ -66,8 +67,8 @@ exports.signIn = async (req, res, next) => {
 
 // 로그아웃
 exports.signOut = (req, res) => {
-  res.cookie('token', '');
-  res.status(200).json({ success: '로그아웃 성공' });
+  req.logout();
+  req.session.destroy();
 };
 
 // 회원 정보 등록
@@ -168,44 +169,16 @@ exports.google = passport.authenticate('google', {
 });
 exports.googleCallback = passport.authenticate('google', {
   failureRedirect: '/signin',
-});
+  successRedirect: '/'
+})
 
 // 카카오 로그인
 exports.kakao = passport.authenticate('kakao');
 exports.kakaoCallback = passport.authenticate('kakao', {
   failureRedirect: '/signin',
-});
+  successRedirect: '/'
+})
 
-exports.setCookie = (req, res) => {
-  res.cookie('token', req.user.token, {
-    httpOnly: true,
-    maxAge: process.env.EXPIRE_TIME,
-  });
-  res.cookie('logout_token', req.user.logoutToken, {
-    httpOnly: true,
-    maxAge: process.env.EXPIRE_TIME,
-  });
-  res.json( req.user )
-  // window.localStorage.setItem('token',req.user.token);
-  // res.redirect('http://elice-kdt-sw-1st-team6.elicecoding.com');
-};
-
-exports.oAuthLogout = async (req, res) => {
-  try {
-    const ACCESS_TOKEN = req.cookies['logout_token'];
-    await axios({
-      method: 'post',
-      url: 'https://kapi.kakao.com/v1/user/logout',
-      headers: {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    });
-    res.cookie('token', '');
-    res.cookie('logout_token', '');
-  } catch (error) {
-    console.error(error);
-    res.json(error);
-  }
-
-  res.redirect('http://elice-kdt-sw-1st-team6.elicecoding.com');
-};
+exports.loginSuccess = async (req, res) => {
+  res.status(200).json(req.user);
+}

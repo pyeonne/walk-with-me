@@ -100,6 +100,7 @@ const Input = forwardRef((props, ref) => {
         required={props.required}
         value={props.value}
         disabled={props.disabled}
+        maxLength={props.maxLength}
       />
     </InputWrapper>
   );

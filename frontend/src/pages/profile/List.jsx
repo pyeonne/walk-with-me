@@ -13,7 +13,7 @@ const List = (props) => {
       {posts.map((post) => (
         <Link to={`/${post._id}`} key={uuidv4()} className={styles.article}>
           <div className={styles.img}>
-            <img src={post.image} alt='' />
+            <img src={post.postImgURL} alt='' />
           </div>
           <div className={styles.summary}>
             <h3>{post.title}</h3>
@@ -28,7 +28,7 @@ const List = (props) => {
             </div>
             <div className={styles.count}>
               <Calendar />
-              <p>{post.members.length + 1}명</p>
+              <p>{post.members.length}명</p>
             </div>
           </div>
         </Link>

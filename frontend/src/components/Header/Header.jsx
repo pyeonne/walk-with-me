@@ -44,12 +44,12 @@ const Header = () => {
 
   const logoutHandler = async () => {
     localStorage.clear();
+    navigate('/');
+    await apiClient.get('/api/auth/signout');
     if (state.darkMode === true) {
       localStorage.setItem('bgMode', 'dark');
     }
-    navigate('/');
     dispatch({ type: CHANGE_USER_INFO, payload: null });
-    await apiClient.get('/api/auth/signout');
   };
 
   const darkModeOnOff = () => {

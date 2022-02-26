@@ -50,21 +50,22 @@ const UserSchema = new mongoose.Schema({
       ref: 'Post',
     },
   ],
-  kakaoId: Number,
+  snsId: Number,
+  provider: String
 });
 
-UserSchema.methods.generateToken = function () {
-  const token = jwt.sign(
-    {
-      _id: this.id,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.EXPIRE_TIME,
-    }
-  );
-  return token;
-};
+// UserSchema.methods.generateToken = function () {
+//   const token = jwt.sign(
+//     {
+//       _id: this.id,
+//     },
+//     process.env.JWT_SECRET,
+//     {
+//       expiresIn: process.env.EXPIRE_TIME,
+//     }
+//   );
+//   return token;
+// };
 
 UserSchema.methods.deleteApplyPost = async function (postId) {
   this.applyPosts = this.applyPosts.filter(

@@ -1,16 +1,22 @@
 const { Server } = require('socket.io');
 const { User } = require('../models');
 const { Post } = require('../models');
-const { Chat } = require('../models');
-const { Room } = require('../models');
 
 const socket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: 'http://elice-kdt-sw-1st-team6.elicecoding.com',
+      origin: 'https://elice-kdt-sw-1st-team6.elicecoding.com',
       credentials: true,
       methods: ['GET', 'POST'],
     },
+  });
+
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('send-message', (message) => {
+      socket.broadcast.emit('receive-message', message);
+    });
+    
   });
 
   let users = [];

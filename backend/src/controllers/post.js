@@ -9,7 +9,8 @@ exports.read = asyncHandler(async (req, res) => {
   const post = await Post.findOne({ _id })
     .populate('author')
     .populate('preMembers')
-    .populate('members');
+    .populate('members')
+    .populate('likeMembers')
   res.status(200).json(post);
 });
 
@@ -259,7 +260,6 @@ exports.allow = asyncHandler(async (req, res) => {
   const { _id: postId } = res.locals.post;
   const { userId } = res.locals;
 
-  console.log(userId);
   const user = await User.findById(userId);
   await user.deleteApplyPost(postId);
 

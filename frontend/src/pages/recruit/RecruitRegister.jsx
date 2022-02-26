@@ -186,6 +186,7 @@ const RecruitRegister = () => {
                 value={title}
                 onChange={onTitleHandler}
                 required={true}
+                maxLength={30}
               />
               <Input
                 name='content'

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import { apiClient } from '../api/api';
 import Card from '../components/Card/Card';
@@ -8,10 +8,10 @@ import styles from './Home.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import Pagination from '../components/Pagination/Pagination';
 import { Context } from '../context';
-import {Cookies, useCookies} from 'react-cookie';
-const cookies = new Cookies();
+import { CHANGE_USER_INFO } from '../context/actionTypes';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [state, dispatch] = useContext(Context);
   const [postsObj, setPostsObj] = useState({
     posts: [],
@@ -22,7 +22,7 @@ const Home = () => {
   const [age, setAge] = useState('');
   const [currPage, setCurrPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
   const getPosts = async (filter) => {
     const response = await apiClient.get(`/api/posts${filter}`);
     const { posts, count } = response.data;
@@ -33,9 +33,24 @@ const Home = () => {
     setLoading(false);
   };
 
+  const getUser = async() => {
+    const response = await apiClient.get('api/auth/login-success', {
+      withCredentials: true
+    });
+    const userInfo = response.data;
+
+    dispatch({
+      type: CHANGE_USER_INFO,
+      payload: userInfo,
+    });
+
+    localStorage.setItem('loginUser', JSON.stringify(userInfo));
+    if (userInfo && !userInfo.nickname) navigate('/profile-register');
+  }
+
   useEffect(() => {
-    console.log(cookies);
-  },[])
+    getUser();
+  }, [])
 
   useEffect(() => {
     let abortController = new AbortController();

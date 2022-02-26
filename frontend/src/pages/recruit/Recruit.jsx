@@ -44,7 +44,6 @@ const Recruit = () => {
   const handleCloseModal = (event) => {
     if (modalOnOff || !modalRef.current.contains(event.target)) {
       setModalOnoff(false);
-      console.log('click');
     }
     return;
   };
@@ -98,10 +97,7 @@ const Recruit = () => {
   return (
     <div>
       <Header
-        isLoggedIn={state.user !== null}
-        src={state.user !== null ? state.user.profileImagePath : null}
       />
-
       <div className={styles['content-container']}>
         <Tab currTab={currTab} postId={post._id} post={post} user={user} />
         <div className={styles.content}>
@@ -125,7 +121,7 @@ const Recruit = () => {
             <div>
               <div className={styles['author-date-container']}>
                 <Avartar
-                  src={post.author.profileImagePath}
+                  src={post.author.profileImgURL}
                   height='3rem'
                   width='3rem'
                 />

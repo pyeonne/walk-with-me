@@ -15,18 +15,22 @@ exports.google = new GoogleStrategy(
     callbackURL: 'https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/google/callback',
   },
   async function (accessToken, refreshToken, profile, done) {
-    const { email } = profile._json;
-    let user = await User.findOne({ email });
-
-    if (!user) {
-      user = await User.create({
-        email,
-        password: newPassword,
-      });
+    try {
+      const user = await User.findOne({ snsId: profile.id, provider: 'google' });
+      if (user) {
+        done(null, user);
+      } else {
+        const newUser = await User.create({
+          email: profile._json && profile._json.email,
+          password: 'google',
+          snsId: profile.id,
+          provider: 'google'
+        });
+        done(null, newUser);
+      }
+    } catch (error) {
+      done(error);
     }
-
-    const token = user.generateToken();
-    done(null, { token, user });
   }
 );
 
@@ -36,27 +40,21 @@ exports.kakao = new KakaoStrategy(
     callbackURL: 'https://elice-kdt-sw-1st-team6.elicecoding.com/api/auth/kakao/callback',
   },
   async (accessToken, refreshToken, profile, done) => {
-    const { id } = profile._json;
-
-    let user = await User.findOne({ kakaoId: id });
-
-    if (!user) {
-      user = await User.create({
-        email: `${newPassword}@kakao.wwm`,
-        password: newPassword,
-        kakaoId: id,
-      });
+    try {
+      const user = await User.findOne({ snsId: profile.id, provider: 'kakao' });
+      if (user) {
+        done(null, user);
+      } else {
+        const newUser = await User.create({
+          email: profile._json && profile._json.kakao_account.email,
+          password: 'kakao',
+          snsId: profile.id,
+          provider: 'kakao'
+        });
+        done(null, newUser);
+      }
+    } catch (error) {
+      done(error);
     }
-
-    const token = user.generateToken();
-    done(null, { logoutToken: accessToken, token, user });
   }
 );
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});

@@ -14,6 +14,8 @@ const manageRouter = Router();
 router.use('/:id', checkPostId, checkPostExist, postRouter);
 router.use(
   '/:id/management/:userId',
+  checkPostId,
+  checkPostExist,
   checkUserId,
   checkLogin,
   checkOwnPost,
@@ -29,7 +31,7 @@ postRouter.get('/', postCtrl.read);
 router.get('/', postCtrl.list);
 router.post('/', checkLogin, postCtrl.create);
 postRouter.put('/', checkLogin, checkOwnPost, postCtrl.update);
-postRouter.delete('/', postCtrl.delete);
+postRouter.delete('/', checkLogin, checkOwnPost, postCtrl.delete);
 
 // 모집 상태 변경
 postRouter.put('/status', checkLogin, checkOwnPost, postCtrl.changeStatus);

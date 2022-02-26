@@ -4,12 +4,13 @@ const { checkLogin } = require('../middlewares/auth');
 
 // 소셜 로그인
 router.get('/google', authCtrl.google);
-router.get('/google/callback', authCtrl.googleCallback, authCtrl.setCookie);
+router.get('/google/callback', authCtrl.googleCallback);
 
 // 카카오
 router.get('/kakao', authCtrl.kakao);
-router.get('/kakao/callback', authCtrl.kakaoCallback, authCtrl.setCookie);
-router.get('/kakao/logout', authCtrl.oAuthLogout);
+router.get('/kakao/callback', authCtrl.kakaoCallback);
+
+router.get('/login-success', authCtrl.loginSuccess);
 
 // 로컬 로그인
 router.post('/signup', authCtrl.signUp);

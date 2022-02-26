@@ -7,9 +7,9 @@ import Avatar from '../../components/Avatar/Avatar';
 import styles from './Chatting.module.css';
 import { NOW_POST } from '../../context/actionTypes';
 import { apiClient } from '../../api/api';
-import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { v4 as uuidv4 } from 'uuid';
+import {io} from 'socket.io-client'
 
 const currTab = '채팅방';
 
@@ -20,24 +20,23 @@ const Chatting = () => {
   const [loading, setLoading] = useState(true);
   const [currMessage, setCurrMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
-  const socket = useRef();
+  const [socket, setSocket] = useState(null)
+
+  // useEffect(() => {
+  //   setSocket(io('https://elice-kdt-sw-1st-team6.elicecoding.com:5000'))
+  // }, [])
+
+  // useEffect(() => {
+  //   socket?.on('welcome', message => {
+  //     console.log(message)
+  //   })
+  // }, [socket])
+
 
   useEffect(() => {
     if (user === null) user = JSON.parse(localStorage.getItem('loginUser'));
     if (post === null) post = JSON.parse(localStorage.getItem('post'));
-
-    socket.current = io('http://elice-kdt-sw-1st-team6.elicecoding.com:5000', {
-      withCredentials: true,
-      extraHeaders: {
-        'post-id': postId,
-        'user-id': user._id,
-      },
-    });
   }, []);
-
-  useEffect(() => {
-    socket.current.emit('addUser', user._id);
-  }, [user]);
 
   const getPost = async () => {
     const response = await apiClient.get('/api/posts/' + postId);
@@ -54,6 +53,7 @@ const Chatting = () => {
     getPost();
     if (post === null) post = JSON.parse(localStorage.getItem('post'));
     else localStorage.setItem('post', JSON.stringify(post));
+
     setMessageList(post.chat);
     return () => {
       dispatch({
@@ -101,7 +101,7 @@ const Chatting = () => {
                       <Avatar />
                     </div>
                     <div className={styles.info}>
-                      <div className={styles.author}>
+                      <div className={post.author._id === messageContent._id ? styles.author : styles.member}>
                         <h3>{messageContent.nickname}</h3>
                         <p className={styles.date}>
                           {new Date(messageContent.time).toLocaleString(
@@ -122,7 +122,6 @@ const Chatting = () => {
                 ))}
               </ScrollToBottom>
             </div>
-            ;
             <div className={styles.chatFooter}>
               <input
                 type='text'
@@ -150,9 +149,8 @@ const Chatting = () => {
               </div>
             </div>
             {/* 멤버 */}
-            
             {post.members.map((member) => 
-              member._id !== post.author._id &&( 
+              member._id !== post.author._id && (
               <div className={styles.user} key={uuidv4()}>
                 <div className={styles.profile}>
                   <Avatar />
@@ -161,10 +159,7 @@ const Chatting = () => {
                   <h3>{member.nickname}</h3>
                 </div>
               </div>
-                )
-              )}
-            )
-              
+            ))}
           </div>
         </div>
       </div>
