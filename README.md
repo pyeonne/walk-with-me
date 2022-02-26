@@ -15,7 +15,7 @@
 
 #### Backend
 
-<img width="959" alt="스크린샷 2022-01-29 오후 4 33 46" src="https://user-images.githubusercontent.com/42693257/151652168-29692a3a-1b6e-42b1-a95a-f5f90b1fded8.png">
+![스크린샷 2022-02-26 오전 10 14 14](https://user-images.githubusercontent.com/42693257/155822862-3cb5b5e1-ba3e-4ca6-8031-2747abb2ad3d.png)
 
 - Express, Mongoose
 
