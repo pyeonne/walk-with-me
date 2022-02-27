@@ -44,7 +44,6 @@ const Header = () => {
 
   const logoutHandler = async () => {
     const response = await apiClient.get('/api/auth/signout');
-    console.log(response.status)
     if (response.status === 200) {
       navigate('/')
       localStorage.clear();

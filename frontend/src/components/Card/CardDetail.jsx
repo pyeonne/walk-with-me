@@ -101,7 +101,7 @@ const CardDetail = ({ style, post, user, darkMode }) => {
     isLeave = confirm('탈퇴하시겠습니까?');
 
     if (isLeave) {
-      if(post.author._id == state.user?._id && post.members.length === 1){
+      if(post.author._id === state.user?._id && post.members.length === 1){
         await apiClient.delete('/api/posts/' + post._id);
         alert('모임이 삭제되었습니다.');
         getPost();
@@ -109,8 +109,8 @@ const CardDetail = ({ style, post, user, darkMode }) => {
         return
       }
 
-      if(post.author._id == state.user?._id){
-        let leader = post.members[0]._id;
+      if(post.author._id === state.user?._id){
+        let leader = post.members[1]._id;
         await apiClient.put(`/api/posts/${post._id}/management/${leader}/entrust`)
         await apiClient.delete(`/api/posts/${post._id}/leave`);
         getPost();

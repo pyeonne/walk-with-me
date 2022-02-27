@@ -9,6 +9,8 @@ import { useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiClient } from '../../api/api';
 
+const defaultImgURL = 'https://cdn.pixabay.com/photo/2020/04/22/10/14/running-5077128_960_720.jpg';
+
 const RecruitEdit = () => {
   const navigate = useNavigate();
   const [area, setArea] = useState('');
@@ -100,7 +102,7 @@ const RecruitEdit = () => {
   const apiCall = async () => {
     try {
       await apiClient.put(`/api/posts/${postId}`, {
-        postImgURL,
+        postImgURL: postImgURL === '' ? defaultImgURL : postImgURL,
         author,
         area,
         category,

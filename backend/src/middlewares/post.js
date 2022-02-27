@@ -35,7 +35,7 @@ exports.checkOwnPost = async (req, res, next) => {
   if (userId.toString() === author._id.toString()) {
     return next();
   }
-  
+
   res.status(401); // Unauthorized
   const error = new Error('권한이 없습니다.');
   return next(error);
