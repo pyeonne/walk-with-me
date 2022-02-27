@@ -155,4 +155,4 @@
 ## 5. 문서
 
 - [위키](https://kdt-gitlab.elice.io/sw_track/class_01/project_2/team6/walk-with-me/-/wikis/home)
-- [노션](https://www.notion.so/elice/6-c59af7484bad43e099d97b96b79fb847)
+- [노션](https://checkered-krill-813.notion.site/YOU-234f352d42cb4c00a6fc115bba4285cc)
