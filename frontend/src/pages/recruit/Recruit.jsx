@@ -60,9 +60,7 @@ const Recruit = () => {
     }
     return;
   };
-  /* 모집 상태
-  PUT /api/posts/:id/status
-  */
+
   const recruitDone = async () => {
     await apiClient.put(`api/posts/${postId}/status`);
 

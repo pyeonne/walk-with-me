@@ -25,12 +25,6 @@ exports.signUp = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  // const token = user.generateToken();
-  // res.cookie('token', token, {
-  //   httpOnly: true,
-  //   maxAge: process.env.EXPIRE_TIME,
-  // });
-
   res.status(200).json(user);
 });
 
@@ -50,13 +44,6 @@ exports.signIn = async (req, res, next) => {
           return;
         }
 
-        // const token = user.generateToken();
-        // res.cookie('token', token, {
-        //   httpOnly: true,
-        //   maxAge: process.env.EXPIRE_TIME,
-        // });
-        
-
         res.status(200).json(user);
       });
     })(req, res);
@@ -69,6 +56,7 @@ exports.signIn = async (req, res, next) => {
 exports.signOut = (req, res) => {
   req.logout();
   req.session.destroy();
+  res.status(200).json({ success: '로그아웃 성공 '});
 };
 
 // 회원 정보 등록

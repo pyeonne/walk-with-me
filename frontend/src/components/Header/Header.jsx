@@ -43,13 +43,17 @@ const Header = () => {
   }, []);
 
   const logoutHandler = async () => {
-    localStorage.clear();
-    navigate('/');
-    await apiClient.get('/api/auth/signout');
+    const response = await apiClient.get('/api/auth/signout');
+    console.log(response.status)
+    if (response.status === 200) {
+      navigate('/')
+      localStorage.clear();
+      dispatch({ type: CHANGE_USER_INFO, payload: null });
+    }
+
     if (state.darkMode === true) {
       localStorage.setItem('bgMode', 'dark');
     }
-    dispatch({ type: CHANGE_USER_INFO, payload: null });
   };
 
   const darkModeOnOff = () => {

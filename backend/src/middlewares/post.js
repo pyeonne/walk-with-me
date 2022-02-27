@@ -31,11 +31,11 @@ exports.checkOwnPost = async (req, res, next) => {
   const { _id: postId } = res.locals.post;
   const { _id: userId } = res.locals.user;
   const { author } = await Post.findById(postId).populate('author');
-  console.log(userId, author._id)
+
   if (userId.toString() === author._id.toString()) {
     return next();
   }
-  console.log('checkOwnPost')
+  
   res.status(401); // Unauthorized
   const error = new Error('권한이 없습니다.');
   return next(error);

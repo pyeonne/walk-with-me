@@ -31,7 +31,7 @@ const Card = ({ style, post, cardType }) => {
       author,
       someLikeMembers,
       likeMembers,
-      like: likeMembers.indexOf(state.user?._id) !== -1,
+      like: likeMembers.map(v => v._id).indexOf(state.user?._id) !== -1,
     };
     return (
       <CardDetail
