@@ -10,7 +10,7 @@
 
 <img width="957" alt="스크린샷 2022-01-29 오후 4 29 35" src="https://user-images.githubusercontent.com/42693257/151652028-3e52d22d-f712-48ac-ac80-6a9dd088a5e2.png">
 
-- Context API, CSS Module
+- Context API, CSS Module, Styled-Components
 
 
 #### Backend
